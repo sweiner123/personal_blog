@@ -12,4 +12,16 @@ about:
       href: https://github.com/sweiner123
 ---
 
-About this blog
+I am an aspiring Data Scientist who is excited to bring creativity and hard analytical skills to a data science team. I became interested in Data Science because I want to know more about the world through the use of empirical methods of investigation. I'm ready to bring my background in closely analyzing arguments to the world of analyzing and communicating data.\
+\
+I aspire to use machine learning and mathematics to not only understand the world but predict it. My goal is to be able to communicate information to clients with the intention of helping everyone make more informed decisions.\
+\
+Two things that I am passionate about are philosophy and cooking at home (homemade hummus is one of my favorites!). These passions show that I am interested in both thinking and doing and Data science is the best of both worlds. I am excited for the challenge of working to understand data and the insights it has to offer for the company and the world. There is nothing more fulfilling than to share an insight that you've come across with the hope of making an impact in someone's life.
+
+## Education
+
+Rutgers University \| New Brunswick, NJ\
+B.A. in Philosophy \| Sept 2018 - May 2021
+
+Institute for Advanced Analytics, North Carolina State University \| Raleigh, NC\
+M.S. Candidate in Analytics \| June 2022 - Current
