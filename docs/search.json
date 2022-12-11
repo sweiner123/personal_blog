@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "personal_blog",
+    "title": "Dialectic with Data",
     "section": "",
     "text": "news\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nDec 11, 2022\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidytuesday\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nDec 11, 2022\n\n\nSam Weiner\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nDec 8, 2022\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   },
@@ -32,6 +32,13 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this blog"
+    "text": "I am an aspiring Data Scientist who is excited to bring creativity and hard analytical skills to a data science team. I became interested in Data Science because I want to know more about the world through the use of empirical methods of investigation. I’m ready to bring my background in closely analyzing arguments to the world of analyzing and communicating data.\n\nI aspire to use machine learning and mathematics to not only understand the world but predict it. My goal is to be able to communicate information to clients with the intention of helping everyone make more informed decisions.\n\nTwo things that I am passionate about are philosophy and cooking at home (homemade hummus is one of my favorites!). These passions show that I am interested in both thinking and doing and Data science is the best of both worlds. I am excited for the challenge of working to understand data and the insights it has to offer for the company and the world. There is nothing more fulfilling than to share an insight that you’ve come across with the hope of making an impact in someone’s life."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "Education",
+    "text": "Education\nRutgers University | New Brunswick, NJ\nB.A. in Philosophy | Sept 2018 - May 2021\nInstitute for Advanced Analytics, North Carolina State University | Raleigh, NC\nM.S. Candidate in Analytics | June 2022 - Current"
   }
 ]
