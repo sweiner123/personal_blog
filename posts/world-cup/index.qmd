@@ -41,17 +41,53 @@ tt %>%
 
 ```
 
-
+This episode of Tidy Tuesday contains two data sets. wcmatches (matches from now on) contains 900 rows, one for each game played on the World Cup stage. It has variables for who played who, what stage (or round) of the tournament the game was played, who won, and the goals scored by each team.
 
 ```{r}
 matches <- tt$wcmatches
+glimpse(matches)
+```
+
+worldcups (wcups from now on) has information about each world cup on a high level. It contains information like the name of the host country each World Cup, the names of the top four finishers, total tournament goals scored, and the number of teams, games, and attendants.
+
+```{r}
 wcups <- tt$worldcups
+glimpse(wcups)
+```
 
-matches
+# Explore the Data
 
+Let's first look the most common match scores for all the games. It looks like low scoring games are the most common.
+
+```{r}
 matches %>% 
   count(home_score, away_score, sort = TRUE)
+
 ```
+
+I want to visualize how many games there were for total goals scored between the home and away teams. We can do this by creating a new column (total_score) adding the two scores together and counting the number of games with that score.  
+
+We can use ggplot2 to easily visualize our data. Also, by turning total_score into a factor, I can reorder the levels of the factors to reflect the number of matches each for each score. This makes the plot easily comprehensible.
+
+```{r}
+#| message: false
+library(viridis)
+
+matches %>% 
+  mutate(total_score = home_score + away_score) %>%
+  count(total_score, sort = TRUE) %>% 
+  mutate(total_score = factor(total_score)) %>% 
+  mutate(total_score = fct_reorder(total_score, n)) %>% 
+  ggplot() +
+  geom_col(aes(total_score, n), fill = "dark blue") +
+  xlab("Total Match Score") +
+  ylab("Number of Matches") +
+  ggtitle("Number of World Cup Matches by Total Score") +
+  theme(legend.position = "none") +
+  coord_flip()
+```
+
+It looks like total score of 1, 2, and 3 are by far the most common score outcomes for world cup matches. Let's now look at the number of matches each country has one since 1930. We are going to visualize teams that have one more than 5 games at world cup and see who ranks on top. 
 
 ```{r}
 matches |> 
@@ -59,9 +95,29 @@ matches |>
   count(winning_team, sort = TRUE)|>
   filter(n > 5) |> 
   ggplot() +
-  geom_col(aes(fct_reorder(winning_team, n, max), n)) + 
+  geom_col(aes(fct_reorder(winning_team, n, max), n), fill = "dark green") + 
   coord_flip()
 ```
+
+Brazil is by far the most winningest team in World Cup history! But I which country has won the most games in the past 20 years?
+
+```{r}
+matches |> 
+  filter(outcome != "D", year >= 2000) |>
+  count(winning_team, sort = TRUE)|>
+  filter(n > 5) |> 
+  ggplot() +
+  geom_col(aes(fct_reorder(winning_team, n, max), n), fill = "dark red") + 
+  coord_flip()
+```
+
+Germany has overcome Brazil! 
+
+Just for fun, let's see which day of the week most World Cup matches are played. Hopefully this information can help you figure out how to spend your vacation days if you want to see the most action.
+
+We are going to also stratify by which stage the games are being played, so if you are more interested in the games deeper in the bracket, we can see on what days those are played most often.
+
+Here I am removing the number associoted with each Group to get an overall Group category. Next, I am releveling the days of week variable to make them look a little nicer.
 
 ```{r}
 matches <- matches %>% 
@@ -73,6 +129,8 @@ matches <- matches %>%
 
 ```
 
+The plot shows that most of the games are played on Saturday and Sunday. So no need to take a vacation day! But Tuesday and Wednesday seem to have the most Semifinal matches.
+
 ```{r}
 matches %>%
   filter(stage != "Group")|>
@@ -80,16 +138,27 @@ matches %>%
   geom_bar()
 ```
 
-```{r}
-wcups %>% view()
+## World Cup dataset
 
+As was mentioned above, the World Cup dataset contains more general information about each World Cup. 
+
+```{r}
+wcups
+```
+
+We can count the number of total goals scored in a World Cup and rank them by which tournament had the most goals scored.
+
+```{r}
 wcups %>% 
   count(year, wt = goals_scored, sort = TRUE)
+```
 
+Let's also visualize the relationship between number of goals scored and the number of matches played in each World Cup.
+
+```{r}
 wcups %>% 
   ggplot(aes(year, goals_scored)) +
   geom_line() +
   geom_line(aes(year, games))
-
 
 ```
