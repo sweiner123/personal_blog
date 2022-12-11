@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "personal_blog"
+  title: "Dialectic with Data"
   navbar:
     right:
       - about.qmd
