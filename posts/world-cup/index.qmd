@@ -13,33 +13,41 @@ Tidy Tuesday is an awesome initiative by the R for Data Science Community where 
 
 This data set contains data on every World Cup since 1930.
 
-```{r, include=FALSE}
+```{r}
+#| output: false
+
 library(tidyverse)
 library(tidytuesdayR)
 library(tidymodels)
 theme_set(theme_light())
 ```
 
-```{r, message=FALSE, echo=FALSE}
+## Load in the World Cup data
+
+```{r}
+#| output: false
 
 tt <- tt_load("2022-11-29")
 tt
 ```
 
-```{r, include=FALSE}
+
+
+```{r}
+#| include: false
 
 tt %>% 
   map(glimpse)
 
 ```
 
-## Load in the World Cup data
+
 
 ```{r}
 matches <- tt$wcmatches
 wcups <- tt$worldcups
 
-matches %>% view()
+matches
 
 matches %>% 
   count(home_score, away_score, sort = TRUE)

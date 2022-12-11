@@ -212,69 +212,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="world-cup-data">World Cup Data</h2>
 <p>This data set contains data on every World Cup since 1930.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">tt_load</span>(<span class="st">"2022-11-29"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>--- Compiling #TidyTuesday Information for 2022-11-29 ----</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>--- There are 2 files available ---</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>--- Starting Download ---</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Downloading file 1 of 2: `wcmatches.csv`
-    Downloading file 2 of 2: `worldcups.csv`</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>--- Download complete ---</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Available datasets:
-    wcmatches 
-    worldcups 
-    </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytuesdayR)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_light</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tt <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(glimpse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 900
-Columns: 15
-$ year           &lt;dbl&gt; 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1…
-$ country        &lt;chr&gt; "Uruguay", "Uruguay", "Uruguay", "Uruguay", "Uruguay", …
-$ city           &lt;chr&gt; "Montevideo", "Montevideo", "Montevideo", "Montevideo",…
-$ stage          &lt;chr&gt; "Group 1", "Group 4", "Group 2", "Group 3", "Group 1", …
-$ home_team      &lt;chr&gt; "France", "Belgium", "Brazil", "Peru", "Argentina", "Ch…
-$ away_team      &lt;chr&gt; "Mexico", "United States", "Yugoslavia", "Romania", "Fr…
-$ home_score     &lt;dbl&gt; 4, 0, 1, 1, 1, 3, 0, 0, 1, 6, 1, 0, 0, 4, 3, 6, 6, 4, 2…
-$ away_score     &lt;dbl&gt; 1, 3, 2, 3, 0, 0, 4, 3, 0, 3, 0, 1, 4, 0, 1, 1, 1, 2, 3…
-$ outcome        &lt;chr&gt; "H", "A", "A", "A", "H", "H", "A", "A", "H", "H", "H", …
-$ win_conditions &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ winning_team   &lt;chr&gt; "France", "United States", "Yugoslavia", "Romania", "Ar…
-$ losing_team    &lt;chr&gt; "Mexico", "Belgium", "Brazil", "Peru", "France", "Mexic…
-$ date           &lt;date&gt; 1930-07-13, 1930-07-13, 1930-07-14, 1930-07-14, 1930-0…
-$ month          &lt;chr&gt; "Jul", "Jul", "Jul", "Jul", "Jul", "Jul", "Jul", "Jul",…
-$ dayofweek      &lt;chr&gt; "Sunday", "Sunday", "Monday", "Monday", "Tuesday", "Wed…
-Rows: 21
-Columns: 10
-$ year         &lt;dbl&gt; 1930, 1934, 1938, 1950, 1954, 1958, 1962, 1966, 1970, 197…
-$ host         &lt;chr&gt; "Uruguay", "Italy", "France", "Brazil", "Switzerland", "S…
-$ winner       &lt;chr&gt; "Uruguay", "Italy", "Italy", "Uruguay", "West Germany", "…
-$ second       &lt;chr&gt; "Argentina", "Czechoslovakia", "Hungary", "Brazil", "Hung…
-$ third        &lt;chr&gt; "USA", "Germany", "Brazil", "Sweden", "Austria", "France"…
-$ fourth       &lt;chr&gt; "Yugoslavia", "Austria", "Sweden", "Spain", "Uruguay", "W…
-$ goals_scored &lt;dbl&gt; 70, 70, 84, 88, 140, 126, 89, 89, 95, 97, 102, 146, 132, …
-$ teams        &lt;dbl&gt; 13, 16, 15, 13, 16, 16, 16, 16, 16, 16, 16, 24, 24, 24, 2…
-$ games        &lt;dbl&gt; 18, 17, 18, 22, 26, 35, 32, 32, 32, 38, 38, 52, 52, 52, 5…
-$ attendance   &lt;dbl&gt; 434000, 395000, 483000, 1337000, 943000, 868000, 776000, …</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">tt_load</span>(<span class="st">"2022-11-29"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="load-in-the-world-cup-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-in-the-world-cup-data">Load in the World Cup data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>matches <span class="ot">&lt;-</span> tt<span class="sc">$</span>wcmatches</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>wcups <span class="ot">&lt;-</span> tt<span class="sc">$</span>worldcups</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>matches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>$wcmatches
-# A tibble: 900 × 15
+<pre><code># A tibble: 900 × 15
     year country city      stage home_…¹ away_…² home_…³ away_…⁴ outcome win_c…⁵
    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  
  1  1930 Uruguay Montevid… Grou… France  Mexico        4       1 H       &lt;NA&gt;   
@@ -290,34 +246,10 @@ $ attendance   &lt;dbl&gt; 434000, 395000, 483000, 1337000, 943000, 868000, 7760
 # … with 890 more rows, 5 more variables: winning_team &lt;chr&gt;,
 #   losing_team &lt;chr&gt;, date &lt;date&gt;, month &lt;chr&gt;, dayofweek &lt;chr&gt;, and
 #   abbreviated variable names ¹​home_team, ²​away_team, ³​home_score,
-#   ⁴​away_score, ⁵​win_conditions
-
-$worldcups
-# A tibble: 21 × 10
-    year host        winner      second third fourth goals…¹ teams games atten…²
-   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
- 1  1930 Uruguay     Uruguay     Argen… USA   Yugos…      70    13    18  434000
- 2  1934 Italy       Italy       Czech… Germ… Austr…      70    16    17  395000
- 3  1938 France      Italy       Hunga… Braz… Sweden      84    15    18  483000
- 4  1950 Brazil      Uruguay     Brazil Swed… Spain       88    13    22 1337000
- 5  1954 Switzerland West Germa… Hunga… Aust… Urugu…     140    16    26  943000
- 6  1958 Sweden      Brazil      Sweden Fran… West …     126    16    35  868000
- 7  1962 Chile       Brazil      Czech… Chile Yugos…      89    16    32  776000
- 8  1966 England     England     West … Port… Sovie…      89    16    32 1614677
- 9  1970 Mexico      Brazil      Italy  West… Urugu…      95    16    32 1673975
-10  1974 Germany     West Germa… Nethe… Pola… Brazil      97    16    38 1774022
-# … with 11 more rows, and abbreviated variable names ¹​goals_scored,
-#   ²​attendance</code></pre>
+#   ⁴​away_score, ⁵​win_conditions</code></pre>
 </div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>matches <span class="ot">&lt;-</span> tt<span class="sc">$</span>wcmatches</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>wcups <span class="ot">&lt;-</span> tt<span class="sc">$</span>worldcups</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>matches <span class="sc">%&gt;%</span> <span class="fu">view</span>()</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>matches <span class="sc">%&gt;%</span> </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(home_score, away_score, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>matches <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(home_score, away_score, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 49 × 3
    home_score away_score     n
@@ -336,38 +268,39 @@ $worldcups
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>matches <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outcome <span class="sc">!=</span> <span class="st">"D"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(winning_team, <span class="at">sort =</span> <span class="cn">TRUE</span>)<span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="fu">fct_reorder</span>(winning_team, n, max), n)) <span class="sc">+</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>matches <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outcome <span class="sc">!=</span> <span class="st">"D"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(winning_team, <span class="at">sort =</span> <span class="cn">TRUE</span>)<span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="fu">fct_reorder</span>(winning_team, n, max), n)) <span class="sc">+</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>matches <span class="ot">&lt;-</span> matches <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stage =</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(stage, <span class="st">"^Group"</span>), <span class="st">"Group"</span>,stage)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stage =</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(stage, <span class="st">"^ Group"</span>), <span class="st">"Group"</span>,stage)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dayofweek =</span> <span class="fu">factor</span>(dayofweek, <span class="fu">c</span>(<span class="st">"Monday"</span>, <span class="st">"Tuesday"</span>, <span class="st">"Wednesday"</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"Thursday"</span>, <span class="st">"Friday"</span>, <span class="st">"Saturday"</span>, </span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"Sunday"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>matches <span class="ot">&lt;-</span> matches <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stage =</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(stage, <span class="st">"^Group"</span>), <span class="st">"Group"</span>,stage)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stage =</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(stage, <span class="st">"^ Group"</span>), <span class="st">"Group"</span>,stage)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dayofweek =</span> <span class="fu">factor</span>(dayofweek, <span class="fu">c</span>(<span class="st">"Monday"</span>, <span class="st">"Tuesday"</span>, <span class="st">"Wednesday"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"Thursday"</span>, <span class="st">"Friday"</span>, <span class="st">"Saturday"</span>, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"Sunday"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>matches <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stage <span class="sc">!=</span> <span class="st">"Group"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(dayofweek, <span class="at">fill =</span> stage)) <span class="sc">+</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>matches <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stage <span class="sc">!=</span> <span class="st">"Group"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(dayofweek, <span class="at">fill =</span> stage)) <span class="sc">+</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wcups <span class="sc">%&gt;%</span> <span class="fu">view</span>()</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>wcups <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(year, <span class="at">wt =</span> goals_scored, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>wcups <span class="sc">%&gt;%</span> <span class="fu">view</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>wcups <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(year, <span class="at">wt =</span> goals_scored, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 21 × 2
     year     n
@@ -384,10 +317,10 @@ $worldcups
 10  1986   132
 # … with 11 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>wcups <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, goals_scored)) <span class="sc">+</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, games))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>wcups <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, goals_scored)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, games))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
