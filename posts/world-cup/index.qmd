@@ -20,7 +20,7 @@ library(tidymodels)
 theme_set(theme_light())
 ```
 
-```{r}
+```{r, message=FALSE}
 
 tt <- tt_load("2022-11-29")
 tt
@@ -43,16 +43,15 @@ matches %>%
   count(home_score, away_score, sort = TRUE)
 ```
 
-
 ```{r}
 matches |> 
   filter(outcome != "D") |>
   count(winning_team, sort = TRUE)|>
+  filter(n > 5) |> 
   ggplot() +
   geom_col(aes(fct_reorder(winning_team, n, max), n)) + 
   coord_flip()
 ```
-
 
 ```{r}
 matches <- matches %>% 
