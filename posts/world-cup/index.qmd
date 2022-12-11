@@ -20,18 +20,20 @@ library(tidymodels)
 theme_set(theme_light())
 ```
 
-```{r, message=FALSE}
+```{r, message=FALSE, echo=FALSE}
 
 tt <- tt_load("2022-11-29")
 tt
 ```
 
-```{r}
+```{r, include=FALSE}
 
 tt %>% 
   map(glimpse)
 
 ```
+
+## Load in the World Cup data
 
 ```{r}
 matches <- tt$wcmatches
