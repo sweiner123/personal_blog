@@ -8,3 +8,5 @@ categories: [news]
 # Hello World!
 
 I am excited to start this blog where I will share my journey learning data science. I hope to share data analysis that I have conducted using the awesome tool-kit I have gained at the Institute for Advanced Analytics, some R packages that I think are cool, and my thoughts on the field of data science as a whole. Cheers to a new adventure!
+
+\- Sam

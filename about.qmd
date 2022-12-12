@@ -18,7 +18,7 @@ I became interested in data science because of my growing curiosity. In my under
 
 My journey has led me to become proficient in R, Python, and SQL. I have become intimately familiar with statistical learning techniques in the inferential world - linear regression, logistic regression, decision trees, causal inference - as well as in the predictive world - random forests, XGBoost, neural networks. I am leveraging Tableau and ggplot2 to create intuitive data visualizations to communicate data analysis to a broad audience.
 
-I am still passionate about big philosophical questions, and I love to have stimulating conversations with my friends or strangers! In my free time, you might see me watching college wresting (Go RU!) or obsessing over perfect hummus recipe.
+I am still passionate about big philosophical questions, and I love to have stimulating conversations with my friends or strangers! In my free time, you might see me watching college wrestling (Go RU!) or obsessing over the perfect hummus recipe.
 
 ## Education
 
