@@ -11,9 +11,9 @@ website:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/sweiner123
+      - icon: liknedin
+        href: https://www.linkedin.com/in/sam-weiner/
 format:
   html:
     theme: litera

@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Sam Weiner is an aspiring Data Scientist who is excited to bring creativity and analytical know-how to your data science team. I am a current masters student at the Institute for Advanced Analytics, where I am studying data science and technical communication to be able to solve complex problems and share results answers with a wide audience.\nI became interested in data science because of my growing curiosity. In my undergraduate philosophy courses, I enjoyed learning about and debating the answers to fascinating philosophical questions, but as my interests broadened from theoretical questions to practical ones, I realized that the skills I had as a philosopher were insufficient to answering real-word questions. When I heard about data science for the first time, I knew that becoming a data scientist was going to be my path forward to gaining a better understanding of our world. My curiosity has only grown as I have embarked on this journey, and I am so excited to dive into all of the data I can get my hands on to deepen my knowledge of the relationships and events that make up our endlessly fascinating world!\nMy journey has led me to become proficient in R, Python, and SQL. I have become intimately familiar with statistical learning techniques in the inferential world - linear regression, logistic regression, decision trees, causal inference - as well as in the predictive world - random forests, XGBoost, neural networks. I am leveraging Tableau and ggplot2 to create intuitive data visualizations to communicate data analysis to a broad audience.\nI am still passionate about big philosophical questions, and I love to have stimulating conversations with my friends or strangers! In my free time, you might see me watching college wrestling (Go RU!) or obsessing over the perfect hummus recipe."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "Education",
+    "text": "Education\nRutgers University | New Brunswick, NJ\nB.A. in Philosophy | Sept 2018 - May 2021\nInstitute for Advanced Analytics, North Carolina State University | Raleigh, NC\nM.S. Candidate in Analytics | June 2022 - Current"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Dialectic with Data",
@@ -26,19 +40,5 @@
     "title": "Tidy Tuesday - World Cup Edition",
     "section": "World Cup dataset",
     "text": "World Cup dataset\nAs was mentioned above, the World Cup dataset contains more general information about each World Cup.\n\nwcups\n\n# A tibble: 21 × 10\n    year host        winner      second third fourth goals…¹ teams games atten…²\n   <dbl> <chr>       <chr>       <chr>  <chr> <chr>    <dbl> <dbl> <dbl>   <dbl>\n 1  1930 Uruguay     Uruguay     Argen… USA   Yugos…      70    13    18  434000\n 2  1934 Italy       Italy       Czech… Germ… Austr…      70    16    17  395000\n 3  1938 France      Italy       Hunga… Braz… Sweden      84    15    18  483000\n 4  1950 Brazil      Uruguay     Brazil Swed… Spain       88    13    22 1337000\n 5  1954 Switzerland West Germa… Hunga… Aust… Urugu…     140    16    26  943000\n 6  1958 Sweden      Brazil      Sweden Fran… West …     126    16    35  868000\n 7  1962 Chile       Brazil      Czech… Chile Yugos…      89    16    32  776000\n 8  1966 England     England     West … Port… Sovie…      89    16    32 1614677\n 9  1970 Mexico      Brazil      Italy  West… Urugu…      95    16    32 1673975\n10  1974 Germany     West Germa… Nethe… Pola… Brazil      97    16    38 1774022\n# … with 11 more rows, and abbreviated variable names ¹​goals_scored,\n#   ²​attendance\n\n\nWe can count the number of total goals scored in a World Cup and rank them by which tournament had the most goals scored.\n\nwcups %>% \n  count(year, wt = goals_scored, sort = TRUE)\n\n# A tibble: 21 × 2\n    year     n\n   <dbl> <dbl>\n 1  1998   171\n 2  2014   171\n 3  2018   169\n 4  2002   161\n 5  2006   147\n 6  1982   146\n 7  2010   145\n 8  1994   141\n 9  1954   140\n10  1986   132\n# … with 11 more rows\n\n\nLet’s also visualize the relationship between number of goals scored and the number of matches played in each World Cup.\n\nwcups %>% \n  ggplot(aes(year, goals_scored)) +\n  geom_line() +\n  geom_line(aes(year, games))"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Sam Weiner is an aspiring Data Scientist who is excited to bring creativity and analytical know-how to your data science team. I am a current masters student at the Institute for Advanced Analytics, where I am studying data science and technical communication to be able to solve complex problems and share results answers with a wide audience.\nI became interested in data science because of my growing curiosity. In my undergraduate philosophy courses, I enjoyed learning about and debating the answers to fascinating philosophical questions, but as my interests broadened from theoretical questions to practical ones, I realized that the skills I had as a philosopher were insufficient to answering real-word questions. When I heard about data science for the first time, I knew that becoming a data scientist was going to be my path forward to gaining a better understanding of our world. My curiosity has only grown as I have embarked on this journey, and I am so excited to dive into all of the data I can get my hands on to deepen my knowledge of the relationships and events that make up our endlessly fascinating world!\nMy journey has led me to become proficient in R, Python, and SQL. I have become intimately familiar with statistical learning techniques in the inferential world - linear regression, logistic regression, decision trees, causal inference - as well as in the predictive world - random forests, XGBoost, neural networks. I am leveraging Tableau and ggplot2 to create intuitive data visualizations to communicate data analysis to a broad audience.\nI am still passionate about big philosophical questions, and I love to have stimulating conversations with my friends or strangers! In my free time, you might see me watching college wrestling (Go RU!) or obsessing over the perfect hummus recipe."
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "About",
-    "section": "Education",
-    "text": "Education\nRutgers University | New Brunswick, NJ\nB.A. in Philosophy | Sept 2018 - May 2021\nInstitute for Advanced Analytics, North Carolina State University | Raleigh, NC\nM.S. Candidate in Analytics | June 2022 - Current"
   }
 ]
