@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sam Weiner">
+
+<title>Dialectic with Data - R resources for Practicum</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Dialectic with Data</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sweiner123"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/sam-weiner/"><i class="bi bi-liknedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">R resources for Practicum</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Sam Weiner </p>
+            </div>
+    </div>
+      
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#a-mishmash-of-r-resources" id="toc-a-mishmash-of-r-resources" class="nav-link active" data-scroll-target="#a-mishmash-of-r-resources"><span class="toc-section-number">1</span>  A Mishmash of R resources</a>
+  <ul class="collapse">
+  <li><a href="#general-r-tips" id="toc-general-r-tips" class="nav-link" data-scroll-target="#general-r-tips"><span class="toc-section-number">1.1</span>  General R tips</a>
+  <ul class="collapse">
+  <li><a href="#r-for-data-science" id="toc-r-for-data-science" class="nav-link" data-scroll-target="#r-for-data-science"><span class="toc-section-number">1.1.1</span>  R for Data Science</a></li>
+  <li><a href="#rstudio-projects" id="toc-rstudio-projects" class="nav-link" data-scroll-target="#rstudio-projects"><span class="toc-section-number">1.1.2</span>  Rstudio Projects</a></li>
+  <li><a href="#shortcuts-tips-and-tricks" id="toc-shortcuts-tips-and-tricks" class="nav-link" data-scroll-target="#shortcuts-tips-and-tricks"><span class="toc-section-number">1.1.3</span>  Shortcuts, Tips, and Tricks</a></li>
+  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="toc-section-number">1.1.4</span>  Quarto</a></li>
+  </ul></li>
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="toc-section-number">1.2</span>  Packages</a>
+  <ul class="collapse">
+  <li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse"><span class="toc-section-number">1.2.1</span>  Tidyverse</a></li>
+  <li><a href="#tidymodels" id="toc-tidymodels" class="nav-link" data-scroll-target="#tidymodels"><span class="toc-section-number">1.2.2</span>  Tidymodels</a></li>
+  <li><a href="#awesome-packages" id="toc-awesome-packages" class="nav-link" data-scroll-target="#awesome-packages"><span class="toc-section-number">1.2.3</span>  Awesome Packages</a></li>
+  </ul></li>
+  <li><a href="#causal-inference" id="toc-causal-inference" class="nav-link" data-scroll-target="#causal-inference"><span class="toc-section-number">1.3</span>  Causal Inference</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="a-mishmash-of-r-resources" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> A Mishmash of R resources</h1>
+<p>Hello again! I’m excited to put another post up on Dialectic with Data where I will be brain dumping some of the awesome R resources I have ran across in my journey learning and loving R! This post is was specifically inspired by my practicum team because I have enjoyed sharing these resources with them over time, but many of them have been lost deep in the depths of our slack channel. So, I am going to be cataloging many of the things that I have shared with them, and I will also be adding new resources as I come upon them for them and you!</p>
+<section id="general-r-tips" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="general-r-tips"><span class="header-section-number">1.1</span> General R tips</h2>
+<section id="r-for-data-science" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="r-for-data-science"><span class="header-section-number">1.1.1</span> R for Data Science</h3>
+<p>My biggest and most valuable tip to learning R is read <a href="https://r4ds.had.co.nz/">R for Data Science by Hadley</a> Wickham and Garret Grolemund.This book has so much knowledge stored inside it. It primarily teaches the <a href="https://www.tidyverse.org/">tidyverse</a> and its wonderful array of tools for exploratory data analysis and data visualization. It has been a bible for me, and I see myself turning back to it more often than one would think for a self-classified introductory book. The second version is currently under development but available to read <a href="https://r4ds.hadley.nz/">here</a>.</p>
+</section>
+<section id="rstudio-projects" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="rstudio-projects"><span class="header-section-number">1.1.2</span> Rstudio Projects</h3>
+<p>Rstudio projects are a convenient and efficient way of organizing all of the code, data, and visualizations that make up a data science project. The biggest efficiency boost in my experience is that your working directory automatically updates to the folder where your Rstudio project lives, so all of you code and visualizations are automatically saved in the same place. Additionally, any data that you have in, for example, a csv file can be easily uploaded to your environment without having to mess with the working directory. Other important features that are a bit more advanced revolve around Rstudio projects ability to improve reproducibility and use version control.</p>
+<ul>
+<li>Resources for learning more about Rstudio Projects
+<ul>
+<li><a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">Intro to Rstudio Projects</a></li>
+<li><a href="https://rstudio.github.io/renv/articles/renv.html">Rstudio and reproducibility</a></li>
+<li><a href="https://happygitwithr.com/index.html">Rstudio and git</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="shortcuts-tips-and-tricks" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="shortcuts-tips-and-tricks"><span class="header-section-number">1.1.3</span> Shortcuts, Tips, and Tricks</h3>
+<p>The Rstudio IDE is probably the best IDE (integrated development environment) for using R and conducting data science tasks in general. It has stiff competition from the likes of Visual Studio Code, but there are a few tips and tricks that I am going to show you for Rstudio that might make you think twice before switching to a different IDE.</p>
+<ul>
+<li><code>Alt + -</code>
+<ul>
+<li>Shortcut for inserting the assignment operator <code>&lt;-</code></li>
+</ul></li>
+<li><code>Ctrl + Shift + M</code>
+<ul>
+<li>Shortcut for inserting the pipe magrittr operator <code>%&gt;%</code> commonly used in the tidyverse</li>
+<li>Note: As of R 4.1.0, R has a built in pipe operator <code>|&gt;</code> which works similarly to the magrittr pipe but has same slight nuances. See <a href="https://ivelasq.rbind.io/blog/understanding-the-r-pipe/">here</a> and <a href="https://stackoverflow.com/questions/67744604/what-does-pipe-greater-than-mean-in-r">here</a> for more information on the built in pipe operator.<br>
+</li>
+</ul></li>
+<li><code>Ctrl + Shift + R</code>
+<ul>
+<li>Creates a comment section header in an R source file which is collapseable and also creates an outline to easily navigate your code file.</li>
+</ul></li>
+<li><code>Ctrl + Shift + Alt + M</code>
+<ul>
+<li>Renames a variable in the entire file. Just highlight the variable to be renamed, use the shortcut, and type the new name. Easy as that!</li>
+<li>Using <code>Ctrl + F</code> and using replace is another option which is useful when you don’t want to rename every instance of a variable in the file.</li>
+</ul></li>
+<li>Code Snippets
+<ul>
+<li>Code Snippets are ways to insert commonly used code structures (or headers) in an R file. Under the <em>Tools</em> toolbar, go to <em>Edit Code Snippets</em>. There you will see all the code snippets pre-built in Rstudio and and editor for adding new ones. I use this to add a header structure to new scripts where I can fill in information about the script for my teammates to read when they use it.</li>
+</ul></li>
+<li>Multiple Cursors
+<ul>
+<li>This was a tip that I was sorely missing from my time using VS Code until I stumbled upon this simple shortcut in Rstudio! Just by holding down the <code>Alt</code> button and clicking or draging with the mouse, you’ll have more cursors than you know what to do with.</li>
+</ul></li>
+</ul>
+<p>More awesome shortcuts can be found in this <a href="https://appsilon.com/rstudio-shortcuts-and-tips/">awesome article by Appsilon</a></p>
+</section>
+<section id="quarto" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="quarto"><span class="header-section-number">1.1.4</span> Quarto</h3>
+<p>Quarto is Rstudio’s (now called Posit) new Rmarkdown replacement. The biggest change from Rmarkdown to Quarto is that you can use Quarto in Jupyter Notebooks! Posit (formerly Rstudio) is broadening it’s presence in the data science community by engaging with python users in addition to R users. The hope, says Posit, is to create easy tools for cross-language collaboration so that researchers and data scientists can use their languages of choice and still work together. From what I have seen, many data scientists who might have preferred R as a language have been pressured to use python because of its large presence in the data science community. This tool is hopefully going to create a pathway for R users to stay R users without complicating team workflows in a python-dominant environment.</p>
+<p>In addition, Quarto has some awesome features such as helping users easily create documents, presentation, or even blogs (like this one!). So far, it has been very intuitive and the documentation has been very helpful. You can find information at <a href="https://quarto.org">quarto.org</a>.</p>
+</section>
+</section>
+<section id="packages" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="packages"><span class="header-section-number">1.2</span> Packages</h2>
+<p>Now lets get to packages! I am going to be listing packages that I think are really helpful (and really cool) for working with data and doing modeling in R.</p>
+<section id="tidyverse" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="tidyverse"><span class="header-section-number">1.2.1</span> Tidyverse</h3>
+<ul>
+<li><a href="https://ggplot2.tidyverse.org/">ggplot2</a>
+<ul>
+<li>This package contains the best tools for taking data and making a stellar visualization out of it. It is extremely versatile and at times very complicated. Later on I will be sharing more about ggplot2 and provide some resources for making ggplot2 super easy to understand.</li>
+</ul></li>
+<li><a href="https://dplyr.tidyverse.org/">dplyr</a>
+<ul>
+<li>This package has the tools you need to manipulate data. Mutate is useful for feature engineering and summarise is great for calculating summaries of your data set. Using the piping syntax makes this package so powerful. My favorite way of using this package is to dig into the data and pipe what I want into a ggplot!</li>
+</ul></li>
+<li><a href="https://readr.tidyverse.org/">readr</a>
+<ul>
+<li>This package makes importing data easy as can be.</li>
+</ul></li>
+<li><a href="https://purrr.tidyverse.org/">purrr</a>
+<ul>
+<li>This package contains the tidyverse’s toolkit for functional programming. The <a href="http://r4ds.had.co.nz/iteration.html">iteration chapter</a> in R for Data Science is a great place to start if you are new to functional programming. Another great resources I used is <a href="https://jennybc.github.io/purrr-tutorial/index.html">purrr tutorial</a> by Jenny Bryan. Functional programming has been very hard for me, but these two resources have really helped me wrap my brain around the concept, and it has already impacted by projects enormously.</li>
+</ul></li>
+<li><a href="https://stringr.tidyverse.org/">stringr</a>
+<ul>
+<li>stringr is the handiest way of working with strings in R. It has everything under the sun when it comes to manipulating and cleaning character data.</li>
+</ul></li>
+<li><a href="https://forcats.tidyverse.org/">forcats</a>
+<ul>
+<li>Factors are a very common data type in R, but they can be tricky at times. This package has some awesome tools for working with factors that will really come in handy if you use factors a lot.</li>
+</ul></li>
+</ul>
+</section>
+<section id="tidymodels" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="tidymodels"><span class="header-section-number">1.2.2</span> Tidymodels</h3>
+<p>Tidymodels is a standalone universe which has everything you need to do machine learning in R. The tidymodels project is headed by the same person that create CARET years back, Max Kuhn, and the goal of tidymodels is the same as CARETS goal: To create a unified interface for machine learning in R. The package makes use of R’s rich ecosystem of machine learning model implementations but standardizes the interface across all those implemetations to make the switch between model implementations seamless. The amount of packages and tools in the tidymodels universe is large and there is too much to say for this blog post. However, I do plan on showing how tidymodels is used in a future blog post, so stay tuned! In the meantime, I am going to point you to some amazing resources if you want to get started now.</p>
+<ul>
+<li><a href="https://www.tmwr.org/">Tidy Modeling with R</a> is a free book written by Max Kuhn and Julia Silge which is the best resource for getting started with tidymodels and it also has some great information on machine learning in general!</li>
+<li><a href="https://www.tidymodels.org/">tidymodels.org</a> has some amazing content which will be the preferred resource for people who want a shorter format introduction to tidymodels.</li>
+<li><a href="https://juliasilge.com/categories/tidymodels/">juilasilge.com</a> is the blog of one of the co-authors of Tidy Modeling with R and she has some great blog posts and youtube videos where she implements the tidymodels packages and gives great explanations of what she is doing.</li>
+</ul>
+</section>
+<section id="awesome-packages" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="awesome-packages"><span class="header-section-number">1.2.3</span> Awesome Packages</h3>
+<p>The Awesome Packages section is going to be a growing list of packages that I find really cool because they have either changed and/or improved the way I use R as a data science student.</p>
+<section id="broom" class="level4" data-number="1.2.3.1">
+<h4 data-number="1.2.3.1" class="anchored" data-anchor-id="broom"><span class="header-section-number">1.2.3.1</span> broom</h4>
+<p><a href="https://broom.tidymodels.org/">broom</a> is a super cool R package. One of the most annoying aspects of using R for data science is trying to extract the output from the model object. Summaries of the model object are easy enough to get using <code>summary()</code>, but to extract the components of model like the coefficients, pvalues, or Rsquared value to use for other operations means digging into the model object and trying and failing to use the right index to find it. broom makes that task no more. By using the <code>tidy()</code> function on supported model objects, the output is represented as a data frame which makes extracting what you want so much easier. Rsquared and other metric vaules can be found by using <code>glance()</code> and <code>augment()</code> can add output like predictions from a new datas et back into the data set from whence it came.</p>
+</section>
+</section>
+</section>
+<section id="causal-inference" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="causal-inference"><span class="header-section-number">1.3</span> Causal Inference</h2>
+<p>Causal inference is a topic that I have been learning about a lot lately. As someone who does not have a formal background in statistics or epidemiology, it has been important to me to find resources that teach causal inference in terms that I can understand. Here is a list of resources and R packages that can help you if you are interested in causal inference.</p>
+<ul>
+<li><a href="https://www.r-causal.org/">Causal Inference in R</a> is a ongoing book project by Malcolm Barrett, Lucy D’Agostino McGowan, and Travis Gerke. It contains some amazing information at the moment and it will only get better as the authors work on it.</li>
+<li><a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">Causal Inference for The Brave and True</a> by Matheus Facure Alves is a book that has great explanations of causal inference techniques and concepts and everything coding related is written in python for those interested in a python implementation of causal inference!</li>
+<li><a href="https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2022/11/hernanrobins_WhatIf_13nov22.pdf">Causal Inference: What If?</a> by Miguel A. Hernán and James M. Robins is causal inference bible. It is much heavier than the resources above and the focus is purely on the methodology of causal inference. However R code which follows part 2 of the book chapter by chapter can be found <a href="https://causalinferencebookr.netlify.app/">here</a>.</li>
+<li><a href="https://www.youtube.com/watch?v=n8c-UK19hbA">Workshop: Causal Inference in R</a> is a video workshop by Malcolm Barrett and Lucy D’Agostino McGowan. The workshop has been updated since the video but no new video has surfaced that I could find. The new workshop can be found on github <a href="https://github.com/malcolmbarrett/causal_inference_r_workshop">here</a> with the slides and exercise rmarkdown files. The solutions to the exercises can be found <a href="https://github.com/malcolmbarrett/causal_inference_r_workshop_solutions">here</a></li>
+<li><a href="https://kosukeimai.github.io/MatchIt/">MatchIt</a> is a package that creates matches based on observational data. It has awesome vignettes on its website that explains matching for causal inference in detail and has many method options to implement for matching</li>
+<li><a href="https://ggdag.malco.io/">ggdag</a> is a way to plot directed acyclic dags (DAGs) in R using more a ggplot2-like interface as opposed to <a href="http://www.dagitty.net/primer/">daggity</a>.</li>
+<li><a href="https://github.com/malcolmbarrett/propensity">propensity</a> helps calculate propensity scores and weights for a wide variety of research questions.propensity is under very early development.</li>
+<li><a href="https://lucymcgowan.github.io/tipr/">tipr</a> After fitting your model, you can determine the unmeasured confounder needed to tip your analysis.</li>
+<li><a href="https://github.com/malcolmbarrett/halfmoon">halfmoon</a>[https://github.com/malcolmbarrett/halfmoon] The goal of halfmoon is to cultivate balance in propensity score models.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
