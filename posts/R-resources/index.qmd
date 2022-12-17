@@ -7,8 +7,6 @@ number-sections: true
 highlight-style: pygments
 ---
 
-# A Mishmash of R resources
-
 Hello again! I'm excited to put another post up on Dialectic with Data where I will be brain dumping some of the awesome R resources I have ran across in my journey learning and loving R! This post is was specifically inspired by my practicum team because I have enjoyed sharing these resources with them over time, but many of them have been lost deep in the depths of our slack channel. So, I am going to be cataloging many of the things that I have shared with them, and I will also be adding new resources as I come upon them for them and you!
 
 ## General R tips
