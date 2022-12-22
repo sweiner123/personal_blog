@@ -34,7 +34,7 @@ The Rstudio IDE is probably the best IDE (integrated development environment) fo
     -   Shortcut for inserting the pipe magrittr operator `%>%` commonly used in the tidyverse
     -   Note: As of R 4.1.0, R has a built in pipe operator `|>` which works similarly to the magrittr pipe but has same slight nuances. See [here](https://ivelasq.rbind.io/blog/understanding-the-r-pipe/) and [here](https://stackoverflow.com/questions/67744604/what-does-pipe-greater-than-mean-in-r) for more information on the built in pipe operator.\
 -   `Ctrl + Shift + R`
-    -   Creates a comment section header in an R source file which is collapseable and also creates an outline to easily navigate your code file.
+    -   Creates a comment section header in an R source file which is collapsible and also creates an outline to easily navigate your code file.
 -   `Ctrl + Shift + Alt + M`
     -   Renames a variable in the entire file. Just highlight the variable to be renamed, use the shortcut, and type the new name. Easy as that!
     -   Using `Ctrl + F` and using replace is another option which is useful when you don't want to rename every instance of a variable in the file.
@@ -47,7 +47,7 @@ More awesome shortcuts can be found in this [awesome article by Appsilon](https:
 
 ### Quarto
 
-Quarto is Rstudio's (now called Posit) new Rmarkdown replacement. The biggest change from Rmarkdown to Quarto is that you can use Quarto in Jupyter Notebooks! Posit (formerly Rstudio) is broadening it's presence in the data science community by engaging with python users in addition to R users. The hope, says Posit, is to create easy tools for cross-language collaboration so that researchers and data scientists can use their languages of choice and still work together. From what I have seen, many data scientists who might have preferred R as a language have been pressured to use python because of its large presence in the data science community. This tool is hopefully going to create a pathway for R users to stay R users without complicating team workflows in a python-dominant environment.
+Quarto is Rstudio's (now called Posit) new Rmarkdown replacement. The biggest change from Rmarkdown to Quarto is that you can use Quarto in Jupyter Notebooks! Posit (formerly Rstudio) is broadening it's presence in the data science community by engaging with python users in addition to R users. The hope, says Posit, is to create easy tools for cross-language collaboration so that researchers and data scientists who have different languages of choice can work together with ease. From what I have seen, many data scientists who might have preferred R as a language have been pressured to use python because of its large presence in the data science community. This tool is hopefully going to create a pathway for R users to stay R users without complicating team workflows in a python-dominant environment.
 
 In addition, Quarto has some awesome features such as helping users easily create documents, presentation, or even blogs (like this one!). So far, it has been very intuitive and the documentation has been very helpful. You can find information at [quarto.org](https://quarto.org).
 
@@ -72,7 +72,7 @@ Now lets get to packages! I am going to be listing packages that I think are rea
 
 ### Tidymodels
 
-Tidymodels is a standalone universe which has everything you need to do machine learning in R. The tidymodels project is headed by the same person that create CARET years back, Max Kuhn, and the goal of tidymodels is the same as CARETS goal: To create a unified interface for machine learning in R. The package makes use of R's rich ecosystem of machine learning model implementations but standardizes the interface across all those implemetations to make the switch between model implementations seamless. The amount of packages and tools in the tidymodels universe is large and there is too much to say for this blog post. However, I do plan on showing how tidymodels is used in a future blog post, so stay tuned! In the meantime, I am going to point you to some amazing resources if you want to get started now.
+Tidymodels is a standalone universe which has everything you need to do machine learning in R. The tidymodels project is headed by the same person that create CARET years back, Max Kuhn, and the goal of tidymodels is the same as CARETS goal: To create a unified interface for machine learning in R. The package makes use of R's rich ecosystem of machine learning model packages but standardizes the interface across all those implementations to make the switch between models seamless. The amount of packages and tools in the tidymodels universe is large and there is too much to say for this blog post. However, I do plan on showing how tidymodels is used in a future blog post, so stay tuned! In the meantime, I am going to point you to some amazing resources if you want to get started now.
 
 -   [Tidy Modeling with R](https://www.tmwr.org/) is a free book written by Max Kuhn and Julia Silge which is the best resource for getting started with tidymodels and it also has some great information on machine learning in general!
 -   [tidymodels.org](https://www.tidymodels.org/) has some amazing content which will be the preferred resource for people who want a shorter format introduction to tidymodels.
@@ -86,6 +86,36 @@ The Awesome Packages section is going to be a growing list of packages that I fi
 
 [broom](https://broom.tidymodels.org/) is a super cool R package. One of the most annoying aspects of using R for data science is trying to extract the output from the model object. Summaries of the model object are easy enough to get using `summary()`, but to extract the components of model like the coefficients, pvalues, or Rsquared value to use for other operations means digging into the model object and trying and failing to use the right index to find it. broom makes that task no more. By using the `tidy()` function on supported model objects, the output is represented as a data frame which makes extracting what you want so much easier. Rsquared and other metric vaules can be found by using `glance()` and `augment()` can add output like predictions from a new datas et back into the data set from whence it came.
 
+#### janitor
+
+[janitor](https://sfirke.github.io/janitor/index.html) is a key package because it does something that, while we might think is important, is not all that interesting, but is a such a quality of life boost for a data scientist. Cleaning dirty data is numerous ways. Cleaning dirty data is a necessary part of the process to extracting value out a data set, but it is such a time sink. Janitor comes in to provide a myriad of helpful functions to get data people working in the data instead of on the data.
+
+#### skimr
+
+[skimr](https://docs.ropensci.org/skimr/) is your best friend when beginning exploratory data analysis. Using the `skim()` function on a data frame, a really easy to understand output will be generated containing summary statistics for all of your columns. The information will include variable type, percent missing, 0th, 25th, 50th, 75th, 100th percentile value for continuous variables, mean, standard deviation, and more! I think that you will love this tool once you start to use it!
+
+#### reprex
+
+We all know what it's like to feel completely baffled when writing code. At least I can say I have felt completely baffled when writing code and I have felt stuck countless times. And when I am baffled, I go to the internet to find the cure. If I ever have to ask a question on sites like stack overflow or github to ask for help, I always use [reprex](https://reprex.tidyverse.org/) to help me create a minimally reproducible example. A minimally reproducible example is simple piece of code that replicates your problem so that other knowledgeable people can help you diagnose your issue. Asking questions with reprex gives you the best chance to finding an answer to your question because you have helped the internet help you by giving them the exact situation you are facing.
+
+## ggplot2
+
+[ggplot2](https://ggplot2.tidyverse.org/) is the primary visualization package in R. It allows for extreme creativity when turning data into visualizations. Checkout the [#tidytuesday](https://twitter.com/search?q=%23tidytuesday&src=hashtag_click) hashtag on twitter to see some of the crazy impressive visualizations made with ggplot2! ggplot2 is not a package that is simple to master, however. For those beginning their journey with ggplot2, I recommend R for Data Science's [chapter on data visualization](https://r4ds.had.co.nz/data-visualisation.html) which gives a great explanation behind the design of ggplot2 and how it is meant to be used. If you need a reference for ggplot2 code, [R Graphics Cookbook](https://r-graphics.org/) is a great resource as are the [R Graph Gallery](https://r-graph-gallery.com/index.html) and [R charts](https://r-charts.com/ggplot2/). I find that sometimes I need to understand how ggplot2 takes data and makes visuals out of it, which is what R for Data Science is great for, and other times I just need a resource to show me all the cool ways I can represent my data, which is what those other three resources are there for.
+
+### Extensions
+
+One major benefit of ggplot2 being the default visualization package in R is that it has been building blocks of choice for so many R programmers create new visualization capabilities in R and ggplot2. There are hundreds of extension packages for ggplot2 that add onto its functionality in incredible ways. For instance, gganimate creates the ability for you to have animated graphics in R! And the best part is that these extensions are usually very easy to learn because they all use the same ggplot2 mechanics as I was saying earlier. A full list of registered extensions can be found [here](https://exts.ggplot2.tidyverse.org/gallery/).
+
+One really exquisite ggplot extension I would like to highlight is [esquisse](https://dreamrs.github.io/esquisse/). This package creates a tableau-like interface inside of Rstudio, so that we can interactively plot our data! It has been a game changer for me when doing EDA.
+
+### Fonts
+
+One way that people like to modify their visualizations from base ggplot2 is by modifying text fonts. Packages like [extrafont](https://github.com/wch/extrafont) and [showtext](https://cran.r-project.org/web/packages/showtext/vignettes/introduction.html) make doing this extremely easy. [hrbrthemes](https://cinc.rud.is/web/packages/hrbrthemes/) is an example of pre-built themes that R users have created that take try to enhance ggplot2 output in this way. 
+
+### Scales
+
+Scaling is a crucial part of effective data communication. If the scale of the data is not clear, then any inferences from that communication will either be unclear or misled. The [scales package](https://scales.r-lib.org/) provides some awesome tooling to make very clear and descriptive plot scales.
+
 ## Causal Inference
 
 Causal inference is a topic that I have been learning about a lot lately. As someone who does not have a formal background in statistics or epidemiology, it has been important to me to find resources that teach causal inference in terms that I can understand. Here is a list of resources and R packages that can help you if you are interested in causal inference.
@@ -93,9 +123,9 @@ Causal inference is a topic that I have been learning about a lot lately. As som
 -   [Causal Inference in R](https://www.r-causal.org/) is a ongoing book project by Malcolm Barrett, Lucy D'Agostino McGowan, and Travis Gerke. It contains some amazing information at the moment and it will only get better as the authors work on it.
 -   [Causal Inference for The Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html) by Matheus Facure Alves is a book that has great explanations of causal inference techniques and concepts and everything coding related is written in python for those interested in a python implementation of causal inference!
 -   [Causal Inference: What If?](https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2022/11/hernanrobins_WhatIf_13nov22.pdf) by Miguel A. Hernán and James M. Robins is causal inference bible. It is much heavier than the resources above and the focus is purely on the methodology of causal inference. However R code which follows part 2 of the book chapter by chapter can be found [here](https://causalinferencebookr.netlify.app/).
--   [Workshop: Causal Inference in R](https://www.youtube.com/watch?v=n8c-UK19hbA) is a video workshop by Malcolm Barrett and Lucy D'Agostino McGowan. The workshop has been updated since the video but no new video has surfaced that I could find. The new workshop can be found on github [here](https://github.com/malcolmbarrett/causal_inference_r_workshop) with the slides and exercise rmarkdown files. The solutions to the exercises can be found [here](https://github.com/malcolmbarrett/causal_inference_r_workshop_solutions)
--   [MatchIt](https://kosukeimai.github.io/MatchIt/) is a package that creates matches based on observational data. It has awesome vignettes on its website that explains matching for causal inference in detail and has many method options to implement for matching
+-   [Workshop: Causal Inference in R](https://www.youtube.com/watch?v=n8c-UK19hbA) is a video workshop by Malcolm Barrett and Lucy D'Agostino McGowan. The workshop has been updated since the video but no new video has surfaced that I could find. The new workshop can be found on github [here](https://github.com/malcolmbarrett/causal_inference_r_workshop) with the slides and exercise rmarkdown files. The solutions to the exercises can be found [here](https://github.com/malcolmbarrett/causal_inference_r_workshop_solutions).
+-   [MatchIt](https://kosukeimai.github.io/MatchIt/) is a package that creates matches based on observational data. It has awesome vignettes on its website that explains matching for causal inference in detail and has many method options to implement for matching.
 -   [ggdag](https://ggdag.malco.io/) is a way to plot directed acyclic dags (DAGs) in R using more a ggplot2-like interface as opposed to [daggity](http://www.dagitty.net/primer/).
 -   [propensity](https://github.com/malcolmbarrett/propensity) helps calculate propensity scores and weights for a wide variety of research questions.propensity is under very early development.
 -   [tipr](https://lucymcgowan.github.io/tipr/) After fitting your model, you can determine the unmeasured confounder needed to tip your analysis.
--   [halfmoon](https://github.com/malcolmbarrett/halfmoon)\[https://github.com/malcolmbarrett/halfmoon\] The goal of halfmoon is to cultivate balance in propensity score models.
+-   [halfmoon](https://github.com/malcolmbarrett/halfmoon) The goal of halfmoon is to cultivate balance in propensity score models.

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -112,17 +112,18 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html">
+ <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/sweiner123"><i class="bi bi-github" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/in/sam-weiner/"><i class="bi bi-liknedin" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -142,6 +143,7 @@ ul.task-list li input[type="checkbox"] {
   <div class="quarto-title-meta">
 
       
+    
       
     </div>
     
@@ -164,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1671314076110" data-listing-reading-time-sort="10.305">
+<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1671743062937" data-listing-reading-time-sort="13.765">
 <div class="body">
 <a href="./posts/R-resources/index.html">
 <h3 class="no-anchor listing-title">
@@ -174,7 +176,7 @@ R resources for Practicum
 
 </div>
 <div class="listing-description">
-Hello again! I’m excited to put another post up on Dialectic with Data where I will be brain dumping some of the awesome R resources I have ran across in my journey learning and loving R! This post is was specifically inspired by my practicum team because I have enjoyed sharing these resources with them over time, but many of them have been lost deep in the depths of our slack channel. So, I am going to be cataloging many of the things that I have shared with them, and I will also be adding new resources as I come upon them for them and you!
+Hello again! I’m excited to put another post up on Dialectic with Data where I will be brain dumping some of the awesome R resources I have ran across in my journey learning…
 </div>
 </a>
 </div>
@@ -206,7 +208,7 @@ analysis
 </div>
 <a href="./posts/world-cup/index.html">
 <div class="listing-description">
-Tidy Tuesday is an awesome initiative by the R for Data Science Community where data sets are published every week for the R community share any analysis and visualizations that can be conjured from the data!
+Tidy Tuesday is an awesome…
 </div>
 </a>
 </div>
@@ -238,7 +240,7 @@ news
 </div>
 <a href="./posts/welcome/index.html">
 <div class="listing-description">
-I am excited to start this blog where I will share my journey learning data science. I hope to share data analysis that I have conducted using the awesome tool-kit I have gained at the Institute for Advanced Analytics, some R packages that I think are cool, and my thoughts on the field of data science as a whole. Cheers to a new adventure!
+I am excited to start this blog where I will share my journey learning data science. I hope to share data analysis that I have conducted using the awesome tool-kit…
 </div>
 </a>
 </div>
@@ -299,7 +301,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -335,24 +354,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
