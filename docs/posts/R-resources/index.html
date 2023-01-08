@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.2.269">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Sam Weiner">
-
+<meta name="dcterms.date" content="2023-01-08">
 <title>Dialectic with Data - R resources for Practicum</title>
 <style>
 code{white-space: pre-wrap;}
@@ -21,8 +19,70 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
-
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
@@ -39,8 +99,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -58,18 +117,12 @@ ul.task-list li input[type="checkbox"] {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Dialectic with Data</span>
@@ -80,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../about.html">
  <span class="menu-text">About</span></a>
   </li>  
@@ -95,17 +148,17 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+<div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">R resources for Practicum</h1>
-                      </div>
+                                <div class="quarto-categories">
+                <div class="quarto-category">resources</div>
+                <div class="quarto-category">rstats</div>
+              </div>
+                  </div>
   </div>
     
   
@@ -118,6 +171,12 @@ ul.task-list li input[type="checkbox"] {
             </div>
     </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 8, 2023</p>
+      </div>
+    </div>
     
       
     </div>
@@ -127,48 +186,63 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#general-r-tips" id="toc-general-r-tips" class="nav-link active" data-scroll-target="#general-r-tips"><span class="toc-section-number">1</span>  General R tips</a>
-  <ul class="collapse">
-  <li><a href="#r-for-data-science" id="toc-r-for-data-science" class="nav-link" data-scroll-target="#r-for-data-science"><span class="toc-section-number">1.1</span>  R for Data Science</a></li>
+<li>
+<a href="#general-r-tips" id="toc-general-r-tips" class="nav-link active" data-scroll-target="#general-r-tips"><span class="toc-section-number">1</span>  General R tips</a>
+  <ul>
+<li><a href="#r-for-data-science" id="toc-r-for-data-science" class="nav-link" data-scroll-target="#r-for-data-science"><span class="toc-section-number">1.1</span>  R for Data Science</a></li>
   <li><a href="#rstudio-projects" id="toc-rstudio-projects" class="nav-link" data-scroll-target="#rstudio-projects"><span class="toc-section-number">1.2</span>  Rstudio Projects</a></li>
   <li><a href="#shortcuts-tips-and-tricks" id="toc-shortcuts-tips-and-tricks" class="nav-link" data-scroll-target="#shortcuts-tips-and-tricks"><span class="toc-section-number">1.3</span>  Shortcuts, Tips, and Tricks</a></li>
   <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="toc-section-number">1.4</span>  Quarto</a></li>
-  </ul></li>
-  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="toc-section-number">2</span>  Packages</a>
-  <ul class="collapse">
-  <li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse"><span class="toc-section-number">2.1</span>  Tidyverse</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="toc-section-number">2</span>  Packages</a>
+  <ul>
+<li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse"><span class="toc-section-number">2.1</span>  Tidyverse</a></li>
   <li><a href="#tidymodels" id="toc-tidymodels" class="nav-link" data-scroll-target="#tidymodels"><span class="toc-section-number">2.2</span>  Tidymodels</a></li>
-  <li><a href="#awesome-packages" id="toc-awesome-packages" class="nav-link" data-scroll-target="#awesome-packages"><span class="toc-section-number">2.3</span>  Awesome Packages</a></li>
-  </ul></li>
-  <li><a href="#ggplot2" id="toc-ggplot2" class="nav-link" data-scroll-target="#ggplot2"><span class="toc-section-number">3</span>  ggplot2</a>
+  <li>
+<a href="#awesome-packages" id="toc-awesome-packages" class="nav-link" data-scroll-target="#awesome-packages"><span class="toc-section-number">2.3</span>  Awesome Packages</a>
   <ul class="collapse">
-  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="toc-section-number">3.1</span>  Extensions</a></li>
+<li><a href="#broom" id="toc-broom" class="nav-link" data-scroll-target="#broom"><span class="toc-section-number">2.3.1</span>  broom</a></li>
+  <li><a href="#janitor" id="toc-janitor" class="nav-link" data-scroll-target="#janitor"><span class="toc-section-number">2.3.2</span>  janitor</a></li>
+  <li><a href="#skimr" id="toc-skimr" class="nav-link" data-scroll-target="#skimr"><span class="toc-section-number">2.3.3</span>  skimr</a></li>
+  <li><a href="#reprex" id="toc-reprex" class="nav-link" data-scroll-target="#reprex"><span class="toc-section-number">2.3.4</span>  reprex</a></li>
+  <li><a href="#here" id="toc-here" class="nav-link" data-scroll-target="#here"><span class="toc-section-number">2.3.5</span>  here</a></li>
+  <li><a href="#todor" id="toc-todor" class="nav-link" data-scroll-target="#todor"><span class="toc-section-number">2.3.6</span>  todor</a></li>
+  <li><a href="#styler" id="toc-styler" class="nav-link" data-scroll-target="#styler"><span class="toc-section-number">2.3.7</span>  styler</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#ggplot2" id="toc-ggplot2" class="nav-link" data-scroll-target="#ggplot2"><span class="toc-section-number">3</span>  ggplot2</a>
+  <ul>
+<li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="toc-section-number">3.1</span>  Extensions</a></li>
   <li><a href="#fonts" id="toc-fonts" class="nav-link" data-scroll-target="#fonts"><span class="toc-section-number">3.2</span>  Fonts</a></li>
   <li><a href="#scales" id="toc-scales" class="nav-link" data-scroll-target="#scales"><span class="toc-section-number">3.3</span>  Scales</a></li>
-  </ul></li>
-  <li><a href="#causal-inference" id="toc-causal-inference" class="nav-link" data-scroll-target="#causal-inference"><span class="toc-section-number">4</span>  Causal Inference</a></li>
   </ul>
-</nav>
+</li>
+  <li>
+<a href="#databases" id="toc-databases" class="nav-link" data-scroll-target="#databases"><span class="toc-section-number">4</span>  Databases</a>
+  <ul>
+<li><a href="#dbplyr" id="toc-dbplyr" class="nav-link" data-scroll-target="#dbplyr"><span class="toc-section-number">4.1</span>  dbplyr</a></li>
+  </ul>
+</li>
+  <li><a href="#causal-inference" id="toc-causal-inference" class="nav-link" data-scroll-target="#causal-inference"><span class="toc-section-number">5</span>  Causal Inference</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<p>Hello again! I’m excited to put another post up on Dialectic with Data where I will be brain dumping some of the awesome R resources I have ran across in my journey learning and loving R! This post is was specifically inspired by my practicum team because I have enjoyed sharing these resources with them over time, but many of them have been lost deep in the depths of our slack channel. So, I am going to be cataloging many of the things that I have shared with them, and I will also be adding new resources as I come upon them for them and you!</p>
-<section id="general-r-tips" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="general-r-tips"><span class="header-section-number">1</span> General R tips</h2>
-<section id="r-for-data-science" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="r-for-data-science"><span class="header-section-number">1.1</span> R for Data Science</h3>
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><p>Hello again! I’m excited to put another post up on Dialectic with Data where I will be brain dumping some of the awesome R resources I have ran across in my journey learning and loving R! This post is was specifically inspired by my practicum team because I have enjoyed sharing these resources with them over time, but many of them have been lost deep in the depths of our slack channel. So, I am going to be cataloging many of the things that I have shared with them, and I will also be adding new resources as I come upon them for them and you!</p>
+<section id="general-r-tips" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="general-r-tips">
+<span class="header-section-number">1</span> General R tips</h2>
+<section id="r-for-data-science" class="level3" data-number="1.1"><h3 data-number="1.1" class="anchored" data-anchor-id="r-for-data-science">
+<span class="header-section-number">1.1</span> R for Data Science</h3>
 <p>My biggest and most valuable tip to learning R is read <a href="https://r4ds.had.co.nz/">R for Data Science by Hadley</a> Wickham and Garret Grolemund.This book has so much knowledge stored inside it. It primarily teaches the <a href="https://www.tidyverse.org/">tidyverse</a> and its wonderful array of tools for exploratory data analysis and data visualization. It has been a bible for me, and I see myself turning back to it more often than one would think for a self-classified introductory book. The second version is currently under development but available to read <a href="https://r4ds.hadley.nz/">here</a>.</p>
-</section>
-<section id="rstudio-projects" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="rstudio-projects"><span class="header-section-number">1.2</span> Rstudio Projects</h3>
+</section><section id="rstudio-projects" class="level3" data-number="1.2"><h3 data-number="1.2" class="anchored" data-anchor-id="rstudio-projects">
+<span class="header-section-number">1.2</span> Rstudio Projects</h3>
 <p>Rstudio projects are a convenient and efficient way of organizing all of the code, data, and visualizations that make up a data science project. The biggest efficiency boost in my experience is that your working directory automatically updates to the folder where your Rstudio project lives, so all of you code and visualizations are automatically saved in the same place. Additionally, any data that you have in, for example, a csv file can be easily uploaded to your environment without having to mess with the working directory. Other important features that are a bit more advanced revolve around Rstudio projects ability to improve reproducibility and use version control.</p>
 <ul>
 <li>Resources for learning more about Rstudio Projects
@@ -176,148 +250,680 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">Intro to Rstudio Projects</a></li>
 <li><a href="https://rstudio.github.io/renv/articles/renv.html">Rstudio and reproducibility</a></li>
 <li><a href="https://happygitwithr.com/index.html">Rstudio and git</a></li>
-</ul></li>
 </ul>
-</section>
-<section id="shortcuts-tips-and-tricks" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="shortcuts-tips-and-tricks"><span class="header-section-number">1.3</span> Shortcuts, Tips, and Tricks</h3>
+</li>
+</ul></section><section id="shortcuts-tips-and-tricks" class="level3" data-number="1.3"><h3 data-number="1.3" class="anchored" data-anchor-id="shortcuts-tips-and-tricks">
+<span class="header-section-number">1.3</span> Shortcuts, Tips, and Tricks</h3>
 <p>The Rstudio IDE is probably the best IDE (integrated development environment) for using R and conducting data science tasks in general. It has stiff competition from the likes of Visual Studio Code, but there are a few tips and tricks that I am going to show you for Rstudio that might make you think twice before switching to a different IDE.</p>
 <ul>
-<li><code>Alt + -</code>
+<li>
+<code>Alt + -</code>
 <ul>
-<li>Shortcut for inserting the assignment operator <code>&lt;-</code></li>
-</ul></li>
-<li><code>Ctrl + Shift + M</code>
+<li>Shortcut for inserting the assignment operator <code>&lt;-</code>
+</li>
+</ul>
+</li>
+<li>
+<code>Ctrl + Shift + M</code>
 <ul>
 <li>Shortcut for inserting the pipe magrittr operator <code>%&gt;%</code> commonly used in the tidyverse</li>
 <li>Note: As of R 4.1.0, R has a built in pipe operator <code>|&gt;</code> which works similarly to the magrittr pipe but has same slight nuances. See <a href="https://ivelasq.rbind.io/blog/understanding-the-r-pipe/">here</a> and <a href="https://stackoverflow.com/questions/67744604/what-does-pipe-greater-than-mean-in-r">here</a> for more information on the built in pipe operator.<br>
 </li>
-</ul></li>
-<li><code>Ctrl + Shift + R</code>
+</ul>
+</li>
+<li>
+<code>Ctrl + Shift + R</code>
 <ul>
 <li>Creates a comment section header in an R source file which is collapsible and also creates an outline to easily navigate your code file.</li>
-</ul></li>
-<li><code>Ctrl + Shift + Alt + M</code>
+</ul>
+</li>
+<li>
+<code>Ctrl + Shift + Alt + M</code>
 <ul>
 <li>Renames a variable in the entire file. Just highlight the variable to be renamed, use the shortcut, and type the new name. Easy as that!</li>
 <li>Using <code>Ctrl + F</code> and using replace is another option which is useful when you don’t want to rename every instance of a variable in the file.</li>
-</ul></li>
+</ul>
+</li>
 <li>Code Snippets
 <ul>
 <li>Code Snippets are ways to insert commonly used code structures (or headers) in an R file. Under the <em>Tools</em> toolbar, go to <em>Edit Code Snippets</em>. There you will see all the code snippets pre-built in Rstudio and and editor for adding new ones. I use this to add a header structure to new scripts where I can fill in information about the script for my teammates to read when they use it.</li>
-</ul></li>
+</ul>
+</li>
 <li>Multiple Cursors
 <ul>
-<li>This was a tip that I was sorely missing from my time using VS Code until I stumbled upon this simple shortcut in Rstudio! Just by holding down the <code>Alt</code> button and clicking or draging with the mouse, you’ll have more cursors than you know what to do with.</li>
-</ul></li>
+<li>This was a tip that I was sorely missing from my time using VS Code until I stumbled upon this simple shortcut in Rstudio! Just by holding down the <code>Alt</code> button and clicking or draging with the mouse, you’ll have more cursors than you know what to do with. More awesome shortcuts can be found in this <a href="https://appsilon.com/rstudio-shortcuts-and-tips/">awesome article by Appsilon</a>
+</li>
 </ul>
-<p>More awesome shortcuts can be found in this <a href="https://appsilon.com/rstudio-shortcuts-and-tips/">awesome article by Appsilon</a></p>
-</section>
-<section id="quarto" class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="quarto"><span class="header-section-number">1.4</span> Quarto</h3>
-<p>Quarto is Rstudio’s (now called Posit) new Rmarkdown replacement. The biggest change from Rmarkdown to Quarto is that you can use Quarto in Jupyter Notebooks! Posit (formerly Rstudio) is broadening it’s presence in the data science community by engaging with python users in addition to R users. The hope, says Posit, is to create easy tools for cross-language collaboration so that researchers and data scientists who have different languages of choice can work together with ease. From what I have seen, many data scientists who might have preferred R as a language have been pressured to use python because of its large presence in the data science community. This tool is hopefully going to create a pathway for R users to stay R users without complicating team workflows in a python-dominant environment.</p>
-<p>In addition, Quarto has some awesome features such as helping users easily create documents, presentation, or even blogs (like this one!). So far, it has been very intuitive and the documentation has been very helpful. You can find information at <a href="https://quarto.org">quarto.org</a>.</p>
-</section>
-</section>
-<section id="packages" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="packages"><span class="header-section-number">2</span> Packages</h2>
+</li>
+</ul></section><section id="quarto" class="level3" data-number="1.4"><h3 data-number="1.4" class="anchored" data-anchor-id="quarto">
+<span class="header-section-number">1.4</span> Quarto</h3>
+<p>Quarto is Rstudio’s (now called Posit) new Rmarkdown replacement. The biggest change from Rmarkdown to Quarto is that you can use Quarto in Jupyter Notebooks! Posit (formerly Rstudio) is broadening it’s presence in the data science community by engaging with python users in addition to R users. The hope, says Posit, is to create easy tools for cross-language collaboration so that researchers and data scientists who have different languages of choice can work together with ease. From what I have seen, many data scientists who might have preferred R as a language have been pressured to use python because of its large presence in the data science community. This tool is hopefully going to create a pathway for R users to stay R users without complicating team workflows in a python-dominant environment. In addition, Quarto has some awesome features such as helping users easily create documents, presentation, or even blogs (like this one!). So far, it has been very intuitive and the documentation has been very helpful. You can find information at <a href="https://quarto.org">quarto.org</a>.</p>
+</section></section><section id="packages" class="level2 page-columns page-full" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="packages">
+<span class="header-section-number">2</span> Packages</h2>
 <p>Now lets get to packages! I am going to be listing packages that I think are really helpful (and really cool) for working with data and doing modeling in R.</p>
-<section id="tidyverse" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="tidyverse"><span class="header-section-number">2.1</span> Tidyverse</h3>
+<section id="tidyverse" class="level3" data-number="2.1"><h3 data-number="2.1" class="anchored" data-anchor-id="tidyverse">
+<span class="header-section-number">2.1</span> Tidyverse</h3>
 <ul>
-<li><a href="https://ggplot2.tidyverse.org/">ggplot2</a>
+<li>
+<a href="https://ggplot2.tidyverse.org/">ggplot2</a>
 <ul>
 <li>This package contains the best tools for taking data and making a stellar visualization out of it. It is extremely versatile and at times very complicated. Later on I will be sharing more about ggplot2 and provide some resources for making ggplot2 super easy to understand.</li>
-</ul></li>
-<li><a href="https://dplyr.tidyverse.org/">dplyr</a>
+</ul>
+</li>
+<li>
+<a href="https://dplyr.tidyverse.org/">dplyr</a>
 <ul>
 <li>This package has the tools you need to manipulate data. Mutate is useful for feature engineering and summarise is great for calculating summaries of your data set. Using the piping syntax makes this package so powerful. My favorite way of using this package is to dig into the data and pipe what I want into a ggplot!</li>
-</ul></li>
-<li><a href="https://readr.tidyverse.org/">readr</a>
+</ul>
+</li>
+<li>
+<a href="https://readr.tidyverse.org/">readr</a>
 <ul>
 <li>This package makes importing data easy as can be.</li>
-</ul></li>
-<li><a href="https://purrr.tidyverse.org/">purrr</a>
+</ul>
+</li>
+<li>
+<a href="https://purrr.tidyverse.org/">purrr</a>
 <ul>
-<li>This package contains the tidyverse’s toolkit for functional programming. The <a href="http://r4ds.had.co.nz/iteration.html">iteration chapter</a> in R for Data Science is a great place to start if you are new to functional programming. Another great resources I used is <a href="https://jennybc.github.io/purrr-tutorial/index.html">purrr tutorial</a> by Jenny Bryan. Functional programming has been very hard for me, but these two resources have really helped me wrap my brain around the concept, and it has already impacted by projects enormously.</li>
-</ul></li>
-<li><a href="https://stringr.tidyverse.org/">stringr</a>
+<li>This package contains the tidyverse’s toolkit for functional programming. The <a href="http://r4ds.had.co.nz/iteration.html">iteration chapter</a> in R for Data Science is a great place to start if you are new to functional programming. Another great resources I used is <a href="https://jennybc.github.io/purrr-tutorial/index.html">purrr tutorial</a> by Jenny Bryan. Functional programming has been very hard for me to learn, but these two resources have really helped me wrap my brain around the concept, and it has already impacted my projects enormously.</li>
+</ul>
+</li>
+<li>
+<a href="https://stringr.tidyverse.org/">stringr</a>
 <ul>
 <li>stringr is the handiest way of working with strings in R. It has everything under the sun when it comes to manipulating and cleaning character data.</li>
-</ul></li>
-<li><a href="https://forcats.tidyverse.org/">forcats</a>
+</ul>
+</li>
+<li>
+<a href="https://forcats.tidyverse.org/">forcats</a>
 <ul>
 <li>Factors are a very common data type in R, but they can be tricky at times. This package has some awesome tools for working with factors that will really come in handy if you use factors a lot.</li>
-</ul></li>
 </ul>
-</section>
-<section id="tidymodels" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="tidymodels"><span class="header-section-number">2.2</span> Tidymodels</h3>
-<p>Tidymodels is a standalone universe which has everything you need to do machine learning in R. The tidymodels project is headed by the same person that create CARET years back, Max Kuhn, and the goal of tidymodels is the same as CARETS goal: To create a unified interface for machine learning in R. The package makes use of R’s rich ecosystem of machine learning model packages but standardizes the interface across all those implementations to make the switch between models seamless. The amount of packages and tools in the tidymodels universe is large and there is too much to say for this blog post. However, I do plan on showing how tidymodels is used in a future blog post, so stay tuned! In the meantime, I am going to point you to some amazing resources if you want to get started now.</p>
-<ul>
-<li><a href="https://www.tmwr.org/">Tidy Modeling with R</a> is a free book written by Max Kuhn and Julia Silge which is the best resource for getting started with tidymodels and it also has some great information on machine learning in general!</li>
-<li><a href="https://www.tidymodels.org/">tidymodels.org</a> has some amazing content which will be the preferred resource for people who want a shorter format introduction to tidymodels.</li>
-<li><a href="https://juliasilge.com/categories/tidymodels/">juilasilge.com</a> is the blog of one of the co-authors of Tidy Modeling with R and she has some great blog posts and youtube videos where she implements the tidymodels packages and gives great explanations of what she is doing.</li>
-</ul>
-</section>
-<section id="awesome-packages" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="awesome-packages"><span class="header-section-number">2.3</span> Awesome Packages</h3>
+</li>
+</ul></section><section id="tidymodels" class="level3" data-number="2.2"><h3 data-number="2.2" class="anchored" data-anchor-id="tidymodels">
+<span class="header-section-number">2.2</span> Tidymodels</h3>
+<p>Tidymodels is a standalone universe which has everything you need to do machine learning in R. The tidymodels project is headed by the same person that create CARET years back, Max Kuhn, and the goal of tidymodels is the same as CARETS goal: To create a unified interface for machine learning in R. The package makes use of R’s rich ecosystem of machine learning model packages but standardizes the interface across all those implementations to make the switch between models seamless. The amount of packages and tools in the tidymodels universe is large and there is too much to say for this blog post. However, I do plan on showing how tidymodels is used in a future blog post, so stay tuned! In the meantime, I am going to point you to some amazing resources if you want to get started now. - <a href="https://www.tmwr.org/">Tidy Modeling with R</a> is a free book written by Max Kuhn and Julia Silge which is the best resource for getting started with tidymodels and it also has some great information on machine learning in general! - <a href="https://www.tidymodels.org/">tidymodels.org</a> has some amazing content which will be the preferred resource for people who want a shorter format introduction to tidymodels. - <a href="https://juliasilge.com/categories/tidymodels/">juilasilge.com</a> is the blog of one of the co-authors of Tidy Modeling with R and she has some great blog posts and youtube videos where she implements the tidymodels packages and gives great explanations of what she is doing.</p>
+</section><section id="awesome-packages" class="level3 page-columns page-full" data-number="2.3"><h3 data-number="2.3" class="anchored" data-anchor-id="awesome-packages">
+<span class="header-section-number">2.3</span> Awesome Packages</h3>
 <p>The Awesome Packages section is going to be a growing list of packages that I find really cool because they have either changed and/or improved the way I use R as a data science student.</p>
-<section id="broom" class="level4" data-number="2.3.1">
-<h4 data-number="2.3.1" class="anchored" data-anchor-id="broom"><span class="header-section-number">2.3.1</span> broom</h4>
-<p><a href="https://broom.tidymodels.org/">broom</a> is a super cool R package. One of the most annoying aspects of using R for data science is trying to extract the output from the model object. Summaries of the model object are easy enough to get using <code>summary()</code>, but to extract the components of model like the coefficients, pvalues, or Rsquared value to use for other operations means digging into the model object and trying and failing to use the right index to find it. broom makes that task no more. By using the <code>tidy()</code> function on supported model objects, the output is represented as a data frame which makes extracting what you want so much easier. Rsquared and other metric vaules can be found by using <code>glance()</code> and <code>augment()</code> can add output like predictions from a new datas et back into the data set from whence it came.</p>
-</section>
-<section id="janitor" class="level4" data-number="2.3.2">
-<h4 data-number="2.3.2" class="anchored" data-anchor-id="janitor"><span class="header-section-number">2.3.2</span> janitor</h4>
+<section id="broom" class="level4" data-number="2.3.1"><h4 data-number="2.3.1" class="anchored" data-anchor-id="broom">
+<span class="header-section-number">2.3.1</span> broom</h4>
+<p><a href="https://broom.tidymodels.org/">broom</a> is a super cool R package. One of the most annoying aspects of using R for data science is trying to extract the output from the model object. Summaries of the model object are easy enough to get using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, but to extract the components of model like the coefficients, pvalues, or Rsquared value to use for other operations means digging into the model object and trying and failing to use the right index to find it. broom makes that task no more. By using the <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> function on supported model objects, the output is represented as a data frame which makes extracting what you want so much easier. Rsquared and other metric vaules can be found by using <code><a href="https://generics.r-lib.org/reference/glance.html">glance()</a></code> and <code><a href="https://generics.r-lib.org/reference/augment.html">augment()</a></code> can add output like predictions from a new dataset back into the data set from whence it came.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span><span class="va">mpg_lm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">hp</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">summary()</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">tidy()</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">glance()</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">augment()</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mpg_lm</span><span class="op">)</span> <span class="co"># Normal summary output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ wt + hp + cyl, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.9290 -1.5598 -0.5311  1.1850  5.8986 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 38.75179    1.78686  21.687  &lt; 2e-16 ***
+wt          -3.16697    0.74058  -4.276 0.000199 ***
+hp          -0.01804    0.01188  -1.519 0.140015    
+cyl         -0.94162    0.55092  -1.709 0.098480 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.512 on 28 degrees of freedom
+Multiple R-squared:  0.8431,    Adjusted R-squared:  0.8263 
+F-statistic: 50.17 on 3 and 28 DF,  p-value: 2.184e-11</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">mpg_lm</span><span class="op">)</span> <span class="co"># tidy() returns coefficients and pvalues</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  38.8       1.79       21.7  4.80e-19
+2 wt           -3.17      0.741      -4.28 1.99e- 4
+3 hp           -0.0180    0.0119     -1.52 1.40e- 1
+4 cyl          -0.942     0.551      -1.71 9.85e- 2</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">(</span><span class="va">mpg_lm</span><span class="op">)</span> <span class="co"># glance returns model metrics</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squa…¹ sigma stati…²  p.value    df logLik   AIC   BIC devia…³
+      &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1     0.843        0.826  2.51    50.2 2.18e-11     3  -72.7  155.  163.    177.
+# … with 2 more variables: df.residual &lt;int&gt;, nobs &lt;int&gt;, and abbreviated
+#   variable names ¹​adj.r.squared, ²​statistic, ³​deviance</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># augment with 'newdata = ' returns entire dataset plus fitted and residual values</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">mpg_lm</span>, newdata <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 14
+   .rownames     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 Mazda RX4    21       6  160    110  3.9   2.62  16.5     0     1     4     4
+ 2 Mazda RX4 …  21       6  160    110  3.9   2.88  17.0     0     1     4     4
+ 3 Datsun 710   22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
+ 4 Hornet 4 D…  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
+ 5 Hornet Spo…  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
+ 6 Valiant      18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
+ 7 Duster 360   14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
+ 8 Merc 240D    24.4     4  147.    62  3.69  3.19  20       1     0     4     2
+ 9 Merc 230     22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
+10 Merc 280     19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
+# … with 22 more rows, and 2 more variables: .fitted &lt;dbl&gt;, .resid &lt;dbl&gt;</code></pre>
+</div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># augment without newdata uses training data and returns more metrics</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">mpg_lm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 11
+   .rowna…¹   mpg    wt    hp   cyl .fitted .resid   .hat .sigma .cooksd .std.…²
+   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Mazda R…  21    2.62   110     6    22.8 -1.82  0.0750   2.53 1.15e-2  -0.754
+ 2 Mazda R…  21    2.88   110     6    22.0 -1.01  0.0582   2.55 2.67e-3  -0.416
+ 3 Datsun …  22.8  2.32    93     4    26.0 -3.16  0.0856   2.48 4.05e-2  -1.32 
+ 4 Hornet …  21.4  3.22   110     6    20.9  0.464 0.0533   2.56 5.08e-4   0.190
+ 5 Hornet …  18.7  3.44   175     8    17.2  1.53  0.110    2.54 1.29e-2   0.647
+ 6 Valiant   18.1  3.46   105     6    20.3 -2.15  0.0699   2.52 1.48e-2  -0.888
+ 7 Duster …  14.3  3.57   245     8    15.5 -1.19  0.118    2.55 8.53e-3  -0.506
+ 8 Merc 24…  24.4  3.19    62     4    23.8  0.636 0.157    2.55 3.55e-3   0.276
+ 9 Merc 230  22.8  3.15    95     4    23.3 -0.496 0.152    2.56 2.06e-3  -0.214
+10 Merc 280  19.2  3.44   123     6    20.0 -0.789 0.0469   2.55 1.27e-3  -0.322
+# … with 22 more rows, and abbreviated variable names ¹​.rownames, ²​.std.resid</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="janitor" class="level4" data-number="2.3.2"><h4 data-number="2.3.2" class="anchored" data-anchor-id="janitor">
+<span class="header-section-number">2.3.2</span> janitor</h4>
 <p><a href="https://sfirke.github.io/janitor/index.html">janitor</a> is a key package because it does something that, while we might think is important, is not all that interesting, but is a such a quality of life boost for a data scientist. Cleaning dirty data is numerous ways. Cleaning dirty data is a necessary part of the process to extracting value out a data set, but it is such a time sink. Janitor comes in to provide a myriad of helpful functions to get data people working in the data instead of on the data.</p>
-</section>
-<section id="skimr" class="level4" data-number="2.3.3">
-<h4 data-number="2.3.3" class="anchored" data-anchor-id="skimr"><span class="header-section-number">2.3.3</span> skimr</h4>
-<p><a href="https://docs.ropensci.org/skimr/">skimr</a> is your best friend when beginning exploratory data analysis. Using the <code>skim()</code> function on a data frame, a really easy to understand output will be generated containing summary statistics for all of your columns. The information will include variable type, percent missing, 0th, 25th, 50th, 75th, 100th percentile value for continuous variables, mean, standard deviation, and more! I think that you will love this tool once you start to use it!</p>
-</section>
-<section id="reprex" class="level4" data-number="2.3.4">
-<h4 data-number="2.3.4" class="anchored" data-anchor-id="reprex"><span class="header-section-number">2.3.4</span> reprex</h4>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Data frame with bad column names</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">`Customer ID`</span>, <span class="op">~</span><span class="va">RegionCode</span>, <span class="op">~</span><span class="va">ElePhanTIntHeRoOm</span>,</span>
+<span>  <span class="fl">242</span>, <span class="st">"A"</span>, <span class="fl">24</span>,</span>
+<span>  <span class="fl">3422</span>, <span class="st">"B"</span>, <span class="fl">353</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  `Customer ID` RegionCode ElePhanTIntHeRoOm
+          &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;
+1           242 A                         24
+2          3422 B                        353</code></pre>
+</div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># clean_names() takes care of most bad column names in most forms</span></span>
+<span><span class="co"># Not always going to work but its great for 99% of the data files you'll encounter</span></span>
+<span><span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  customer_id region_code ele_phan_t_int_he_ro_om
+        &lt;dbl&gt; &lt;chr&gt;                         &lt;dbl&gt;
+1         242 A                                24
+2        3422 B                               353</code></pre>
+</div>
+</div>
+</section><section id="skimr" class="level4" data-number="2.3.3"><h4 data-number="2.3.3" class="anchored" data-anchor-id="skimr">
+<span class="header-section-number">2.3.3</span> skimr</h4>
+<p><a href="https://docs.ropensci.org/skimr/">skimr</a> is your best friend when beginning exploratory data analysis. Using the <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> function on a data frame, a really easy to understand output will be generated containing summary statistics for all of your columns. The information will include variable type, percent missing, 0th, 25th, 50th, 75th, 100th percentile value for continuous variables, mean, standard deviation, and more! I think that you will love this tool once you start to use it!</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/skimr/">skimr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">mtcars</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">mpg</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20.09</td>
+<td style="text-align: right;">6.03</td>
+<td style="text-align: right;">10.40</td>
+<td style="text-align: right;">15.43</td>
+<td style="text-align: right;">19.20</td>
+<td style="text-align: right;">22.80</td>
+<td style="text-align: right;">33.90</td>
+<td style="text-align: left;">▃▇▅▁▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cyl</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6.19</td>
+<td style="text-align: right;">1.79</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">6.00</td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: left;">▆▁▃▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">disp</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">230.72</td>
+<td style="text-align: right;">123.94</td>
+<td style="text-align: right;">71.10</td>
+<td style="text-align: right;">120.83</td>
+<td style="text-align: right;">196.30</td>
+<td style="text-align: right;">326.00</td>
+<td style="text-align: right;">472.00</td>
+<td style="text-align: left;">▇▃▃▃▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hp</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">146.69</td>
+<td style="text-align: right;">68.56</td>
+<td style="text-align: right;">52.00</td>
+<td style="text-align: right;">96.50</td>
+<td style="text-align: right;">123.00</td>
+<td style="text-align: right;">180.00</td>
+<td style="text-align: right;">335.00</td>
+<td style="text-align: left;">▇▇▆▃▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">drat</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.60</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">2.76</td>
+<td style="text-align: right;">3.08</td>
+<td style="text-align: right;">3.70</td>
+<td style="text-align: right;">3.92</td>
+<td style="text-align: right;">4.93</td>
+<td style="text-align: left;">▇▃▇▅▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wt</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.22</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">1.51</td>
+<td style="text-align: right;">2.58</td>
+<td style="text-align: right;">3.33</td>
+<td style="text-align: right;">3.61</td>
+<td style="text-align: right;">5.42</td>
+<td style="text-align: left;">▃▃▇▁▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">qsec</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">17.85</td>
+<td style="text-align: right;">1.79</td>
+<td style="text-align: right;">14.50</td>
+<td style="text-align: right;">16.89</td>
+<td style="text-align: right;">17.71</td>
+<td style="text-align: right;">18.90</td>
+<td style="text-align: right;">22.90</td>
+<td style="text-align: left;">▃▇▇▂▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">vs</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">▇▁▁▁▆</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">am</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">▇▁▁▁▆</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gear</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.69</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: left;">▇▁▆▁▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">carb</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.81</td>
+<td style="text-align: right;">1.62</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: left;">▇▂▅▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="reprex" class="level4 page-columns page-full" data-number="2.3.4"><h4 data-number="2.3.4" class="anchored" data-anchor-id="reprex">
+<span class="header-section-number">2.3.4</span> reprex</h4>
 <p>We all know what it’s like to feel completely baffled when writing code. At least I can say I have felt completely baffled when writing code and I have felt stuck countless times. And when I am baffled, I go to the internet to find the cure. If I ever have to ask a question on sites like stack overflow or github to ask for help, I always use <a href="https://reprex.tidyverse.org/">reprex</a> to help me create a minimally reproducible example. A minimally reproducible example is simple piece of code that replicates your problem so that other knowledgeable people can help you diagnose your issue. Asking questions with reprex gives you the best chance to finding an answer to your question because you have helped the internet help you by giving them the exact situation you are facing.</p>
-</section>
-</section>
-</section>
-<section id="ggplot2" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="ggplot2"><span class="header-section-number">3</span> ggplot2</h2>
+<p>Create a reproducible example of the error that you are encountering. For instance, lets say you are trying to create three boxplots looking at the distribution of some continuous variable across the values of a categorical variable, but the output doesn’t look right. Let’s use the mtcars dataset to illustrate this issue.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Continuous x aesthetic
+ℹ did you forget `aes(group = ...)`?</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Once we have recreated our issue in a simple and easy to follow example, we highlight all of the code that was used to create the example, <em>including the libraries</em>. Then, we run the <code><a href="https://reprex.tidyverse.org/reference/reprex.html">reprex()</a></code> function which will nicely format our code with any errors or warnings that we may have gotten and copy that to our clipboard.</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://reprex.tidyverse.org">reprex</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://reprex.tidyverse.org/reference/reprex.html">reprex</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The output will look like this when we upload our code to stackoverflow or github:</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>It even includes the plot as image which will show up when we post to stack overflow or github!</p>
+</div></div><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Continuous x aesthetic</span></span>
+<span><span class="co">#&gt; ℹ did you forget `aes(group = ...)`?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="https://i.imgur.com/lrYe9oR.png" class="img-fluid"><!-- --></p>
+<p><sup>Created on 2023-01-08 with <a href="https://reprex.tidyverse.org">reprex v2.0.2</a></sup></p>
+<p>Also, by adding <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> around <code>cyl</code>, we can get the plot we were looking for!</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Correct way to create boxplot</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="here" class="level4" data-number="2.3.5"><h4 data-number="2.3.5" class="anchored" data-anchor-id="here">
+<span class="header-section-number">2.3.5</span> here</h4>
+<p>Sharing code is an important part of collaborative data science projects which is common in the field. To be able make sure code is able to be run by others when shared, coders must be cognizant of not hard-coding file paths into their scripts. Other people will 99.99% of the time not have the same file structure as you do, and hard coding a file path will make that script only usable by you until all the file paths are changed by the person you shared it with. We don’t want to make sharing code difficult, so I am hoping that you use the <a href="https://here.r-lib.org/">here package</a> to help you create relative file paths! The here package makes creating relative file paths as simple as can be and using it will make sharing code will be hindrance free.</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog</code></pre>
+</div>
+</div>
+<p>Calling <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> will output the top of the project directory</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog"</code></pre>
+</div>
+</div>
+<p>By adding folder names in quatation marks, we can easily dive deeper into our project directory.</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"posts"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog/posts"</code></pre>
+</div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"posts"</span>, <span class="st">"R-resources"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog/posts/R-resources"</code></pre>
+</div>
+</div>
+</section><section id="todor" class="level4" data-number="2.3.6"><h4 data-number="2.3.6" class="anchored" data-anchor-id="todor">
+<span class="header-section-number">2.3.6</span> todor</h4>
+<p>Working on big projects means that there are always multiple tasks that are being managed at once. The <a href="https://github.com/dokato/todor">todor package</a> lets you create searchable comments within your R scripts or even entire projects to help you keep track of your tasks. Never forget again with todor!</p>
+<p>Using todor is as easy writing a comment in R and using a keyword like TODO at the beginning.</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">todor</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># TODO Show an example of todor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- </span><span class="al">TODO</span><span class="co"> Change this section. --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When we call the <code><a href="https://rdrr.io/pkg/todor/man/todor.html">todor()</a></code> function, we get output like this. As you might have noticed, todor can detect HTML comments as well!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="todor.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">todor</figcaption><p></p>
+</figure>
+</div>
+</section><section id="styler" class="level4" data-number="2.3.7"><h4 data-number="2.3.7" class="anchored" data-anchor-id="styler">
+<span class="header-section-number">2.3.7</span> styler</h4>
+<p>Sometimes when we’re coding, readability is not on the front of our mind. Use the <a href="https://styler.r-lib.org/">styler package</a> to help make your scripts more readable so that you know what it’s doing the next time you come back to it. All you have to do is run one function, and the package non-invasively stylizes your code to be in a standard format so that your code looks consistent across projects.</p>
+<p>Let’s say we have code like this. Quite difficult to read through, no?</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">&gt;</span> <span class="fl">5.1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Petal.Width</span>, <span class="va">Petal.Length</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Petal.Length</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="va">Petal.Width</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After running <code>styler::style_active_file()</code>, our code is reformmated and much more readable in my opinion.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">&gt;</span> <span class="fl">5.1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Petal.Width</span>, <span class="va">Petal.Length</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Petal.Length</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="va">Petal.Width</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></section></section><section id="ggplot2" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="ggplot2">
+<span class="header-section-number">3</span> ggplot2</h2>
 <p><a href="https://ggplot2.tidyverse.org/">ggplot2</a> is the primary visualization package in R. It allows for extreme creativity when turning data into visualizations. Checkout the <a href="https://twitter.com/search?q=%23tidytuesday&amp;src=hashtag_click">#tidytuesday</a> hashtag on twitter to see some of the crazy impressive visualizations made with ggplot2! ggplot2 is not a package that is simple to master, however. For those beginning their journey with ggplot2, I recommend R for Data Science’s <a href="https://r4ds.had.co.nz/data-visualisation.html">chapter on data visualization</a> which gives a great explanation behind the design of ggplot2 and how it is meant to be used. If you need a reference for ggplot2 code, <a href="https://r-graphics.org/">R Graphics Cookbook</a> is a great resource as are the <a href="https://r-graph-gallery.com/index.html">R Graph Gallery</a> and <a href="https://r-charts.com/ggplot2/">R charts</a>. I find that sometimes I need to understand how ggplot2 takes data and makes visuals out of it, which is what R for Data Science is great for, and other times I just need a resource to show me all the cool ways I can represent my data, which is what those other three resources are there for.</p>
-<section id="extensions" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="extensions"><span class="header-section-number">3.1</span> Extensions</h3>
-<p>One major benefit of ggplot2 being the default visualization package in R is that it has been building blocks of choice for so many R programmers create new visualization capabilities in R and ggplot2. There are hundreds of extension packages for ggplot2 that add onto its functionality in incredible ways. For instance, gganimate creates the ability for you to have animated graphics in R! And the best part is that these extensions are usually very easy to learn because they all use the same ggplot2 mechanics as I was saying earlier. A full list of registered extensions can be found <a href="https://exts.ggplot2.tidyverse.org/gallery/">here</a>.</p>
-<p>One really exquisite ggplot extension I would like to highlight is <a href="https://dreamrs.github.io/esquisse/">esquisse</a>. This package creates a tableau-like interface inside of Rstudio, so that we can interactively plot our data! It has been a game changer for me when doing EDA.</p>
-</section>
-<section id="fonts" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="fonts"><span class="header-section-number">3.2</span> Fonts</h3>
+<section id="extensions" class="level3" data-number="3.1"><h3 data-number="3.1" class="anchored" data-anchor-id="extensions">
+<span class="header-section-number">3.1</span> Extensions</h3>
+<p>One major benefit of ggplot2 being the default visualization package in R is that it has been building blocks of choice for so many R programmers create new visualization capabilities in R and ggplot2. There are hundreds of extension packages for ggplot2 that add onto its functionality in incredible ways. For instance, gganimate creates the ability for you to have animated graphics in R! And the best part is that these extensions are usually very easy to learn because they all use the same ggplot2 mechanics as I was saying earlier. A full list of registered extensions can be found <a href="https://exts.ggplot2.tidyverse.org/gallery/">here</a>. One really exquisite ggplot extension I would like to highlight is <a href="https://dreamrs.github.io/esquisse/">esquisse</a>. This package creates a tableau-like interface inside of Rstudio, so that we can interactively plot our data! It has been a game changer for me when doing EDA.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="esquisse.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">esquisse example</figcaption><p></p>
+</figure>
+</div>
+</section><section id="fonts" class="level3" data-number="3.2"><h3 data-number="3.2" class="anchored" data-anchor-id="fonts">
+<span class="header-section-number">3.2</span> Fonts</h3>
 <p>One way that people like to modify their visualizations from base ggplot2 is by modifying text fonts. Packages like <a href="https://github.com/wch/extrafont">extrafont</a> and <a href="https://cran.r-project.org/web/packages/showtext/vignettes/introduction.html">showtext</a> make doing this extremely easy. <a href="https://cinc.rud.is/web/packages/hrbrthemes/">hrbrthemes</a> is an example of pre-built themes that R users have created that take try to enhance ggplot2 output in this way.</p>
-</section>
-<section id="scales" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="scales"><span class="header-section-number">3.3</span> Scales</h3>
-<p>Scaling is a crucial part of effective data communication. If the scale of the data is not clear, then any inferences from that communication will either be unclear or misled. The <a href="https://scales.r-lib.org/">scales package</a> provides some awesome tooling to make very clear and descriptive plot scales.</p>
-</section>
-</section>
-<section id="causal-inference" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="causal-inference"><span class="header-section-number">4</span> Causal Inference</h2>
+<p>Here’s what we can do with showtext.</p>
+<p>First lets look at standard ggplot2 output.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Using showtext, we can import fonts from google fonts with a simple function and then use some ggplot2 options to include theme in our plot.</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: sysfonts</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: showtextdb</code></pre>
+</div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Dancing Script"</span>, <span class="st">"dance"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Gochi Hand"</span>, <span class="st">"gochi"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Schoolbell"</span>, <span class="st">"bell"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Covered By Your Grace"</span>, <span class="st">"grace"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Rock Salt"</span>, <span class="st">"rock"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Sepal Length"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Sepal Width"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Sepal Width by Sepal Length Colored by Species"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"gochi"</span>, size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, </span>
+<span>    axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"bell"</span>, size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, </span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"grace"</span>, size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, </span>
+<span>    legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"rock"</span>, size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>, </span>
+<span>    legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span><span class="st">"dance"</span>, size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We used four different fonts in one ggplot! I’ll admit it’s not the nicest looking plot I’ve ever made, but the point stands that you can customize ggplots to your hearts content using packages like showtext.</p>
+</section><section id="scales" class="level3" data-number="3.3"><h3 data-number="3.3" class="anchored" data-anchor-id="scales">
+<span class="header-section-number">3.3</span> Scales</h3>
+<p>Scaling data in a visualization is a crucial part of effective data communication. If the scale of the data is not clear, then any inferences from that communication will either be unclear or misled. The <a href="https://scales.r-lib.org/">scales package</a> provides some awesome tooling to make very clear and descriptive plot scales.</p>
+<p>Here’s a bad example but an example nonetheless. Using two <code>scales</code> functions, <code><a href="https://scales.r-lib.org/reference/label_dollar.html">label_dollar()</a></code> and <code>label_percent</code>, we changed the axis labels of the previous graph to be more descriptive. There are many more powerful fuctions in the scales package that I am sure will benefit your data communication tasks.</p>
+<div class="cell">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'scales'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    discard</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:readr':
+
+    col_factor</code></pre>
+</div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html">label_dollar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html">label_percent</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section></section><section id="databases" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="databases">
+<span class="header-section-number">4</span> Databases</h2>
+<p>Working with databases in R is not terribly complicated. The <a href="https://dbi.r-dbi.org/">DBI</a> package is very useful when connecting to and querying databases. But there are some really cool tools for working with databases in that I you’re going to like.</p>
+<section id="dbplyr" class="level3" data-number="4.1"><h3 data-number="4.1" class="anchored" data-anchor-id="dbplyr">
+<span class="header-section-number">4.1</span> dbplyr</h3>
+<p><a href="https://dbplyr.tidyverse.org/">dbplyr</a> is a tidyverse package that converts dplyr code into SQL queries. Yes, you read that right. I need to note right away, however, that it does not aim to replace SQL in your data science workflow; while it is robust, it is not a complete replacement. With that said, when I have been coding in R for a while and have dplyr code right at the front of mind, it has been great to just whip up some quick code to enable some more EDA with dbplyr. It is a great addition to any R users workflow if they work with databases frequently.</p>
+</section></section><section id="causal-inference" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="causal-inference">
+<span class="header-section-number">5</span> Causal Inference</h2>
 <p>Causal inference is a topic that I have been learning about a lot lately. As someone who does not have a formal background in statistics or epidemiology, it has been important to me to find resources that teach causal inference in terms that I can understand. Here is a list of resources and R packages that can help you if you are interested in causal inference.</p>
 <ul>
-<li><a href="https://www.r-causal.org/">Causal Inference in R</a> is a ongoing book project by Malcolm Barrett, Lucy D’Agostino McGowan, and Travis Gerke. It contains some amazing information at the moment and it will only get better as the authors work on it.</li>
-<li><a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">Causal Inference for The Brave and True</a> by Matheus Facure Alves is a book that has great explanations of causal inference techniques and concepts and everything coding related is written in python for those interested in a python implementation of causal inference!</li>
-<li><a href="https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2022/11/hernanrobins_WhatIf_13nov22.pdf">Causal Inference: What If?</a> by Miguel A. Hernán and James M. Robins is causal inference bible. It is much heavier than the resources above and the focus is purely on the methodology of causal inference. However R code which follows part 2 of the book chapter by chapter can be found <a href="https://causalinferencebookr.netlify.app/">here</a>.</li>
-<li><a href="https://www.youtube.com/watch?v=n8c-UK19hbA">Workshop: Causal Inference in R</a> is a video workshop by Malcolm Barrett and Lucy D’Agostino McGowan. The workshop has been updated since the video but no new video has surfaced that I could find. The new workshop can be found on github <a href="https://github.com/malcolmbarrett/causal_inference_r_workshop">here</a> with the slides and exercise rmarkdown files. The solutions to the exercises can be found <a href="https://github.com/malcolmbarrett/causal_inference_r_workshop_solutions">here</a>.</li>
-<li><a href="https://kosukeimai.github.io/MatchIt/">MatchIt</a> is a package that creates matches based on observational data. It has awesome vignettes on its website that explains matching for causal inference in detail and has many method options to implement for matching.</li>
-<li><a href="https://ggdag.malco.io/">ggdag</a> is a way to plot directed acyclic dags (DAGs) in R using more a ggplot2-like interface as opposed to <a href="http://www.dagitty.net/primer/">daggity</a>.</li>
-<li><a href="https://github.com/malcolmbarrett/propensity">propensity</a> helps calculate propensity scores and weights for a wide variety of research questions.propensity is under very early development.</li>
-<li><a href="https://lucymcgowan.github.io/tipr/">tipr</a> After fitting your model, you can determine the unmeasured confounder needed to tip your analysis.</li>
-<li><a href="https://github.com/malcolmbarrett/halfmoon">halfmoon</a> The goal of halfmoon is to cultivate balance in propensity score models.</li>
+<li><p><a href="https://www.r-causal.org/">Causal Inference in R</a> is a ongoing book project by Malcolm Barrett, Lucy D’Agostino McGowan, and Travis Gerke. It contains some amazing information at the moment and it will only get better as the authors work on it.</p></li>
+<li><p><a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">Causal Inference for The Brave and True</a> by Matheus Facure Alves is a book that has great explanations of causal inference techniques and concepts and everything coding related is written in python for those interested in a python implementation of causal inference!</p></li>
+<li><p><a href="https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2022/11/hernanrobins_WhatIf_13nov22.pdf">Causal Inference: What If?</a> by Miguel A. Hernán and James M. Robins is causal inference bible. It is much heavier than the resources above and the focus is purely on the methodology of causal inference. However R code which follows part 2 of the book chapter by chapter can be found <a href="https://causalinferencebookr.netlify.app/">here</a>.</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=n8c-UK19hbA">Workshop: Causal Inference in R</a> is a video workshop by Malcolm Barrett and Lucy D’Agostino McGowan. The workshop has been updated since the video but no new video has surfaced that I could find. The new workshop can be found on github <a href="https://github.com/malcolmbarrett/causal_inference_r_workshop">here</a> with the slides and exercise rmarkdown files. The solutions to the exercises can be found <a href="https://github.com/malcolmbarrett/causal_inference_r_workshop_solutions">here</a>.</p></li>
+<li><p><a href="https://kosukeimai.github.io/MatchIt/">MatchIt</a> is a package that creates matches based on observational data. It has awesome vignettes on its website that explains matching for causal inference in detail and has many method options to implement for matching.</p></li>
+<li><p><a href="https://ggdag.malco.io/">ggdag</a> is a way to plot directed acyclic dags (DAGs) in R using more a ggplot2-like interface as opposed to <a href="http://www.dagitty.net/primer/">daggity</a>.</p></li>
+<li><p><a href="https://github.com/malcolmbarrett/propensity">propensity</a> helps calculate propensity scores and weights for a wide variety of research questions.propensity is under very early development.</p></li>
+<li><p><a href="https://lucymcgowan.github.io/tipr/">tipr</a> After fitting your model, you can determine the unmeasured confounder needed to tip your analysis.</p></li>
+<li><p><a href="https://github.com/malcolmbarrett/halfmoon">halfmoon</a> The goal of halfmoon is to cultivate balance in propensity score models.</p></li>
 </ul>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

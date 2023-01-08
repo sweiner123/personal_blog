@@ -1,0 +1,90 @@
+---
+draft: true
+---
+
+```{r}
+library(tidyverse)
+library(skimr)
+```
+
+```{r}
+weather_forecasts <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/weather_forecasts.csv")
+cities <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/cities.csv")
+outlook_meanings <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/outlook_meanings.csv")
+
+skim(weather_forecasts)
+```
+
+```{r}
+library(tsibble)
+library(fable)
+library(feasts)
+library(lubridate)
+```
+
+```{r}
+forecast_tsbl <- weather_forecasts |>
+  mutate(city = factor(city),
+         state = factor(state),
+         high_or_low = factor(high_or_low),
+         forecast_hours_before = factor(forecast_hours_before)) |> 
+  as_tsibble(key = c(city, state, high_or_low, forecast_hours_before), index = date)
+
+
+forecast_tsbl |> 
+  filter(city == "NEWARK", high_or_low == "high", forecast_hours_before == 12) |>
+  autoplot(observed_temp)
+```
+
+```{r}
+#30 day train test split
+
+train <- forecast_tsbl |> 
+  filter(city == "NEWARK", high_or_low == "high", forecast_hours_before == 12) |> 
+  slice_head(n = -30)
+
+test <- anti_join(forecast_tsbl |> 
+  filter(city == "NEWARK", high_or_low == "high", forecast_hours_before == 12), train)
+
+```
+
+```{r}
+train |> features(observed_temp, unitroot_kpss)
+train |> features(observed_temp, unitroot_ndiffs)
+
+train |> 
+  mutate(diff_obs = difference(observed_temp)) |> 
+  features(diff_obs, unitroot_kpss)
+
+train |> features(observed_temp, unitroot_nsdiffs)
+
+train |> autoplot(difference(observed_temp))
+
+train |> autoplot(difference(observed_temp))
+
+train |> ACF(difference(observed_temp)) |> autoplot()
+
+train |> features(difference(observed_temp), feat_acf)
+```
+
+```{r}
+
+train_fill <- train |> tidyr::fill(c(observed_temp))
+
+train_fill |> gg_tsdisplay(difference(observed_temp))
+
+ets_train <- train_fill |> 
+  model(ETS(observed_temp))
+
+ets_train |> gg_tsresiduals()
+
+ets_train |> report()
+
+ets_train |>
+  forecast(h = 30) |> 
+  autoplot(train_fill)
+```
+
+```{r}
+# TODO try ARIMA modeling
+```

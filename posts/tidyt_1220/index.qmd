@@ -1,0 +1,206 @@
+---
+title: "Tidy Tuesday - 12/20"
+author: "Sam Weiner"
+date: last-modified
+categories: [tidytuesday, analysis]
+freeze: auto
+draft: true
+---
+
+```{r}
+#| message: false
+
+library(tidytuesdayR)
+library(tidyverse)
+library(skimr)
+```
+
+```{r}
+#| message: false
+
+# tt <- tt_load("2022-12-20")
+# 
+# tt
+# 
+# tt %>% map(glimpse)
+
+weather_forecasts <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/weather_forecasts.csv")
+cities <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/cities.csv")
+outlook_meanings <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/outlook_meanings.csv")
+
+skim(weather_forecasts)
+
+```
+
+```{r}
+
+##NEEDS WORK MAYBE DIVE DEEPER INTO ONE RELATIONSHIP
+
+weather_forecasts %>% View()
+
+weather_forecasts %>%
+  filter(!is.na(forecast_temp)) |> 
+  filter(state == "NJ", city == "NEWARK") %>%
+  ggplot() + 
+  geom_line(aes(date, forecast_temp), color = "blue") + 
+  geom_line(aes(date, observed_temp), color = "red") +
+  scale_color_brewer() + 
+  facet_wrap(~ forecast_hours_before + high_or_low)
+
+
+```
+
+```{r}
+
+weather_forecasts |> 
+  filter(city == "NEWARK", state == "NJ")
+
+weather_forecasts |> 
+  filter(city == "NEWARK", state == "NJ", !is.na(forecast_temp)) |> 
+  filter(high_or_low == "high") |> 
+  mutate(error = forecast_temp - observed_temp) |> 
+  filter(!is.na(error)) |> 
+  group_by(forecast_hours_before) |> 
+  summarise(MAE = mean(abs(error)))
+
+
+
+```
+
+## Time Series
+
+tsibble
+
+how do our predictions using esm or arima do against the national weather service?
+
+```{r libs-ts}
+library(tsibble)
+library(fable)
+library(feasts)
+library(lubridate)
+```
+
+```{r astsibble}
+forecast_tsbl <- weather_forecasts |>
+  mutate(city = factor(city),
+         state = factor(state),
+         high_or_low = factor(high_or_low),
+         forecast_hours_before = factor(forecast_hours_before)) |> 
+  as_tsibble(key = c(city, state, high_or_low, forecast_hours_before), index = date)
+
+
+forecast_tsbl |> group_by_key() |> 
+  slice(n()-12:0) |> 
+  View()
+  
+train <- forecast_tsbl[]
+```
+
+```{r}
+#impute
+forecast_tsbl |> filter(is.na(observed_temp))
+forecast_tsbl |> filter(is.na(forecast_temp))
+
+forecast_tsbl |> 
+  filter(city == "NEWARK") |> 
+  select(observed_temp, forecast_temp) |> 
+  #keys and index are automatically kept even when not specified
+  summarise(avg_obs_temp = mean(observed_temp, na.rm = TRUE),
+            avg_pred_temp = mean(forecast_temp, na.rm = TRUE))
+  
+forecast_tsbl |> 
+  filter(city == "NEWARK", high_or_low == "high") |> 
+  select(observed_temp, forecast_temp) |> 
+  autoplot(observed_temp)
+```
+
+```{r MAE}
+forecast_tsbl |>
+  filter(city %in% c("NEWARK", "ABILENE")) |> 
+  features(observed_temp, feat_stl) |> 
+  ggplot(aes(x = trend_strength, y = seasonal_strength_week, color = forecast_hours_before)) +
+  geom_point() + 
+  facet_wrap(~city + high_or_low)
+  
+```
+
+```{r observed temp}
+## Fit an ARIMA model on the data with missing values and interpolate
+#Observed temp
+forecast_fill <- forecast_tsbl |> 
+  filter(
+    city == "NEWARK",
+    state == "NJ"
+  ) |> 
+  model(
+    ARIMA(observed_temp)
+  ) |> 
+  interpolate(forecast_tsbl)
+
+# forecast_fill |> (\(x) {sum(is.na(x$observed_temp))})()
+# forecast_fill |> with(sum(is.na(observed_temp)))
+
+sum(is.na(forecast_tsbl$observed_temp))
+sum(is.na(forecast_fill$observed_temp))
+
+#STL Decomposition
+
+forecast_fill |> 
+  gg_season(observed_temp)
+
+
+forecast_fill |> 
+  ACF(observed_temp) |> 
+  autoplot()
+
+forecast_fill |> 
+  model(
+    STL(observed_temp ~ trend(window = 7) + season(period = 365.24, window = 11),
+        robust = FALSE)
+  ) |> 
+  components() |> 
+  autoplot()
+
+forecast_fill |> 
+  model(
+    STL(observed_temp ~ trend(window = 7) + season(period = 365.24, window = 13))
+  ) |> 
+  components() |> 
+  autoplot()
+
+
+fit_ets <- forecast_fill |> 
+  model(
+    auto_ets = ETS(observed_temp)
+  )
+
+fit_ets |> filter(high_or_low == 'high', forecast_hours_before == 12) |> report()
+
+
+fit_ets |> filter(high_or_low == 'high', forecast_hours_before == 12) |> forecast(h = "30 days") |> autoplot(forecast_fill |> filter(high_or_low == 'high', forecast_hours_before == 12), level = NULL)
+```
+
+```{r}
+
+newark_high_feats <- forecast_fill |> 
+  filter(high_or_low == "high") |> 
+  features(observed_temp, feature_set(pkgs = "feasts"))
+
+newark_high_feats |> 
+  select(starts_with("season"), forecast_hours_before) |> 
+  mutate(seasonal_peak_week)
+```
+
+```{r}
+
+newark_high <- forecast_fill |> 
+  filter(high_or_low == "high", forecast_hours_before == 12) 
+
+newark_high |> autoplot(observed_temp)
+
+newark_high |> gg_season(observed_temp, labels = "both")
+
+newark_high |> gg_tsdisplay()
+newark_high |> gg_tsdisplay(difference(observed_temp, 365) |> difference(),
+                            plot_type = "partial")
+```
