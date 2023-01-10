@@ -5,14 +5,18 @@ date: "1/9/2023"
 categories: [tidytuesday, analysis]
 freeze: auto
 ---
+Tidy Tuesday released this data set on December 20th, 2022. It was collected as a part of a data science capstone project where national weather data was acquired to learn which areas of the U.S. struggle with weather prediction and the possible reasons why. Specifically, the project focused on the error in high and low temperature forecasting. 
 
-The data includes 16 months of forecasts and observations from 167 cities, as well as a separate data.frame of information about those cities and some other American cities.
+The data includes 16 months of daily forecasts and observations from 167 cities, as well as a separate data.frame of information about those cities and some other American cities.
+
+So let's dive into this data and learn something about forecasting weather! 
 
 ```{r}
 #| message: false
 
 library(tidyverse)
 library(skimr)
+#Tidyverts universe of packages
 library(tsibble)
 library(fable)
 library(feasts)
@@ -27,18 +31,24 @@ cities <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesda
 outlook_meanings <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/outlook_meanings.csv")
 ```
 
-This data set contains daily high and daily low temperature forecasts 48, 36, 24, and 12 prior to every date. The data also contains the observed high and low temperature for that date. (Note: some dates have missing data for observed temperature.)
+The weather forecasts data set contains daily high and daily low temperature forecasts 48, 36, 24, and 12 prior to every date in the data set. The data also contains the observed high and low temperature for that date. (Note: some dates have missing data for observed temperature.)
+
+Here's a glimpse at the column names, the number of rows, and the first couple of values in the weather forecasts data set.
 
 ```{r}
 weather_forecasts |> glimpse()
 ```
+
+
 
 ```{r}
 #| include: false
 skim(weather_forecasts)
 ```
 
-I will be using the the tsibble package which is has very nice properties when working with time series data. The first of which is that it enable us contain multiple timeseries in the same data structure, and this allows is run models or check for certain features on all of them simultaneously.
+The data contains multiple time series, one for each combination of city, state, high_or_low, and forecast_hours_before. I think that looking into how the different forecast times compare in accuracy will be interesting to look at, as well as whether forecast accuracy differs at different times in the year.
+
+I will be using the tsibble package for this data which is useful when working with time series data. The first of which is that it enables us contain multiple time series in the same data structure, a time series tibble, and this allows us run models or check for certain features on multiple series simultaneously. If you want to learn more about time series analysis and how to use the tidyverts packages, I highly recommend reading [Forecasting: Principles and Practice (3rd ed)](https://otexts.com/fpp3/) by Rob J Hyndman and George Athanasopoulos. It is a very detailed book and covers a lot of ground in the field of time series.
 
 ```{r}
 forecast_tsbl <- weather_forecasts |>
@@ -49,7 +59,7 @@ forecast_tsbl <- weather_forecasts |>
   as_tsibble(key = c(city, state, high_or_low, forecast_hours_before), index = date)
 ```
 
-I am going to be subsetting the data to look at one city, Newark, NJ. This visualization is a time plot of the observed high temperature for Newark, NJ from January 30th, 2021 to June 1st, 2022.
+I am going to be subsetting the data to look at one city, Newark, NJ. This visualization is a time plot of the observed daily high temperature for Newark, NJ from January 30th, 2021 to June 1st, 2022.
 
 ```{r}
 forecast_tsbl |> 
@@ -62,14 +72,14 @@ forecast_tsbl |>
 
 We will be looking at the rolling mean absolute error between forecasted high and low temperatures versus observed high and low temperatures across the different temperature forecasts.
 
-I am using a 30 day window around each date to compute the mean I am also ignoring dates with missing values.
+I am using a 30 day window around each date to compute the mean. I am also ignoring dates with missing values.
 
 ```{r}
 slide_tsbl <- forecast_tsbl |> 
   filter(city == "NEWARK") |> 
   mutate(error = forecast_temp - observed_temp) |> 
   mutate(mean_temp_error = slider::slide_dbl(error,
-                                              ~abs(mean(., na.rm = TRUE)), 
+                                              ~mean(abs(.), na.rm = TRUE), 
                                               .before = 15,
                                               .after = 15, 
                                               .complete = TRUE))
@@ -107,3 +117,16 @@ slide_tsbl |>
   ylab("Mean Error")
   
 ```
+
+We can see the overall mean absolute error for each forecast. 
+
+```{r}
+forecast_tsbl |> 
+  as_tibble() |> 
+  filter(city == "NEWARK", state == "NJ") |>  
+  mutate(error = forecast_temp - observed_temp) |>
+  group_by(forecast_hours_before) |> 
+  summarise(MAE = mean(abs(error), na.rm = T))
+
+```
+
