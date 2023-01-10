@@ -34,6 +34,10 @@ forecast_tsbl <- weather_forecasts |>
 forecast_tsbl |> 
   filter(city == "NEWARK", high_or_low == "high", forecast_hours_before == 12) |>
   autoplot(observed_temp)
+
+forecast_tsbl |> 
+  filter(city == "NEWARK", high_or_low == "high") |>
+  autoplot(observed_temp)
 ```
 
 ```{r}
@@ -47,6 +51,32 @@ test <- anti_join(forecast_tsbl |>
   filter(city == "NEWARK", high_or_low == "high", forecast_hours_before == 12), train)
 
 ```
+
+Sliding Window
+ - Mean Absolute Error of forecasts versus observed temperature over different forecast times
+
+```{r}
+slide_tsbl <- forecast_tsbl |> 
+  filter(city == "NEWARK") |> 
+  mutate(error = forecast_temp - observed_temp) |> 
+  mutate(mean_temp_error = slider::slide_dbl(error,
+                                              ~mean(., na.rm = TRUE), 
+                                              .before = 15,
+                                              .after = 15, 
+                                              .complete = TRUE))
+
+slide_tsbl |> select(forecast_temp, observed_temp, error,mean_temp_error) |> view()
+
+slide_tsbl |> 
+  autoplot(mean_temp_error)
+
+slide_tsbl |> 
+  filter(high_or_low == "high") |> 
+  ggplot() +
+  geom_line(aes(x = date, y = mean_temp_error)) + 
+  facet_grid(vars(high_or_low, forecast_hours_before))
+```
+
 
 ```{r}
 train |> features(observed_temp, unitroot_kpss)

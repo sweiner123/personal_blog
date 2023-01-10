@@ -774,7 +774,7 @@ F-statistic: 50.17 on 3 and 28 DF,  p-value: 2.184e-11</code></pre>
 <pre><code>[1] "C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog"</code></pre>
 </div>
 </div>
-<p>By adding folder names in quatation marks, we can easily dive deeper into our project directory.</p>
+<p>By adding folder names in quotation marks, we can easily dive deeper into our project directory.</p>
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"posts"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -870,29 +870,17 @@ F-statistic: 50.17 on 3 and 28 DF,  p-value: 2.184e-11</code></pre>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_end.html">showtext_end</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We used four different fonts in one ggplot! I’ll admit it’s not the nicest looking plot I’ve ever made, but the point stands that you can customize ggplots to your hearts content using packages like showtext.</p>
 </section><section id="scales" class="level3" data-number="3.3"><h3 data-number="3.3" class="anchored" data-anchor-id="scales">
 <span class="header-section-number">3.3</span> Scales</h3>
 <p>Scaling data in a visualization is a crucial part of effective data communication. If the scale of the data is not clear, then any inferences from that communication will either be unclear or misled. The <a href="https://scales.r-lib.org/">scales package</a> provides some awesome tooling to make very clear and descriptive plot scales.</p>
-<p>Here’s a bad example but an example nonetheless. Using two <code>scales</code> functions, <code><a href="https://scales.r-lib.org/reference/label_dollar.html">label_dollar()</a></code> and <code>label_percent</code>, we changed the axis labels of the previous graph to be more descriptive. There are many more powerful fuctions in the scales package that I am sure will benefit your data communication tasks.</p>
+<p>Here’s a bad example but an example nonetheless. Using two <code>scales</code> functions, <code><a href="https://scales.r-lib.org/reference/label_dollar.html">label_dollar()</a></code> and <code>label_percent</code>, we changed the axis labels of the previous graph to be more descriptive. There are many more powerful functions in the scales package that I am sure will benefit your data communication tasks.</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'scales'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:purrr':
-
-    discard</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:readr':
-
-    col_factor</code></pre>
-</div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_dollar.html">label_dollar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html">label_percent</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>

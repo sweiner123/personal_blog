@@ -84,7 +84,6 @@ The Awesome Packages section is going to be a growing list of packages that I fi
 
 [broom](https://broom.tidymodels.org/) is a super cool R package. One of the most annoying aspects of using R for data science is trying to extract the output from the model object. Summaries of the model object are easy enough to get using `summary()`, but to extract the components of model like the coefficients, pvalues, or Rsquared value to use for other operations means digging into the model object and trying and failing to use the right index to find it. broom makes that task no more. By using the `tidy()` function on supported model objects, the output is represented as a data frame which makes extracting what you want so much easier. Rsquared and other metric vaules can be found by using `glance()` and `augment()` can add output like predictions from a new dataset back into the data set from whence it came.
 
-
 ```{r}
 #| warning: false
 library(tidyverse)
@@ -92,9 +91,7 @@ library(broom)
 mpg_lm <- lm(mpg ~ wt + hp + cyl, data = mtcars)
 ```
 
-
 ::: panel-tabset
-
 ## summary()
 
 ```{r}
@@ -109,6 +106,7 @@ tidy(mpg_lm) # tidy() returns coefficients and pvalues
 ```
 
 ## glance()
+
 ```{r}
 
 glance(mpg_lm) # glance returns model metrics
@@ -123,7 +121,6 @@ augment(mpg_lm, newdata = mtcars)
 # augment without newdata uses training data and returns more metrics
 augment(mpg_lm)
 ```
-
 :::
 
 #### janitor
@@ -148,7 +145,6 @@ test
 janitor::clean_names(test)
 ```
 
-
 #### skimr
 
 [skimr](https://docs.ropensci.org/skimr/) is your best friend when beginning exploratory data analysis. Using the `skim()` function on a data frame, a really easy to understand output will be generated containing summary statistics for all of your columns. The information will include variable type, percent missing, 0th, 25th, 50th, 75th, 100th percentile value for continuous variables, mean, standard deviation, and more! I think that you will love this tool once you start to use it!
@@ -158,7 +154,6 @@ library(skimr)
 
 skim(mtcars)
 ```
-
 
 #### reprex
 
@@ -184,10 +179,9 @@ reprex()
 
 The output will look like this when we upload our code to stackoverflow or github:
 
-::: {.column-margin}
+::: column-margin
 It even includes the plot as image which will show up when we post to stack overflow or github!
 :::
-
 
 ``` r
 library(tidyverse)
@@ -211,7 +205,6 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
   geom_boxplot()
 ```
 
-
 #### here
 
 Sharing code is an important part of collaborative data science projects which is common in the field. To be able make sure code is able to be run by others when shared, coders must be cognizant of not hard-coding file paths into their scripts. Other people will 99.99% of the time not have the same file structure as you do, and hard coding a file path will make that script only usable by you until all the file paths are changed by the person you shared it with. We don't want to make sharing code difficult, so I am hoping that you use the [here package](https://here.r-lib.org/) to help you create relative file paths! The here package makes creating relative file paths as simple as can be and using it will make sharing code will be hindrance free.
@@ -233,12 +226,11 @@ here("posts")
 here("posts", "R-resources")
 ```
 
-
 #### todor
 
 Working on big projects means that there are always multiple tasks that are being managed at once. The [todor package](https://github.com/dokato/todor) lets you create searchable comments within your R scripts or even entire projects to help you keep track of your tasks. Never forget again with todor!
 
-Using todor is as easy writing a comment in R and using a keyword like TODO at the beginning. 
+Using todor is as easy writing a comment in R and using a keyword like TODO at the beginning.
 
 ```{r}
 library(todor)
@@ -250,10 +242,9 @@ library(todor)
 <!-- TODO Change this section. -->
 ```
 
-When we call the `todor()` function, we get output like this. As you might have noticed, todor can detect HTML comments as well! 
+When we call the `todor()` function, we get output like this. As you might have noticed, todor can detect HTML comments as well!
 
 ![todor](todor.png)
-
 
 #### styler
 
@@ -261,22 +252,20 @@ Sometimes when we're coding, readability is not on the front of our mind. Use th
 
 Let's say we have code like this. Quite difficult to read through, no?
 
-```r
+``` r
 iris |> 
   filter(Sepal.Length > 5.1) |> select(Petal.Width, Petal.Length) |> group_by(Petal.Length)|> summarise(mean = Petal.Width)
 ```
 
 After running `styler::style_active_file()`, our code is reformmated and much more readable in my opinion.
 
-```r
+``` r
 iris |>
   filter(Sepal.Length > 5.1) |>
   select(Petal.Width, Petal.Length) |>
   group_by(Petal.Length) |>
   summarise(mean = Petal.Width)
 ```
-
-
 
 ## ggplot2
 
@@ -285,8 +274,6 @@ iris |>
 ### Extensions
 
 One major benefit of ggplot2 being the default visualization package in R is that it has been building blocks of choice for so many R programmers create new visualization capabilities in R and ggplot2. There are hundreds of extension packages for ggplot2 that add onto its functionality in incredible ways. For instance, gganimate creates the ability for you to have animated graphics in R! And the best part is that these extensions are usually very easy to learn because they all use the same ggplot2 mechanics as I was saying earlier. A full list of registered extensions can be found [here](https://exts.ggplot2.tidyverse.org/gallery/). One really exquisite ggplot extension I would like to highlight is [esquisse](https://dreamrs.github.io/esquisse/). This package creates a tableau-like interface inside of Rstudio, so that we can interactively plot our data! It has been a game changer for me when doing EDA.
-
-
 
 ![esquisse example](esquisse.png)
 
@@ -331,6 +318,8 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
     legend.title = element_text("dance", size = 20)
     )
 
+#This function makes it so that any future plots are reverted back to the 
+#original settings
 showtext_end()
 ```
 
@@ -353,12 +342,12 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   theme_minimal()
 ```
 
-
 ## Databases
 
 Working with databases in R is not terribly complicated. The [DBI](https://dbi.r-dbi.org/) package is very useful when connecting to and querying databases. But there are some really cool tools for working with databases in that I you're going to like.
 
 ### dbplyr
+
 [dbplyr](https://dbplyr.tidyverse.org/) is a tidyverse package that converts dplyr code into SQL queries. Yes, you read that right. I need to note right away, however, that it does not aim to replace SQL in your data science workflow; while it is robust, it is not a complete replacement. With that said, when I have been coding in R for a while and have dplyr code right at the front of mind, it has been great to just whip up some quick code to enable some more EDA with dbplyr. It is a great addition to any R users workflow if they work with databases frequently.
 
 ## Causal Inference
