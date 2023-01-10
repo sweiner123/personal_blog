@@ -11,6 +11,8 @@ highlight-style: pygments
 format: 
   html: 
     code-link: true
+fig-width: 6
+fig-asp: 0.618
 ---
 
 Hello again! I'm excited to put another post up on Dialectic with Data where I will be brain dumping some of the awesome R resources I have ran across in my journey learning and loving R! This post is was specifically inspired by my practicum team because I have enjoyed sharing these resources with them over time, but many of them have been lost deep in the depths of our slack channel. So, I am going to be cataloging many of the things that I have shared with them, and I will also be adding new resources as I come upon them for them and you!
@@ -315,7 +317,8 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
     axis.title.y = element_text(family = "bell", size = 20), 
     plot.title = element_text(family = "grace", size = 20), 
     legend.text = element_text(family = "rock", size = 20), 
-    legend.title = element_text("dance", size = 20)
+    legend.title = element_text("dance", size = 20),
+    axis.text = element_text(size = 20)
     )
 
 #This function makes it so that any future plots are reverted back to the 
@@ -333,16 +336,18 @@ Here's a bad example but an example nonetheless. Using two `scales` functions, `
 
 ```{r}
 #| message: false
-#| fig-cap: "Changing the X and Y axis labels"
-#| fig-width: 6
-#| fig-height: 3.5
+
 library(scales)
 
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point() +
   scale_x_continuous(labels = scales::label_dollar()) +
   scale_y_continuous(labels = scales::label_percent()) +
-  theme_minimal()
+  theme_minimal() +
+  theme(axis.text = element_text(size = 20),
+        axis.title = element_text(size = "20"),
+        legend.title = element_text(size = 20),
+        legend.text = element_text(size = 20)) 
 ```
 
 ## Databases
