@@ -207,21 +207,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p>The data includes 16 months of forecasts and observations from 167 cities, as well as a separate data.frame of information about those cities and some other American cities.</p>
+<p>Tidy Tuesday released this data set on December 20th, 2022. It was collected as a part of a data science capstone project where national weather data was acquired to learn which areas of the U.S. struggle with weather prediction and the possible reasons why. Specifically, the project focused on the error in high and low temperature forecasting.</p>
+<p>The data includes 16 months of daily forecasts and observations from 167 cities, as well as a separate data.frame of information about those cities and some other American cities.</p>
+<p>So let’s dive into this data and learn something about forecasting weather!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibble)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(feasts)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Tidyverts universe of packages</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibble)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fable)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>weather_forecasts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/weather_forecasts.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cities <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/cities.csv"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>outlook_meanings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/outlook_meanings.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This data set contains daily high and daily low temperature forecasts 48, 36, 24, and 12 prior to every date. The data also contains the observed high and low temperature for that date. (Note: some dates have missing data for observed temperature.)</p>
+<p>The weather forecasts data set contains daily high and daily low temperature forecasts 48, 36, 24, and 12 prior to every date in the data set. The data also contains the observed high and low temperature for that date. (Note: some dates have missing data for observed temperature.)</p>
+<p>Here’s a glimpse at the column names, the number of rows, and the first couple of values in the weather forecasts data set.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weather_forecasts <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -239,7 +243,8 @@ $ forecast_outlook      &lt;chr&gt; NA, NA, NA, "DUST", NA, NA, "DUST", "SUNNY",
 $ possible_error        &lt;chr&gt; "none", "none", "none", "none", "none", "none", …</code></pre>
 </div>
 </div>
-<p>I will be using the the tsibble package which is has very nice properties when working with time series data. The first of which is that it enable us contain multiple timeseries in the same data structure, and this allows is run models or check for certain features on all of them simultaneously.</p>
+<p>The data contains multiple time series, one for each combination of city, state, high_or_low, and forecast_hours_before. I think that looking into how the different forecast times compare in accuracy will be interesting to look at, as well as whether forecast accuracy differs at different times in the year.</p>
+<p>I will be using the tsibble package for this data which is useful when working with time series data. The first of which is that it enables us contain multiple time series in the same data structure, a time series tibble, and this allows us run models or check for certain features on multiple series simultaneously. If you want to learn more about time series analysis and how to use the tidyverts packages, I highly recommend reading <a href="https://otexts.com/fpp3/">Forecasting: Principles&nbsp;and&nbsp;Practice (3rd ed)</a> by Rob J Hyndman and George Athanasopoulos. It is a very detailed book and covers a lot of ground in the field of time series.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>forecast_tsbl <span class="ot">&lt;-</span> weather_forecasts <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">city =</span> <span class="fu">factor</span>(city),</span>
@@ -248,7 +253,7 @@ $ possible_error        &lt;chr&gt; "none", "none", "none", "none", "none", "non
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">forecast_hours_before =</span> <span class="fu">factor</span>(forecast_hours_before)) <span class="sc">|&gt;</span> </span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tsibble</span>(<span class="at">key =</span> <span class="fu">c</span>(city, state, high_or_low, forecast_hours_before), <span class="at">index =</span> date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>I am going to be subsetting the data to look at one city, Newark, NJ. This visualization is a time plot of the observed high temperature for Newark, NJ from January 30th, 2021 to June 1st, 2022.</p>
+<p>I am going to be subsetting the data to look at one city, Newark, NJ. This visualization is a time plot of the observed daily high temperature for Newark, NJ from January 30th, 2021 to June 1st, 2022.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>forecast_tsbl <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(city <span class="sc">==</span> <span class="st">"NEWARK"</span>, high_or_low <span class="sc">==</span> <span class="st">"high"</span>, forecast_hours_before <span class="sc">==</span> <span class="dv">12</span>) <span class="sc">|&gt;</span></span>
@@ -263,13 +268,13 @@ $ possible_error        &lt;chr&gt; "none", "none", "none", "none", "none", "non
 <section id="sliding-window" class="level3">
 <h3 class="anchored" data-anchor-id="sliding-window">Sliding Window</h3>
 <p>We will be looking at the rolling mean absolute error between forecasted high and low temperatures versus observed high and low temperatures across the different temperature forecasts.</p>
-<p>I am using a 30 day window around each date to compute the mean I am also ignoring dates with missing values.</p>
+<p>I am using a 30 day window around each date to compute the mean. I am also ignoring dates with missing values.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>slide_tsbl <span class="ot">&lt;-</span> forecast_tsbl <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(city <span class="sc">==</span> <span class="st">"NEWARK"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">error =</span> forecast_temp <span class="sc">-</span> observed_temp) <span class="sc">|&gt;</span> </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_temp_error =</span> slider<span class="sc">::</span><span class="fu">slide_dbl</span>(error,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                                              <span class="sc">~</span><span class="fu">abs</span>(<span class="fu">mean</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                                              <span class="sc">~</span><span class="fu">mean</span>(<span class="fu">abs</span>(.), <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">.before =</span> <span class="dv">15</span>,</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">.after =</span> <span class="dv">15</span>, </span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">.complete =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -304,6 +309,24 @@ $ possible_error        &lt;chr&gt; "none", "none", "none", "none", "none", "non
 </details>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can see the overall mean absolute error for each forecast.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>forecast_tsbl <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(city <span class="sc">==</span> <span class="st">"NEWARK"</span>, state <span class="sc">==</span> <span class="st">"NJ"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">error =</span> forecast_temp <span class="sc">-</span> observed_temp) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(forecast_hours_before) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MAE =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(error), <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  forecast_hours_before   MAE
+  &lt;fct&gt;                 &lt;dbl&gt;
+1 12                     1.98
+2 24                     2.12
+3 36                     2.29
+4 48                     2.41</code></pre>
 </div>
 </div>
 

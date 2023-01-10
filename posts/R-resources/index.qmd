@@ -333,6 +333,9 @@ Here's a bad example but an example nonetheless. Using two `scales` functions, `
 
 ```{r}
 #| message: false
+#| fig-cap: "Changing the X and Y axis labels"
+#| fig-width: 6
+#| fig-height: 3.5
 library(scales)
 
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
