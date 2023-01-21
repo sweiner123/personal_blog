@@ -2,6 +2,7 @@
 title: "R resources for Practicum" 
 author: "Sam Weiner" 
 date: "1/8/2023"
+image: r_packages.jpeg
 categories: [resources, rstats]
 editor: visual 
 toc: true 
@@ -56,6 +57,8 @@ The Rstudio IDE is probably the best IDE (integrated development environment) fo
 Quarto is Rstudio's (now called Posit) new Rmarkdown replacement. The biggest change from Rmarkdown to Quarto is that you can use Quarto in Jupyter Notebooks! Posit (formerly Rstudio) is broadening it's presence in the data science community by engaging with python users in addition to R users. The hope, says Posit, is to create easy tools for cross-language collaboration so that researchers and data scientists who have different languages of choice can work together with ease. From what I have seen, many data scientists who might have preferred R as a language have been pressured to use python because of its large presence in the data science community. This tool is hopefully going to create a pathway for R users to stay R users without complicating team workflows in a python-dominant environment. In addition, Quarto has some awesome features such as helping users easily create documents, presentation, or even blogs (like this one!). So far, it has been very intuitive and the documentation has been very helpful. You can find information at [quarto.org](https://quarto.org).
 
 ## Packages
+
+![R-Packages](r_packages.jpeg)
 
 Now lets get to packages! I am going to be listing packages that I think are really helpful (and really cool) for working with data and doing modeling in R.
 

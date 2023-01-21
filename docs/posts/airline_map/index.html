@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Sam Weiner">
+<meta name="dcterms.date" content="2023-01-18">
+<title>Dialectic with Data - Mapping Aviation Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script src="../../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script><script src="../../site_libs/jquery-1.12.4/jquery.min.js"></script><link href="../../site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-1.3.1/leaflet.js"></script><link href="../../site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="../../site_libs/proj4-2.6.2/proj4.min.js"></script><script src="../../site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="../../site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-binding-2.1.1/leaflet.js"></script><link href="../../site_libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet">
+<link href="../../site_libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet">
+<script src="../../site_libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script><script src="../../site_libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script><script src="../../site_libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script><link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Dialectic with Data</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sweiner123"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/sam-weiner/"><i class="bi bi-liknedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+<div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Mapping Aviation Data</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">maps</div>
+                <div class="quarto-category">rstats</div>
+                <div class="quarto-category">api</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Sam Weiner </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 18, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#visualizing-data-from-apis" id="toc-visualizing-data-from-apis" class="nav-link active" data-scroll-target="#visualizing-data-from-apis"><span class="toc-section-number">1</span>  Visualizing Data From API’s</a>
+  <ul>
+<li><a href="#api-keys" id="toc-api-keys" class="nav-link" data-scroll-target="#api-keys"><span class="toc-section-number">1.1</span>  API Keys</a></li>
+  <li><a href="#api-calls" id="toc-api-calls" class="nav-link" data-scroll-target="#api-calls"><span class="toc-section-number">1.2</span>  API Calls</a></li>
+  <li><a href="#working-with-the-data" id="toc-working-with-the-data" class="nav-link" data-scroll-target="#working-with-the-data"><span class="toc-section-number">1.3</span>  Working with the Data</a></li>
+  <li><a href="#data-prep-for-plotting-flights" id="toc-data-prep-for-plotting-flights" class="nav-link" data-scroll-target="#data-prep-for-plotting-flights"><span class="toc-section-number">1.4</span>  Data Prep for Plotting Flights</a></li>
+  <li><a href="#plotting-our-data" id="toc-plotting-our-data" class="nav-link" data-scroll-target="#plotting-our-data"><span class="toc-section-number">1.5</span>  Plotting Our Data</a></li>
+  <li><a href="#putting-everything-into-a-function" id="toc-putting-everything-into-a-function" class="nav-link" data-scroll-target="#putting-everything-into-a-function"><span class="toc-section-number">1.6</span>  Putting Everything into a Function</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="visualizing-data-from-apis" class="level1 page-columns page-full" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Visualizing Data From API’s</h1>
+<p>Hello and welcome back to Dialectic with Data! In this installment, I am going to be working with data from the <a href="https://aviationstack.com/">AviationStack API</a>. This API can let us retrieve real time flight data from all over the world, and I thought that it would be interesting to visualize the flights that are currently on their way to a specific airport.</p>
+<p>To recreate this project yourself, you can sign up for a free account with AviationStack <a href="https://aviationstack.com/product">here</a>. The free account lets us make 100 api calls a month which is really awesome!</p>
+<p>For this project, I am going to be working in R, which has a great package for working with api calls, <a href="https://httr.r-lib.org/">httr</a>. This package lets us easily assemble queries.</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://httr.r-lib.org/">httr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dshkol/airportr">airportr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+
+</div>
+<section id="api-keys" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="api-keys">
+<span class="header-section-number">1.1</span> API Keys</h2>
+<p>The first step for working with APIs is to get our API key into our R session. Generally, it is not a very good practice to have our API key written out in our code. The key is liable to get stolen and abused, and that is something that we want to prevent. If you plan on using the API key a lot, you might want to add it to your .Renviron file. Doing this is very simple and generally safe.</p>
+<p>To get to your .Renviron file, go to the console and run this code <code>usethis::get_r_environ()</code>. Your .Renviron should pop up and then you can add a line like this: <code>aviation_api = {your_key_here}</code>. Now, whenever you want to retrieve you API key, call <code>Sys.getenv("aviation_api")</code> and your API key will appear.</p>
+<p>If you only plan on using your API key a couple of times, however, Rstudio has a function that you can use to manually add your API key each time you want to add it to your R environment. Run <code><a href="https://rstudio.github.io/rstudioapi/reference/askForPassword.html">rstudioapi::askForPassword()</a></code> and an interactive window will pop up where you can put your key. Just remember to save it to a variable!</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu">rstudioapi</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/rstudioapi/reference/askForPassword.html">askForPassword</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="api-calls" class="level2 page-columns page-full" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="api-calls">
+<span class="header-section-number">1.2</span> API Calls</h2>
+<p>For this project, I am going to be working in R, which has a great package for working with API calls, <a href="https://httr.r-lib.org/">httr</a>. This package lets us easily assemble queries.</p>
+<p>To make a call from the API, we are going to use <code><a href="https://httr.r-lib.org/reference/GET.html">httr::GET()</a></code>. To construct the call, we put the base URL as a string in the function. Then, in the query parameter, we write a named list using the different parameters we have to or want to add to the call. <code>access_key</code> is where we put our API key and this is a necessary parameter. <code>arr_iata</code> is an optional parameter which is used to get us the information that we want, but it is not necessary to have a successful API call. You can find out more about the different parameters in the <a href="https://aviationstack.com/documentation">AviationStack documentation</a>.</p>
+<p>In this API call, we are using the real-time flights API endpoint, and we are saying that we want to see flights that are going to be arriving at JFK airport.</p>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="">If you are unfamiliar with the term “IATA”, have no fear! IATA codes are a global standard of references for airports all around the world. They are really easy to find and almost every airport has one.</span></div></div>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/GET.html">GET</a></span><span class="op">(</span><span class="st">"http://api.aviationstack.com/v1/flights"</span>, </span>
+<span>               query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>access_key <span class="op">=</span> <span class="va">api</span>, arr_iata <span class="op">=</span> <span class="st">"JFK"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<p>Once our call has been completed, we are going to get back something called a response object. This object contains all the information that we requested. When we run the object in the console, we get some summary information like the full URL of the call (including the API key which is why I’m not showing the output), the time of the call, the size of the request in kB, and the status code.</p>
+<p>The status code is an important piece of information to look for when working with APIs. A status code of 200 is good. That means everything worked fine and we have our data! A status code of anything else means that we do not have our data, and the reasons could be many. For more information on what other status codes mean, I turn you to the <a href="https://www.flickr.com/photos/girliemac/sets/72157628409467125">HTTP Status Cats</a> for guidance.</p>
+<p>So to retrieve the status of our API call, we run <code>httr::status_code(r)</code> and, luckily for us, our request went through without a hitch! (Though this was not always the case when I was writing this article 😥)</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/status_code.html">status_code</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 200</code></pre>
+</div>
+</div>
+</section><section id="working-with-the-data" class="level2 page-columns page-full" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="working-with-the-data">
+<span class="header-section-number">1.3</span> Working with the Data</h2>
+<p>To retrieve the contents of our call, we run <code>httr::content(r)</code> on our response object.</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">&lt;-</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/content.html">content</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="page-columns page-full"><p><code>flights</code> is a large list with two main components. <code>pagination</code> and <code>data</code>. We are most interested in what’s contained inside <code>data</code>. </p><div class="no-row-height column-margin column-container"><span class=""><code>pagination</code> contains some descriptive information about the call that we can’t do anything with.</span></div></div>
+<p>Let’s take a look at what’s inside <code>data</code> using the <code>str</code> function. The <code>max.level</code> option makes the output a little easier to read.</p>
+<p>As we can see, data contains lists too! Namely, there are lists called flight date and flight status which each contain one value. Also there are lists called departure, arrival, airline and flight which contain a lot of value and even more lists!</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">flights</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, max.level <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 8
+ $ flight_date  : chr "2023-01-19"
+ $ flight_status: chr "scheduled"
+ $ departure    :List of 12
+  ..$ airport         : chr "Hong Kong International"
+  ..$ timezone        : chr "Asia/Hong_Kong"
+  ..$ iata            : chr "HKG"
+  ..$ icao            : chr "VHHH"
+  ..$ terminal        : chr "1"
+  ..$ gate            : NULL
+  ..$ delay           : NULL
+  ..$ scheduled       : chr "2023-01-19T03:20:00+00:00"
+  ..$ estimated       : chr "2023-01-19T03:20:00+00:00"
+  ..$ actual          : NULL
+  ..$ estimated_runway: NULL
+  ..$ actual_runway   : NULL
+ $ arrival      :List of 13
+  ..$ airport         : chr "John F Kennedy International"
+  ..$ timezone        : chr "America/New_York"
+  ..$ iata            : chr "JFK"
+  ..$ icao            : chr "KJFK"
+  ..$ terminal        : chr "8"
+  ..$ gate            : NULL
+  ..$ baggage         : NULL
+  ..$ delay           : NULL
+  ..$ scheduled       : chr "2023-01-19T06:00:00+00:00"
+  ..$ estimated       : chr "2023-01-19T06:00:00+00:00"
+  ..$ actual          : NULL
+  ..$ estimated_runway: NULL
+  ..$ actual_runway   : NULL
+ $ airline      :List of 3
+  ..$ name: chr "Malaysia Airlines"
+  ..$ iata: chr "MH"
+  ..$ icao: chr "MAS"
+ $ flight       :List of 4
+  ..$ number    : chr "9210"
+  ..$ iata      : chr "MH9210"
+  ..$ icao      : chr "MAS9210"
+  ..$ codeshared:List of 6
+  .. ..$ airline_name : chr "cathay pacific"
+  .. ..$ airline_iata : chr "cx"
+  .. ..$ airline_icao : chr "cpa"
+  .. ..$ flight_number: chr "844"
+  .. ..$ flight_iata  : chr "cx844"
+  .. ..$ flight_icao  : chr "cpa844"
+ $ aircraft     : NULL
+ $ live         : NULL</code></pre>
+</div>
+</div>
+<p>To get this data in a nice to read format, how about we turn it into a data frame?</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_flight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">flights</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_flight</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 1
+  data            
+  &lt;list&gt;          
+1 &lt;named list [8]&gt;
+2 &lt;named list [8]&gt;
+3 &lt;named list [8]&gt;
+4 &lt;named list [8]&gt;
+5 &lt;named list [8]&gt;
+6 &lt;named list [8]&gt;</code></pre>
+</div>
+</div>
+<p>OK, that’s not nice to read.</p>
+<p>The issue is that the data is still in a list. We have to get the information out of a list find a way to make it look like a data frame with columns and rows. There is a package in R called, <a href="https://tidyr.tidyverse.org/">tidyr</a> (which is included in the tidyverse), that will be able to help us. tidyr is full of functions that will help us “rectangle” our data. The function we will be using is <code><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider()</a></code>. Let’s see how it works.</p>
+<p>To use <code><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider()</a></code>, we first have to turn our list into a data frame which we did with <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code> above. Next, we pipe the data frame to <code><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider()</a></code> and tell it what column we want it to work on. In this case we only have one called <code>data</code>. After we run the code, we something a lot bigger. Actually, the number of rows are the same, but the columns are now equivalent to the number of items that <code>flights$data</code> contains. And each column name corresponds to the name of that item. However, we can see that a lot of the columns still contains lists.</p>
+<div class="cell column-body-outset">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_flight</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  flight_d…¹ fligh…² departure    arrival      airline      flight       aircr…³
+  &lt;chr&gt;      &lt;chr&gt;   &lt;list&gt;       &lt;list&gt;       &lt;list&gt;       &lt;list&gt;       &lt;list&gt; 
+1 2023-01-19 schedu… &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;NULL&gt; 
+2 2023-01-19 schedu… &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;NULL&gt; 
+3 2023-01-18 active  &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;NULL&gt; 
+4 2023-01-18 active  &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;NULL&gt; 
+5 2023-01-18 schedu… &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;NULL&gt; 
+6 2023-01-18 schedu… &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;named list&gt; &lt;NULL&gt; 
+# … with 1 more variable: live &lt;list&gt;, and abbreviated variable names
+#   ¹​flight_date, ²​flight_status, ³​aircraft</code></pre>
+</div>
+</div>
+<p>However, we can see that a lot of the columns still contains lists. No problem. We can easily take care of that with another call to <code><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider()</a></code>. If we string together two calls to the function, we can get to the information in the lists under departure. Now our data frame is a lot bigger.</p>
+<div class="cell column-body-outset">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_flight</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">departure</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 19
+  flight_date flight_s…¹ depar…² depar…³ depar…⁴ depar…⁵ depar…⁶ depar…⁷ depar…⁸
+  &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;
+1 2023-01-19  scheduled  Hong K… Asia/H… HKG     VHHH    1       &lt;NA&gt;         NA
+2 2023-01-19  scheduled  Hong K… Asia/H… HKG     VHHH    1       &lt;NA&gt;         NA
+3 2023-01-18  active     Ronald… Americ… DCA     KDCA    2       B15          NA
+4 2023-01-18  active     Pittsb… Americ… PIT     KPIT    &lt;NA&gt;    B37          NA
+5 2023-01-18  scheduled  Luis M… Americ… SJU     TJSJ    A       5             3
+6 2023-01-18  scheduled  Charle… Americ… CHS     KCHS    &lt;NA&gt;    B8           34
+# … with 10 more variables: departure_scheduled &lt;chr&gt;,
+#   departure_estimated &lt;chr&gt;, departure_actual &lt;chr&gt;,
+#   departure_estimated_runway &lt;chr&gt;, departure_actual_runway &lt;chr&gt;,
+#   arrival &lt;list&gt;, airline &lt;list&gt;, flight &lt;list&gt;, aircraft &lt;list&gt;,
+#   live &lt;list&gt;, and abbreviated variable names ¹​flight_status,
+#   ²​departure_airport, ³​departure_timezone, ⁴​departure_iata, ⁵​departure_icao,
+#   ⁶​departure_terminal, ⁷​departure_gate, ⁸​departure_delay</code></pre>
+</div>
+</div>
+<p>We can string together as many calls to <code><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider()</a></code> as we need until we get the output that we are looking for. We can remove the columns that end with “codeshared” as we won’t be utilizing that information.</p>
+<p>We are saving the output as a data frame names <code>tb_flight</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tb_flight</span> <span class="op">&lt;-</span> <span class="va">data_flight</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">departure</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">arrival</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">airline</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span><span class="va">flight</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"codeshared"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here is what our final data frame looks like.</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tb_flight</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display column-body-outset">
+
+<div id="famozltwbs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#famozltwbs) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#famozltwbs) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#famozltwbs) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#famozltwbs) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#famozltwbs) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#famozltwbs) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#famozltwbs) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#famozltwbs) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#famozltwbs) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+:where(#famozltwbs) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#famozltwbs) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#famozltwbs) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#famozltwbs) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#famozltwbs) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#famozltwbs) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#famozltwbs) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#famozltwbs) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#famozltwbs) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#famozltwbs) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#famozltwbs) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#famozltwbs) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#famozltwbs) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#famozltwbs) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#famozltwbs) .gt_left {
+  text-align: left;
+}
+
+:where(#famozltwbs) .gt_center {
+  text-align: center;
+}
+
+:where(#famozltwbs) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#famozltwbs) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#famozltwbs) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#famozltwbs) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#famozltwbs) .gt_super {
+  font-size: 65%;
+}
+
+:where(#famozltwbs) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#famozltwbs) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#famozltwbs) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#famozltwbs) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#famozltwbs) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#famozltwbs) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#famozltwbs) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="flight_date">flight_date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="flight_status">flight_status</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_airport">departure_airport</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_timezone">departure_timezone</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_iata">departure_iata</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_icao">departure_icao</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_terminal">departure_terminal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_gate">departure_gate</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="departure_delay">departure_delay</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_scheduled">departure_scheduled</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_estimated">departure_estimated</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_actual">departure_actual</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_estimated_runway">departure_estimated_runway</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="departure_actual_runway">departure_actual_runway</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_airport">arrival_airport</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_timezone">arrival_timezone</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_iata">arrival_iata</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_icao">arrival_icao</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="arrival_terminal">arrival_terminal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_gate">arrival_gate</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="arrival_baggage">arrival_baggage</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="arrival_delay">arrival_delay</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_scheduled">arrival_scheduled</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_estimated">arrival_estimated</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_actual">arrival_actual</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_estimated_runway">arrival_estimated_runway</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="arrival_actual_runway">arrival_actual_runway</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="airline_name">airline_name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="airline_iata">airline_iata</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="airline_icao">airline_icao</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="flight_number">flight_number</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="flight_iata">flight_iata</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="flight_icao">flight_icao</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="aircraft">aircraft</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="live">live</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="flight_date" class="gt_row gt_right">2023-01-19</td>
+<td headers="flight_status" class="gt_row gt_left">scheduled</td>
+<td headers="departure_airport" class="gt_row gt_left">Hong Kong International</td>
+<td headers="departure_timezone" class="gt_row gt_left">Asia/Hong_Kong</td>
+<td headers="departure_iata" class="gt_row gt_left">HKG</td>
+<td headers="departure_icao" class="gt_row gt_left">VHHH</td>
+<td headers="departure_terminal" class="gt_row gt_left">1</td>
+<td headers="departure_gate" class="gt_row gt_left">NA</td>
+<td headers="departure_delay" class="gt_row gt_right">NA</td>
+<td headers="departure_scheduled" class="gt_row gt_left">2023-01-19T03:20:00+00:00</td>
+<td headers="departure_estimated" class="gt_row gt_left">2023-01-19T03:20:00+00:00</td>
+<td headers="departure_actual" class="gt_row gt_left">NA</td>
+<td headers="departure_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="departure_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_airport" class="gt_row gt_left">John F Kennedy International</td>
+<td headers="arrival_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="arrival_iata" class="gt_row gt_left">JFK</td>
+<td headers="arrival_icao" class="gt_row gt_left">KJFK</td>
+<td headers="arrival_terminal" class="gt_row gt_right">8</td>
+<td headers="arrival_gate" class="gt_row gt_left">NA</td>
+<td headers="arrival_baggage" class="gt_row gt_right">NA</td>
+<td headers="arrival_delay" class="gt_row gt_center">NA</td>
+<td headers="arrival_scheduled" class="gt_row gt_left">2023-01-19T06:00:00+00:00</td>
+<td headers="arrival_estimated" class="gt_row gt_left">2023-01-19T06:00:00+00:00</td>
+<td headers="arrival_actual" class="gt_row gt_left">NA</td>
+<td headers="arrival_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="airline_name" class="gt_row gt_left">Malaysia Airlines</td>
+<td headers="airline_iata" class="gt_row gt_left">MH</td>
+<td headers="airline_icao" class="gt_row gt_left">MAS</td>
+<td headers="flight_number" class="gt_row gt_right">9210</td>
+<td headers="flight_iata" class="gt_row gt_left">MH9210</td>
+<td headers="flight_icao" class="gt_row gt_left">MAS9210</td>
+<td headers="aircraft" class="gt_row gt_center"></td>
+<td headers="live" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="flight_date" class="gt_row gt_right">2023-01-19</td>
+<td headers="flight_status" class="gt_row gt_left">scheduled</td>
+<td headers="departure_airport" class="gt_row gt_left">Hong Kong International</td>
+<td headers="departure_timezone" class="gt_row gt_left">Asia/Hong_Kong</td>
+<td headers="departure_iata" class="gt_row gt_left">HKG</td>
+<td headers="departure_icao" class="gt_row gt_left">VHHH</td>
+<td headers="departure_terminal" class="gt_row gt_left">1</td>
+<td headers="departure_gate" class="gt_row gt_left">NA</td>
+<td headers="departure_delay" class="gt_row gt_right">NA</td>
+<td headers="departure_scheduled" class="gt_row gt_left">2023-01-19T03:20:00+00:00</td>
+<td headers="departure_estimated" class="gt_row gt_left">2023-01-19T03:20:00+00:00</td>
+<td headers="departure_actual" class="gt_row gt_left">NA</td>
+<td headers="departure_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="departure_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_airport" class="gt_row gt_left">John F Kennedy International</td>
+<td headers="arrival_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="arrival_iata" class="gt_row gt_left">JFK</td>
+<td headers="arrival_icao" class="gt_row gt_left">KJFK</td>
+<td headers="arrival_terminal" class="gt_row gt_right">8</td>
+<td headers="arrival_gate" class="gt_row gt_left">NA</td>
+<td headers="arrival_baggage" class="gt_row gt_right">NA</td>
+<td headers="arrival_delay" class="gt_row gt_center">NA</td>
+<td headers="arrival_scheduled" class="gt_row gt_left">2023-01-19T06:00:00+00:00</td>
+<td headers="arrival_estimated" class="gt_row gt_left">2023-01-19T06:00:00+00:00</td>
+<td headers="arrival_actual" class="gt_row gt_left">NA</td>
+<td headers="arrival_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="airline_name" class="gt_row gt_left">Cathay Pacific</td>
+<td headers="airline_iata" class="gt_row gt_left">CX</td>
+<td headers="airline_icao" class="gt_row gt_left">CPA</td>
+<td headers="flight_number" class="gt_row gt_right">844</td>
+<td headers="flight_iata" class="gt_row gt_left">CX844</td>
+<td headers="flight_icao" class="gt_row gt_left">CPA844</td>
+<td headers="aircraft" class="gt_row gt_center"></td>
+<td headers="live" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="flight_date" class="gt_row gt_right">2023-01-18</td>
+<td headers="flight_status" class="gt_row gt_left">active</td>
+<td headers="departure_airport" class="gt_row gt_left">Ronald Reagan Washington National Airport</td>
+<td headers="departure_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="departure_iata" class="gt_row gt_left">DCA</td>
+<td headers="departure_icao" class="gt_row gt_left">KDCA</td>
+<td headers="departure_terminal" class="gt_row gt_left">2</td>
+<td headers="departure_gate" class="gt_row gt_left">B15</td>
+<td headers="departure_delay" class="gt_row gt_right">NA</td>
+<td headers="departure_scheduled" class="gt_row gt_left">2023-01-18T06:10:00+00:00</td>
+<td headers="departure_estimated" class="gt_row gt_left">2023-01-18T06:10:00+00:00</td>
+<td headers="departure_actual" class="gt_row gt_left">NA</td>
+<td headers="departure_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="departure_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_airport" class="gt_row gt_left">John F Kennedy International</td>
+<td headers="arrival_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="arrival_iata" class="gt_row gt_left">JFK</td>
+<td headers="arrival_icao" class="gt_row gt_left">KJFK</td>
+<td headers="arrival_terminal" class="gt_row gt_right">4</td>
+<td headers="arrival_gate" class="gt_row gt_left">B55</td>
+<td headers="arrival_baggage" class="gt_row gt_right">NA</td>
+<td headers="arrival_delay" class="gt_row gt_center">NA</td>
+<td headers="arrival_scheduled" class="gt_row gt_left">2023-01-18T07:37:00+00:00</td>
+<td headers="arrival_estimated" class="gt_row gt_left">2023-01-18T07:37:00+00:00</td>
+<td headers="arrival_actual" class="gt_row gt_left">NA</td>
+<td headers="arrival_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="airline_name" class="gt_row gt_left">Alitalia</td>
+<td headers="airline_iata" class="gt_row gt_left">AZ</td>
+<td headers="airline_icao" class="gt_row gt_left">AZA</td>
+<td headers="flight_number" class="gt_row gt_right">5849</td>
+<td headers="flight_iata" class="gt_row gt_left">AZ5849</td>
+<td headers="flight_icao" class="gt_row gt_left">AZA5849</td>
+<td headers="aircraft" class="gt_row gt_center"></td>
+<td headers="live" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="flight_date" class="gt_row gt_right">2023-01-18</td>
+<td headers="flight_status" class="gt_row gt_left">active</td>
+<td headers="departure_airport" class="gt_row gt_left">Pittsburgh International</td>
+<td headers="departure_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="departure_iata" class="gt_row gt_left">PIT</td>
+<td headers="departure_icao" class="gt_row gt_left">KPIT</td>
+<td headers="departure_terminal" class="gt_row gt_left">NA</td>
+<td headers="departure_gate" class="gt_row gt_left">B37</td>
+<td headers="departure_delay" class="gt_row gt_right">NA</td>
+<td headers="departure_scheduled" class="gt_row gt_left">2023-01-18T05:50:00+00:00</td>
+<td headers="departure_estimated" class="gt_row gt_left">2023-01-18T05:50:00+00:00</td>
+<td headers="departure_actual" class="gt_row gt_left">NA</td>
+<td headers="departure_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="departure_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_airport" class="gt_row gt_left">John F Kennedy International</td>
+<td headers="arrival_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="arrival_iata" class="gt_row gt_left">JFK</td>
+<td headers="arrival_icao" class="gt_row gt_left">KJFK</td>
+<td headers="arrival_terminal" class="gt_row gt_right">8</td>
+<td headers="arrival_gate" class="gt_row gt_left">37</td>
+<td headers="arrival_baggage" class="gt_row gt_right">NA</td>
+<td headers="arrival_delay" class="gt_row gt_center">NA</td>
+<td headers="arrival_scheduled" class="gt_row gt_left">2023-01-18T07:30:00+00:00</td>
+<td headers="arrival_estimated" class="gt_row gt_left">2023-01-18T07:30:00+00:00</td>
+<td headers="arrival_actual" class="gt_row gt_left">NA</td>
+<td headers="arrival_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="airline_name" class="gt_row gt_left">Qatar Airways</td>
+<td headers="airline_iata" class="gt_row gt_left">QR</td>
+<td headers="airline_icao" class="gt_row gt_left">QTR</td>
+<td headers="flight_number" class="gt_row gt_right">7678</td>
+<td headers="flight_iata" class="gt_row gt_left">QR7678</td>
+<td headers="flight_icao" class="gt_row gt_left">QTR7678</td>
+<td headers="aircraft" class="gt_row gt_center"></td>
+<td headers="live" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="flight_date" class="gt_row gt_right">2023-01-18</td>
+<td headers="flight_status" class="gt_row gt_left">scheduled</td>
+<td headers="departure_airport" class="gt_row gt_left">Luis Munoz Marin International</td>
+<td headers="departure_timezone" class="gt_row gt_left">America/Puerto_Rico</td>
+<td headers="departure_iata" class="gt_row gt_left">SJU</td>
+<td headers="departure_icao" class="gt_row gt_left">TJSJ</td>
+<td headers="departure_terminal" class="gt_row gt_left">A</td>
+<td headers="departure_gate" class="gt_row gt_left">5</td>
+<td headers="departure_delay" class="gt_row gt_right">3</td>
+<td headers="departure_scheduled" class="gt_row gt_left">2023-01-18T06:20:00+00:00</td>
+<td headers="departure_estimated" class="gt_row gt_left">2023-01-18T06:20:00+00:00</td>
+<td headers="departure_actual" class="gt_row gt_left">2023-01-18T06:22:00+00:00</td>
+<td headers="departure_estimated_runway" class="gt_row gt_left">2023-01-18T06:22:00+00:00</td>
+<td headers="departure_actual_runway" class="gt_row gt_left">2023-01-18T06:22:00+00:00</td>
+<td headers="arrival_airport" class="gt_row gt_left">John F Kennedy International</td>
+<td headers="arrival_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="arrival_iata" class="gt_row gt_left">JFK</td>
+<td headers="arrival_icao" class="gt_row gt_left">KJFK</td>
+<td headers="arrival_terminal" class="gt_row gt_right">5</td>
+<td headers="arrival_gate" class="gt_row gt_left">11</td>
+<td headers="arrival_baggage" class="gt_row gt_right">3</td>
+<td headers="arrival_delay" class="gt_row gt_center">NA</td>
+<td headers="arrival_scheduled" class="gt_row gt_left">2023-01-18T09:25:00+00:00</td>
+<td headers="arrival_estimated" class="gt_row gt_left">2023-01-18T09:25:00+00:00</td>
+<td headers="arrival_actual" class="gt_row gt_left">NA</td>
+<td headers="arrival_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="airline_name" class="gt_row gt_left">JetBlue Airways</td>
+<td headers="airline_iata" class="gt_row gt_left">B6</td>
+<td headers="airline_icao" class="gt_row gt_left">JBU</td>
+<td headers="flight_number" class="gt_row gt_right">404</td>
+<td headers="flight_iata" class="gt_row gt_left">B6404</td>
+<td headers="flight_icao" class="gt_row gt_left">JBU404</td>
+<td headers="aircraft" class="gt_row gt_center"></td>
+<td headers="live" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="flight_date" class="gt_row gt_right">2023-01-18</td>
+<td headers="flight_status" class="gt_row gt_left">scheduled</td>
+<td headers="departure_airport" class="gt_row gt_left">Charleston, AFB Municipal</td>
+<td headers="departure_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="departure_iata" class="gt_row gt_left">CHS</td>
+<td headers="departure_icao" class="gt_row gt_left">KCHS</td>
+<td headers="departure_terminal" class="gt_row gt_left">NA</td>
+<td headers="departure_gate" class="gt_row gt_left">B8</td>
+<td headers="departure_delay" class="gt_row gt_right">34</td>
+<td headers="departure_scheduled" class="gt_row gt_left">2023-01-18T10:45:00+00:00</td>
+<td headers="departure_estimated" class="gt_row gt_left">2023-01-18T10:45:00+00:00</td>
+<td headers="departure_actual" class="gt_row gt_left">NA</td>
+<td headers="departure_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="departure_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_airport" class="gt_row gt_left">John F Kennedy International</td>
+<td headers="arrival_timezone" class="gt_row gt_left">America/New_York</td>
+<td headers="arrival_iata" class="gt_row gt_left">JFK</td>
+<td headers="arrival_icao" class="gt_row gt_left">KJFK</td>
+<td headers="arrival_terminal" class="gt_row gt_right">5</td>
+<td headers="arrival_gate" class="gt_row gt_left">23</td>
+<td headers="arrival_baggage" class="gt_row gt_right">5</td>
+<td headers="arrival_delay" class="gt_row gt_center">NA</td>
+<td headers="arrival_scheduled" class="gt_row gt_left">2023-01-18T12:35:00+00:00</td>
+<td headers="arrival_estimated" class="gt_row gt_left">2023-01-18T12:35:00+00:00</td>
+<td headers="arrival_actual" class="gt_row gt_left">NA</td>
+<td headers="arrival_estimated_runway" class="gt_row gt_left">NA</td>
+<td headers="arrival_actual_runway" class="gt_row gt_left">NA</td>
+<td headers="airline_name" class="gt_row gt_left">TAP Air Portugal</td>
+<td headers="airline_iata" class="gt_row gt_left">TP</td>
+<td headers="airline_icao" class="gt_row gt_left">TAP</td>
+<td headers="flight_number" class="gt_row gt_right">4266</td>
+<td headers="flight_iata" class="gt_row gt_left">TP4266</td>
+<td headers="flight_icao" class="gt_row gt_left">TAP4266</td>
+<td headers="aircraft" class="gt_row gt_center"></td>
+<td headers="live" class="gt_row gt_center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section><section id="data-prep-for-plotting-flights" class="level2 page-columns page-full" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="data-prep-for-plotting-flights">
+<span class="header-section-number">1.4</span> Data Prep for Plotting Flights</h2>
+<p>Looking at our data, there’s something that stands out, or should I say doesn’t stand out. This data doesn’t have any geographic information! We can’t plot anything with this data.</p>
+<p>Well, thankfully for us, there is a nifty package that can help us called <a href="https://github.com/dshkol/airportr">airportr</a>. Airportr is a pretty simple package that does exactly what we need it to do. It uses data from <a href="openfligts.org">openfligts.org</a> to take an airport name, such as an IATA code, and produce a bunch of information about that airport, including it’s latitude and longitude! We can plot now! WOOHOO!</p>
+<p>So let’s get down to business. We are going to take our unnested data frame and use the IATA codes to get the latitude and longitude of each airport currently with flights heading to JFK airport.</p>
+<p>To do this, we are going to use <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> which takes a list or vector of values, and applies them one at a time to a function. The function we are applying them to is <code><a href="https://rdrr.io/pkg/airportr/man/airport_detail.html">airportr::airport_detail()</a></code> which is going to return the information we need.</p>
+<p><code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> returns a list of values however and we want a data frame, so <code><a href="https://purrr.tidyverse.org/reference/list_c.html">purrr::list_rbind()</a></code> is going to collapse that list into exactly what we want. Once we have a data frame, we can add back in all the flight information from the API call to include as details in our map.</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lat_lon_dep</span> <span class="op">&lt;-</span> <span class="va">tb_flight</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>departure_country <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">departure_timezone</span>, <span class="st">'/'</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">departure_iata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">airportr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/airportr/man/airport_detail.html">airport_detail</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">x</span>, input_type <span class="op">=</span> <span class="st">"IATA"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="va">tb_flight</span><span class="op">$</span><span class="va">departure_iata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">tb_flight</span> <span class="op">|&gt;</span> </span>
+<span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"scheduled"</span><span class="op">)</span>, </span>
+<span>                     <span class="va">airline_name</span>, </span>
+<span>                     <span class="va">flight_number</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>departure_scheduled <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="va">departure_scheduled</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         arrival_scheduled <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="va">arrival_scheduled</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This bit of code is to get us the location of JFK airport since flights don’t leave JFK to arrive at JFK, or do they? That would be weird.</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">arr_location</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_vec</a></span><span class="op">(</span><span class="st">"JFK"</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">airportr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/airportr/man/airport_location.html">airport_location</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">x</span>, input_type <span class="op">=</span> <span class="st">"IATA"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">arr_location</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  Latitude Longitude
+     &lt;dbl&gt;     &lt;dbl&gt;
+1     40.6     -73.8</code></pre>
+</div>
+</div>
+<p>Anyway, once we get JFK’s lat and long, we can do something to help us with our plotting later. On our map, we want to have a line point from the departure airport to JFK. To do this we need to have the a special data type called a <code>LINESTRING</code> which we well be creating later, but this is a necessary step to creating it.</p>
+<p>We group the data frame we created by IATA code and then we pass the grouped data frame to a function called <code><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_modify()</a></code>. This function lets us apply function to each group, and we are using it to get one row for each IATA code found in our data. Then, for each group we are adding the longitude and latitude for JFK.</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lat_lon_line</span> <span class="op">&lt;-</span> <span class="va">lat_lon_dep</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_modify</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_modify</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/add_row.html">add_row</a></span><span class="op">(</span><span class="va">.x</span>, </span>
+<span>                         Latitude <span class="op">=</span> <span class="va">arr_location</span><span class="op">$</span><span class="va">Latitude</span>, </span>
+<span>                         Longitude <span class="op">=</span> <span class="va">arr_location</span><span class="op">$</span><span class="va">Longitude</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is what our output will look like.</p>
+<p>As you can see, the second occurance of each IATA code contains the latitude and longitude of JFK.</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lat_lon_line</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">IATA</span>, <span class="va">Longitude</span>, <span class="va">Latitude</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+# Groups:   IATA [3]
+  IATA  Longitude Latitude
+  &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 AMS        4.76     52.3
+2 AMS      -73.8      40.6
+3 ATL      -84.4      33.6
+4 ATL      -73.8      40.6
+5 BGR      -68.8      44.8
+6 BGR      -73.8      40.6</code></pre>
+</div>
+</div>
+<p>When working with geographical data in R, the <a href="https://r-spatial.github.io/sf/">sf package</a> going to be your best friend. This package contains so many functions to work with and map out geographic data. And most importantly for us, turn geographic data in numeric form into a geographic data structure called a geometry.</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">sf::st_as_sf()</a></code> is going to turn our long and lat values into a geometry data structure. All we have to do is give it our data frame, the column names that correspond to our long and lat values, and a value for our coordinate reference system. 4326 is a standard CRS code that helps applies the same mapping projection to all of our long and lat values when they are plotted.</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dep_sf</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="va">lat_lon_line</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Longitude"</span>, <span class="st">"Latitude"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here’s why we went through all that trouble with <code><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_modify()</a></code> before. When we group dep_sf by IATA code and then call <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> on it, we get the latitude and longitude for JFK and the other airport in the same column.</p>
+<div class="cell column-body-outset">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dep_sf</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 1 field
+Geometry type: MULTIPOINT
+Dimension:     XY
+Bounding box:  xmin: -84.4281 ymin: 33.6367 xmax: 4.76389 ymax: 52.3086
+Geodetic CRS:  WGS 84
+# A tibble: 6 × 2
+  IATA                                  geometry
+  &lt;chr&gt;                         &lt;MULTIPOINT [°]&gt;
+1 AMS    ((4.76389 52.3086), (-73.7789 40.6398))
+2 ATL   ((-84.4281 33.6367), (-73.7789 40.6398))
+3 BGR   ((-68.8281 44.8074), (-73.7789 40.6398))
+4 BOS   ((-73.7789 40.6398), (-71.0052 42.3643))
+5 BTV   ((-73.1533 44.4719), (-73.7789 40.6398))
+6 BUF   ((-73.7789 40.6398), (-78.7322 42.9405))</code></pre>
+</div>
+</div>
+<p>Next, when we call another sf function, <code><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast()</a></code>, with the argument “LINESTRING”, we get the geometry that we have been after. Now, we can plot lines between the airports!</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dep_sf</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast</a></span><span class="op">(</span><span class="st">"LINESTRING"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 1 field
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -84.4281 ymin: 33.6367 xmax: 4.76389 ymax: 52.3086
+Geodetic CRS:  WGS 84
+# A tibble: 6 × 2
+  IATA                              geometry
+  &lt;chr&gt;                     &lt;LINESTRING [°]&gt;
+1 AMS    (4.76389 52.3086, -73.7789 40.6398)
+2 ATL   (-84.4281 33.6367, -73.7789 40.6398)
+3 BGR   (-68.8281 44.8074, -73.7789 40.6398)
+4 BOS   (-73.7789 40.6398, -71.0052 42.3643)
+5 BTV   (-73.1533 44.4719, -73.7789 40.6398)
+6 BUF   (-73.7789 40.6398, -78.7322 42.9405)</code></pre>
+</div>
+</div>
+<p>The final part of the pipe is adding on the information from our API call and the airportr function call.</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dep_line</span> <span class="op">&lt;-</span> <span class="va">dep_sf</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast</a></span><span class="op">(</span><span class="st">"LINESTRING"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">lat_lon_dep</span> <span class="op">|&gt;</span></span>
+<span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_modify</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span><span class="op">)</span></span>
+<span>            <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="plotting-our-data" class="level2 page-columns page-full" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="plotting-our-data">
+<span class="header-section-number">1.5</span> Plotting Our Data</h2>
+<p>We have finally made it to plotting our data! Wow, that was a long road but I am glad we are here.</p>
+<p>We are going to be using the <a href="https://rstudio.github.io/leaflet/https://rstudio.github.io/leaflet/">leaflet R package</a> which is the R implementation of a popular open-source JavaScript library for interactive mapping.</p>
+<p>I highly recommend checking out the documentation for using leaflet because it is very powerful, and what I am about to show you is a pretty simple use case in comparison to what is out there.</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>All leaflet code begins with the <code><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html">leaflet()</a></code> function. Then we add our base map with <code><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addTiles()</a></code>. Now we add our geometries. <code><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addPolylines()</a></code> is how we add our LINESTIRNG data. We don’t have to specify our columns in this instance because leaflet is looking for the geometry data structure we made. Next, we are adding markers for the airport locations using <code><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addMarkers()</a></code>. In this case, we are referring to column names because we don’t have a geometry data structure in this object. I’m also adding labels so information about each airport and the flight shows up when we hover over a marker, and finally, we are clustering markers because some airports have multiple flights going to JFK throughout the day.</p>
+<div class="cell">
+<details><summary>Labels</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
+<span>  <span class="st">"&lt;strong&gt;%s&lt;/strong&gt;&lt;br/&gt;%s&lt;br/&gt;%s&lt;br/&gt;Flight Number &lt;strong&gt;%s&lt;/strong&gt;</span></span>
+<span><span class="st">  &lt;br/&gt;Departure Time %s&lt;br/&gt; Arrvial Time %s"</span>,</span>
+<span>  <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">City</span>, <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">Name</span>, <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">airline_name</span>,</span>
+<span>  <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">flight_number</span>, <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">departure_scheduled</span>, <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">arrival_scheduled</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rstudio.github.io/htmltools/reference/HTML.html">HTML</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addPolylines</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dep_line</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addMarkers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lat_lon_dep</span>, </span>
+<span>             lng <span class="op">=</span> <span class="op">~</span><span class="va">Longitude</span>, </span>
+<span>             lat <span class="op">=</span> <span class="op">~</span><span class="va">Latitude</span>, </span>
+<span>             label <span class="op">=</span> <span class="va">label</span>,</span>
+<span>             clusterOptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-options.html">markerClusterOptions</a></span><span class="op">(</span>freezeAtZoom <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So with all our code put together, here’s our finished map.</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display column-screen-inset-shaded">
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c1b55bb5c746576ee901" style="width:100%;height:541px;"></div>
+<script type="application/json" data-for="htmlwidget-c1b55bb5c746576ee901">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addPolylines","args":[[[[{"lng":[4.76389,-73.77890015],"lat":[52.308601,40.63980103]}]],[[{"lng":[-84.428101,-73.77890015],"lat":[33.6367,40.63980103]}]],[[{"lng":[-68.8281021118164,-73.77890015],"lat":[44.8073997497559,40.63980103]}]],[[{"lng":[-73.77890015,-71.00520325],"lat":[40.63980103,42.36429977]}]],[[{"lng":[-73.1532974243,-73.77890015],"lat":[44.4719009399,40.63980103]}]],[[{"lng":[-73.77890015,-78.73220062],"lat":[40.63980103,42.94049835]}]],[[{"lng":[-80.04049683,-73.77890015],"lat":[32.89860153,40.63980103]}]],[[{"lng":[-80.9430999755859,-73.77890015],"lat":[35.2140007019043,40.63980103]}]],[[{"lng":[-73.77890015,-86.8770980835],"lat":[40.63980103,21.0365009308]}]],[[{"lng":[-77.037697,-73.77890015],"lat":[38.8521,40.63980103]}]],[[{"lng":[-97.038002,-73.77890015],"lat":[32.896801,40.63980103]}]],[[{"lng":[51.608056,-73.77890015],"lat":[25.273056,40.63980103]}]],[[{"lng":[55.3643989563,-73.77890015],"lat":[25.2527999878,40.63980103]}]],[[{"lng":[12.2388889,-73.77890015],"lat":[41.8002778,40.63980103]}]],[[{"lng":[-80.152702,-73.77890015],"lat":[26.072599,40.63980103]}]],[[{"lng":[113.915001,-73.77890015],"lat":[22.308901,40.63980103]}]],[[{"lng":[-86.294403,-73.77890015],"lat":[39.7173,40.63980103]}]],[[{"lng":[-73.77890015,-76.4583969116211],"lat":[40.63980103,42.4910011291504]}]],[[{"lng":[-118.4079971,-73.77890015],"lat":[33.94250107,40.63980103]}]],[[{"lng":[-0.461941,-73.77890015],"lat":[51.4706,40.63980103]}]],[[{"lng":[-73.77890015,-77.114305],"lat":[40.63980103,-12.0219]}]],[[{"lng":[-81.3089981079102,-73.77890015],"lat":[28.4293994903564,40.63980103]}]],[[{"lng":[-89.9766998291016,-73.77890015],"lat":[35.0424003601074,40.63980103]}]],[[{"lng":[-80.2906036376953,-73.77890015],"lat":[25.7931995391846,40.63980103]}]],[[{"lng":[-100.107002258,-73.77890015],"lat":[25.7784996033,40.63980103]}]],[[{"lng":[-77.4662017822,-73.77890015],"lat":[25.0389995575,40.63980103]}]],[[{"lng":[-76.2012023925781,-73.77890015],"lat":[36.8945999145508,40.63980103]}]],[[{"lng":[-80.0955963134766,-73.77890015],"lat":[26.6832008361816,40.63980103]}]],[[{"lng":[-80.23290253,-73.77890015],"lat":[40.49150085,40.63980103]}]],[[{"lng":[-73.77890015,-77.6724014282227],"lat":[40.63980103,43.1189002990723]}]],[[{"lng":[-81.20210266,-73.77890015],"lat":[32.12760162,40.63980103]}]],[[{"lng":[-122.375,-73.77890015],"lat":[37.6189994812012,40.63980103]}]],[[{"lng":[-73.77890015,-66.0018005371],"lat":[40.63980103,18.4393997192]}]],[[{"lng":[-73.77890015,-64.9733963012695],"lat":[40.63980103,18.3372993469238]}]],[[{"lng":[34.8866996765137,-73.77890015],"lat":[32.0113983154297,40.63980103]}]],[[{"lng":[-82.533203125,-73.77890015],"lat":[27.9755001068115,40.63980103]}]],[[{"lng":[121.233002,-73.77890015],"lat":[25.0777,40.63980103]}]],[[{"lng":[-114.019996643,-73.77890015],"lat":[51.113899231,40.63980103]}]],[[{"lng":[-79.6305999756,-73.77890015],"lat":[43.6772003174,40.63980103]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":false,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addMarkers","args":[[22.308901,22.308901,38.8521,40.49150085,18.4393997192,32.89860153,18.3372993469238,18.3372993469238,18.3372993469238,18.3372993469238,18.3372993469238,18.3372993469238,32.89860153,27.9755001068115,27.9755001068115,25.2527999878,25.7931995391846,27.9755001068115,27.9755001068115,43.6772003174,39.7173,39.7173,40.49150085,25.273056,42.94049835,42.94049835,42.94049835,42.94049835,42.94049835,42.94049835,42.94049835,42.94049835,25.7784996033,25.0777,51.4706,42.4910011291504,44.4719009399,35.0424003601074,25.273056,25.0389995575,26.6832008361816,51.113899231,36.8945999145508,43.6772003174,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,37.6189994812012,44.4719009399,52.308601,44.8073997497559,32.12760162,32.12760162,32.12760162,32.12760162,21.0365009308,-12.0219,25.7931995391846,25.7931995391846,25.7931995391846,25.7931995391846,42.94049835,42.94049835,42.94049835,42.94049835,42.94049835,18.4393997192,18.4393997192,18.4393997192,43.6772003174,33.94250107,40.49150085,35.2140007019043,32.896801,32.896801,32.896801,32.896801,32.896801,32.896801,32.896801,41.8002778,26.072599,36.8945999145508,33.6367,43.1189002990723,26.6832008361816,42.94049835,42.36429977,28.4293994903564,32.0113983154297,32.0113983154297],[113.915001,113.915001,-77.037697,-80.23290253,-66.0018005371,-80.04049683,-64.9733963012695,-64.9733963012695,-64.9733963012695,-64.9733963012695,-64.9733963012695,-64.9733963012695,-80.04049683,-82.533203125,-82.533203125,55.3643989563,-80.2906036376953,-82.533203125,-82.533203125,-79.6305999756,-86.294403,-86.294403,-80.23290253,51.608056,-78.73220062,-78.73220062,-78.73220062,-78.73220062,-78.73220062,-78.73220062,-78.73220062,-78.73220062,-100.107002258,121.233002,-0.461941,-76.4583969116211,-73.1532974243,-89.9766998291016,51.608056,-77.4662017822,-80.0955963134766,-114.019996643,-76.2012023925781,-79.6305999756,-122.375,-122.375,-122.375,-122.375,-122.375,-122.375,-122.375,-122.375,-122.375,-122.375,-122.375,-122.375,-122.375,-73.1532974243,4.76389,-68.8281021118164,-81.20210266,-81.20210266,-81.20210266,-81.20210266,-86.8770980835,-77.114305,-80.2906036376953,-80.2906036376953,-80.2906036376953,-80.2906036376953,-78.73220062,-78.73220062,-78.73220062,-78.73220062,-78.73220062,-66.0018005371,-66.0018005371,-66.0018005371,-79.6305999756,-118.4079971,-80.23290253,-80.9430999755859,-97.038002,-97.038002,-97.038002,-97.038002,-97.038002,-97.038002,-97.038002,12.2388889,-80.152702,-76.2012023925781,-84.428101,-77.6724014282227,-80.0955963134766,-78.73220062,-71.00520325,-81.3089981079102,34.8866996765137,34.8866996765137],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,{"showCoverageOnHover":true,"zoomToBoundsOnClick":true,"spiderfyOnMaxZoom":true,"removeOutsideVisibleBounds":true,"spiderLegPolylineOptions":{"weight":1.5,"color":"#222","opacity":0.5},"freezeAtZoom":5},null,["<strong>Hong Kong<\/strong><br/>Hong Kong International Airport<br/>Malaysia Airlines<br/>Flight Number <strong>9210<\/strong>\n  <br/>Departure Time 2023-01-19 03:20:00<br/> Arrvial Time 2023-01-19 06:00:00","<strong>Hong Kong<\/strong><br/>Hong Kong International Airport<br/>Cathay Pacific<br/>Flight Number <strong>844<\/strong>\n  <br/>Departure Time 2023-01-19 03:20:00<br/> Arrvial Time 2023-01-19 06:00:00","<strong>Washington<\/strong><br/>Ronald Reagan Washington National Airport<br/>Alitalia<br/>Flight Number <strong>5849<\/strong>\n  <br/>Departure Time 2023-01-18 06:10:00<br/> Arrvial Time 2023-01-18 07:37:00","<strong>Pittsburgh<\/strong><br/>Pittsburgh International Airport<br/>Qatar Airways<br/>Flight Number <strong>7678<\/strong>\n  <br/>Departure Time 2023-01-18 05:50:00<br/> Arrvial Time 2023-01-18 07:30:00","<strong>San Juan<\/strong><br/>Luis Munoz Marin International Airport<br/>JetBlue Airways<br/>Flight Number <strong>404<\/strong>\n  <br/>Departure Time 2023-01-18 06:20:00<br/> Arrvial Time 2023-01-18 09:25:00","<strong>Charleston<\/strong><br/>Charleston Air Force Base-International Airport<br/>TAP Air Portugal<br/>Flight Number <strong>4266<\/strong>\n  <br/>Departure Time 2023-01-18 10:45:00<br/> Arrvial Time 2023-01-18 12:35:00","<strong>St. Thomas<\/strong><br/>Cyril E. King Airport<br/>JetBlue Airways<br/>Flight Number <strong>4084<\/strong>\n  <br/>Departure Time 2023-01-18 14:14:00<br/> Arrvial Time 2023-01-18 17:29:00","<strong>St. Thomas<\/strong><br/>Cyril E. King Airport<br/>Qatar Airways<br/>Flight Number <strong>9012<\/strong>\n  <br/>Departure Time 2023-01-18 14:14:00<br/> Arrvial Time 2023-01-18 17:29:00","<strong>St. Thomas<\/strong><br/>Cyril E. King Airport<br/>American Airlines<br/>Flight Number <strong>936<\/strong>\n  <br/>Departure Time 2023-01-18 14:14:00<br/> Arrvial Time 2023-01-18 17:29:00","<strong>St. Thomas<\/strong><br/>Cyril E. King Airport<br/>Alitalia<br/>Flight Number <strong>3189<\/strong>\n  <br/>Departure Time 2023-01-18 14:35:00<br/> Arrvial Time 2023-01-18 17:45:00","<strong>St. Thomas<\/strong><br/>Cyril E. King Airport<br/>KLM<br/>Flight Number <strong>7799<\/strong>\n  <br/>Departure Time 2023-01-18 14:35:00<br/> Arrvial Time 2023-01-18 17:45:00","<strong>St. Thomas<\/strong><br/>Cyril E. King Airport<br/>Virgin Atlantic<br/>Flight Number <strong>4942<\/strong>\n  <br/>Departure Time 2023-01-18 14:35:00<br/> Arrvial Time 2023-01-18 17:45:00","<strong>Charleston<\/strong><br/>Charleston Air Force Base-International Airport<br/>Royal Air Maroc<br/>Flight Number <strong>9625<\/strong>\n  <br/>Departure Time 2023-01-18 10:45:00<br/> Arrvial Time 2023-01-18 12:35:00","<strong>Tampa<\/strong><br/>Tampa International Airport<br/>JAL<br/>Flight Number <strong>5851<\/strong>\n  <br/>Departure Time 2023-01-18 06:21:00<br/> Arrvial Time 2023-01-18 09:00:00","<strong>Tampa<\/strong><br/>Tampa International Airport<br/>American Airlines<br/>Flight Number <strong>9104<\/strong>\n  <br/>Departure Time 2023-01-18 06:21:00<br/> Arrvial Time 2023-01-18 09:00:00","<strong>Dubai<\/strong><br/>Dubai International Airport<br/>Emirates<br/>Flight Number <strong>201<\/strong>\n  <br/>Departure Time 2023-01-18 08:30:00<br/> Arrvial Time 2023-01-18 13:55:00","<strong>Miami<\/strong><br/>Miami International Airport<br/>Alitalia<br/>Flight Number <strong>3358<\/strong>\n  <br/>Departure Time 2023-01-18 07:35:00<br/> Arrvial Time 2023-01-18 10:20:00","<strong>Tampa<\/strong><br/>Tampa International Airport<br/>Virgin Atlantic<br/>Flight Number <strong>4946<\/strong>\n  <br/>Departure Time 2023-01-18 07:30:00<br/> Arrvial Time 2023-01-18 10:10:00","<strong>Tampa<\/strong><br/>Tampa International Airport<br/>Delta Air Lines<br/>Flight Number <strong>1641<\/strong>\n  <br/>Departure Time 2023-01-18 07:30:00<br/> Arrvial Time 2023-01-18 10:10:00","<strong>Toronto<\/strong><br/>Lester B. Pearson International Airport<br/>American Airlines<br/>Flight Number <strong>4422<\/strong>\n  <br/>Departure Time 2023-01-18 06:11:00<br/> Arrvial Time 2023-01-18 08:00:00","<strong>Indianapolis<\/strong><br/>Indianapolis International Airport<br/>Alitalia<br/>Flight Number <strong>3527<\/strong>\n  <br/>Departure Time 2023-01-18 07:00:00<br/> Arrvial Time 2023-01-18 09:23:00","<strong>Indianapolis<\/strong><br/>Indianapolis International Airport<br/>Korean Air<br/>Flight Number <strong>7545<\/strong>\n  <br/>Departure Time 2023-01-18 07:00:00<br/> Arrvial Time 2023-01-18 09:23:00","<strong>Pittsburgh<\/strong><br/>Pittsburgh International Airport<br/>WestJet<br/>Flight Number <strong>7432<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 07:50:00","<strong>Doha<\/strong><br/>Hamad International Airport<br/>Alaska Airlines<br/>Flight Number <strong>5839<\/strong>\n  <br/>Departure Time 2023-01-18 15:30:00<br/> Arrvial Time 2023-01-18 22:20:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>JetBlue Airways<br/>Flight Number <strong>2601<\/strong>\n  <br/>Departure Time 2023-01-18 13:30:00<br/> Arrvial Time 2023-01-18 14:58:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>Singapore Airlines<br/>Flight Number <strong>1457<\/strong>\n  <br/>Departure Time 2023-01-18 13:30:00<br/> Arrvial Time 2023-01-18 14:58:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>Qatar Airways<br/>Flight Number <strong>3882<\/strong>\n  <br/>Departure Time 2023-01-18 13:30:00<br/> Arrvial Time 2023-01-18 14:58:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>El Al<br/>Flight Number <strong>8622<\/strong>\n  <br/>Departure Time 2023-01-18 13:30:00<br/> Arrvial Time 2023-01-18 14:58:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>Etihad Airways<br/>Flight Number <strong>8242<\/strong>\n  <br/>Departure Time 2023-01-18 13:30:00<br/> Arrvial Time 2023-01-18 14:58:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>Aer Lingus<br/>Flight Number <strong>5033<\/strong>\n  <br/>Departure Time 2023-01-18 13:30:00<br/> Arrvial Time 2023-01-18 14:58:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>Royal Air Maroc<br/>Flight Number <strong>9629<\/strong>\n  <br/>Departure Time 2023-01-18 13:30:00<br/> Arrvial Time 2023-01-18 14:58:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>American Airlines<br/>Flight Number <strong>9455<\/strong>\n  <br/>Departure Time 2023-01-18 13:30:00<br/> Arrvial Time 2023-01-18 14:58:00","<strong>Monterrey<\/strong><br/>General Mariano Escobedo International Airport<br/>American Airlines<br/>Flight Number <strong>2928<\/strong>\n  <br/>Departure Time 2023-01-18 06:19:00<br/> Arrvial Time 2023-01-18 11:31:00","<strong>Taipei<\/strong><br/>Taiwan Taoyuan International Airport<br/>SA AVIANCA<br/>Flight Number <strong>4511<\/strong>\n  <br/>Departure Time 2023-01-18 19:30:00<br/> Arrvial Time 2023-01-18 21:10:00","<strong>London<\/strong><br/>London Heathrow Airport<br/>British Airways<br/>Flight Number <strong>179<\/strong>\n  <br/>Departure Time 2023-01-18 18:00:00<br/> Arrvial Time 2023-01-18 21:10:00","<strong>Ithaca<\/strong><br/>Ithaca Tompkins Regional Airport<br/>Delta Air Lines<br/>Flight Number <strong>4728<\/strong>\n  <br/>Departure Time 2023-01-18 05:31:00<br/> Arrvial Time 2023-01-18 07:03:00","<strong>Burlington<\/strong><br/>Burlington International Airport<br/>Delta Air Lines<br/>Flight Number <strong>5378<\/strong>\n  <br/>Departure Time 2023-01-18 05:15:00<br/> Arrvial Time 2023-01-18 07:00:00","<strong>Memphis<\/strong><br/>Memphis International Airport<br/>FedEx<br/>Flight Number <strong>1431<\/strong>\n  <br/>Departure Time 2023-01-18 02:40:00<br/> Arrvial Time 2023-01-18 05:38:00","<strong>Doha<\/strong><br/>Hamad International Airport<br/>SriLankan Airlines<br/>Flight Number <strong>3000<\/strong>\n  <br/>Departure Time 2023-01-18 15:30:00<br/> Arrvial Time 2023-01-18 22:20:00","<strong>Nassau<\/strong><br/>Lynden Pindling International Airport<br/>Delta Air Lines<br/>Flight Number <strong>1918<\/strong>\n  <br/>Departure Time 2023-01-18 14:00:00<br/> Arrvial Time 2023-01-18 16:55:00","<strong>West Palm Beach<\/strong><br/>Palm Beach International Airport<br/>TAP Air Portugal<br/>Flight Number <strong>4440<\/strong>\n  <br/>Departure Time 2023-01-18 10:55:00<br/> Arrvial Time 2023-01-18 13:39:00","<strong>Calgary<\/strong><br/>Calgary International Airport<br/>WestJet<br/>Flight Number <strong>1680<\/strong>\n  <br/>Departure Time 2023-01-18 09:50:00<br/> Arrvial Time 2023-01-18 16:27:00","<strong>Norfolk<\/strong><br/>Norfolk International Airport<br/>Aeromexico<br/>Flight Number <strong>4311<\/strong>\n  <br/>Departure Time 2023-01-18 11:42:00<br/> Arrvial Time 2023-01-18 13:09:00","<strong>Toronto<\/strong><br/>Lester B. Pearson International Airport<br/>Virgin Atlantic<br/>Flight Number <strong>4728<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 07:59:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>Virgin Atlantic<br/>Flight Number <strong>4768<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:30:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>Air Europa<br/>Flight Number <strong>3427<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:30:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>LATAM Airlines<br/>Flight Number <strong>6409<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:30:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>KLM<br/>Flight Number <strong>5051<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:30:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>Alitalia<br/>Flight Number <strong>3104<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:30:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>Air France<br/>Flight Number <strong>2246<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:30:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>TAP Air Portugal<br/>Flight Number <strong>4390<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:23:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>Singapore Airlines<br/>Flight Number <strong>1463<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:23:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>El Al<br/>Flight Number <strong>8732<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:23:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>Hawaiian Airlines<br/>Flight Number <strong>2362<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:23:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>Icelandair<br/>Flight Number <strong>7896<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:23:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>Royal Air Maroc<br/>Flight Number <strong>9559<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:23:00","<strong>San Francisco<\/strong><br/>San Francisco International Airport<br/>American Airlines<br/>Flight Number <strong>9368<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 14:23:00","<strong>Burlington<\/strong><br/>Burlington International Airport<br/>Korean Air<br/>Flight Number <strong>7368<\/strong>\n  <br/>Departure Time 2023-01-18 05:15:00<br/> Arrvial Time 2023-01-18 07:00:00","<strong>Amsterdam<\/strong><br/>Amsterdam Airport Schiphol<br/>Virgin Atlantic<br/>Flight Number <strong>6837<\/strong>\n  <br/>Departure Time 2023-01-18 13:35:00<br/> Arrvial Time 2023-01-18 15:50:00","<strong>Bangor<\/strong><br/>Bangor International Airport<br/>KLM<br/>Flight Number <strong>6635<\/strong>\n  <br/>Departure Time 2023-01-18 05:10:00<br/> Arrvial Time 2023-01-18 06:57:00","<strong>Savannah<\/strong><br/>Savannah Hilton Head International Airport<br/>Delta Air Lines<br/>Flight Number <strong>4804<\/strong>\n  <br/>Departure Time 2023-01-18 07:15:00<br/> Arrvial Time 2023-01-18 09:24:00","<strong>Savannah<\/strong><br/>Savannah Hilton Head International Airport<br/>WestJet<br/>Flight Number <strong>7601<\/strong>\n  <br/>Departure Time 2023-01-18 07:15:00<br/> Arrvial Time 2023-01-18 09:24:00","<strong>Savannah<\/strong><br/>Savannah Hilton Head International Airport<br/>Virgin Atlantic<br/>Flight Number <strong>3749<\/strong>\n  <br/>Departure Time 2023-01-18 07:15:00<br/> Arrvial Time 2023-01-18 09:24:00","<strong>Savannah<\/strong><br/>Savannah Hilton Head International Airport<br/>China Eastern Airlines<br/>Flight Number <strong>4684<\/strong>\n  <br/>Departure Time 2023-01-18 07:15:00<br/> Arrvial Time 2023-01-18 09:24:00","<strong>Cancun<\/strong><br/>Cancún International Airport<br/>American Airlines<br/>Flight Number <strong>1327<\/strong>\n  <br/>Departure Time 2023-01-18 12:30:00<br/> Arrvial Time 2023-01-18 16:19:00","<strong>Lima<\/strong><br/>Jorge Chávez International Airport<br/>JAL<br/>Flight Number <strong>8252<\/strong>\n  <br/>Departure Time 2023-01-18 00:30:00<br/> Arrvial Time 2023-01-18 08:20:00","<strong>Miami<\/strong><br/>Miami International Airport<br/>KLM<br/>Flight Number <strong>6957<\/strong>\n  <br/>Departure Time 2023-01-18 07:35:00<br/> Arrvial Time 2023-01-18 10:20:00","<strong>Miami<\/strong><br/>Miami International Airport<br/>Kenya Airways<br/>Flight Number <strong>7013<\/strong>\n  <br/>Departure Time 2023-01-18 07:35:00<br/> Arrvial Time 2023-01-18 10:20:00","<strong>Miami<\/strong><br/>Miami International Airport<br/>LATAM Airlines<br/>Flight Number <strong>6245<\/strong>\n  <br/>Departure Time 2023-01-18 07:35:00<br/> Arrvial Time 2023-01-18 10:20:00","<strong>Miami<\/strong><br/>Miami International Airport<br/>China Eastern Airlines<br/>Flight Number <strong>4665<\/strong>\n  <br/>Departure Time 2023-01-18 07:35:00<br/> Arrvial Time 2023-01-18 10:20:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>Turkish Airlines<br/>Flight Number <strong>8956<\/strong>\n  <br/>Departure Time 2023-01-18 08:33:00<br/> Arrvial Time 2023-01-18 09:59:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>Qatar Airways<br/>Flight Number <strong>4200<\/strong>\n  <br/>Departure Time 2023-01-18 08:33:00<br/> Arrvial Time 2023-01-18 09:59:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>JAL<br/>Flight Number <strong>5921<\/strong>\n  <br/>Departure Time 2023-01-18 08:33:00<br/> Arrvial Time 2023-01-18 09:59:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>Aer Lingus<br/>Flight Number <strong>5031<\/strong>\n  <br/>Departure Time 2023-01-18 08:33:00<br/> Arrvial Time 2023-01-18 09:59:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>American Airlines<br/>Flight Number <strong>9434<\/strong>\n  <br/>Departure Time 2023-01-18 08:33:00<br/> Arrvial Time 2023-01-18 09:59:00","<strong>San Juan<\/strong><br/>Luis Munoz Marin International Airport<br/>JetBlue Airways<br/>Flight Number <strong>2130<\/strong>\n  <br/>Departure Time 2023-01-18 07:30:00<br/> Arrvial Time 2023-01-18 10:29:00","<strong>San Juan<\/strong><br/>Luis Munoz Marin International Airport<br/>Qatar Airways<br/>Flight Number <strong>4024<\/strong>\n  <br/>Departure Time 2023-01-18 07:30:00<br/> Arrvial Time 2023-01-18 10:29:00","<strong>San Juan<\/strong><br/>Luis Munoz Marin International Airport<br/>JAL<br/>Flight Number <strong>5495<\/strong>\n  <br/>Departure Time 2023-01-18 07:30:00<br/> Arrvial Time 2023-01-18 10:29:00","<strong>Toronto<\/strong><br/>Lester B. Pearson International Airport<br/>Delta Air Lines<br/>Flight Number <strong>4731<\/strong>\n  <br/>Departure Time 2023-01-18 06:00:00<br/> Arrvial Time 2023-01-18 07:59:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>Singapore Airlines<br/>Flight Number <strong>1530<\/strong>\n  <br/>Departure Time 2023-01-18 05:30:00<br/> Arrvial Time 2023-01-18 13:56:00","<strong>Pittsburgh<\/strong><br/>Pittsburgh International Airport<br/>WestJet<br/>Flight Number <strong>7287<\/strong>\n  <br/>Departure Time 2023-01-18 12:28:00<br/> Arrvial Time 2023-01-18 14:10:00","<strong>Charlotte<\/strong><br/>Charlotte Douglas International Airport<br/>American Airlines<br/>Flight Number <strong>2731<\/strong>\n  <br/>Departure Time 2023-01-18 14:41:00<br/> Arrvial Time 2023-01-18 16:29:00","<strong>Dallas-Fort Worth<\/strong><br/>Dallas Fort Worth International Airport<br/>Air France<br/>Flight Number <strong>2384<\/strong>\n  <br/>Departure Time 2023-01-18 11:10:00<br/> Arrvial Time 2023-01-18 15:35:00","<strong>Dallas-Fort Worth<\/strong><br/>Dallas Fort Worth International Airport<br/>Aeromexico<br/>Flight Number <strong>3400<\/strong>\n  <br/>Departure Time 2023-01-18 11:10:00<br/> Arrvial Time 2023-01-18 15:35:00","<strong>Dallas-Fort Worth<\/strong><br/>Dallas Fort Worth International Airport<br/>Alitalia<br/>Flight Number <strong>3403<\/strong>\n  <br/>Departure Time 2023-01-18 11:10:00<br/> Arrvial Time 2023-01-18 15:35:00","<strong>Dallas-Fort Worth<\/strong><br/>Dallas Fort Worth International Airport<br/>Korean Air<br/>Flight Number <strong>3174<\/strong>\n  <br/>Departure Time 2023-01-18 11:10:00<br/> Arrvial Time 2023-01-18 15:35:00","<strong>Dallas-Fort Worth<\/strong><br/>Dallas Fort Worth International Airport<br/>KLM<br/>Flight Number <strong>5033<\/strong>\n  <br/>Departure Time 2023-01-18 11:10:00<br/> Arrvial Time 2023-01-18 15:35:00","<strong>Dallas-Fort Worth<\/strong><br/>Dallas Fort Worth International Airport<br/>LATAM Airlines<br/>Flight Number <strong>6677<\/strong>\n  <br/>Departure Time 2023-01-18 11:10:00<br/> Arrvial Time 2023-01-18 15:35:00","<strong>Dallas-Fort Worth<\/strong><br/>Dallas Fort Worth International Airport<br/>Virgin Atlantic<br/>Flight Number <strong>3471<\/strong>\n  <br/>Departure Time 2023-01-18 11:10:00<br/> Arrvial Time 2023-01-18 15:35:00","<strong>Rome<\/strong><br/>Leonardo da Vinci–Fiumicino Airport<br/>Delta Air Lines<br/>Flight Number <strong>153<\/strong>\n  <br/>Departure Time 2023-01-18 13:35:00<br/> Arrvial Time 2023-01-18 17:25:00","<strong>Fort Lauderdale<\/strong><br/>Fort Lauderdale Hollywood International Airport<br/>JetBlue Airways<br/>Flight Number <strong>1902<\/strong>\n  <br/>Departure Time 2023-01-18 14:30:00<br/> Arrvial Time 2023-01-18 17:24:00","<strong>Norfolk<\/strong><br/>Norfolk International Airport<br/>Kenya Airways<br/>Flight Number <strong>7063<\/strong>\n  <br/>Departure Time 2023-01-18 07:00:00<br/> Arrvial Time 2023-01-18 08:25:00","<strong>Atlanta<\/strong><br/>Hartsfield Jackson Atlanta International Airport<br/>JetBlue Airways<br/>Flight Number <strong>1968<\/strong>\n  <br/>Departure Time 2023-01-18 09:54:00<br/> Arrvial Time 2023-01-18 12:05:00","<strong>Rochester<\/strong><br/>Greater Rochester International Airport<br/>JetBlue Airways<br/>Flight Number <strong>185<\/strong>\n  <br/>Departure Time 2023-01-18 06:03:00<br/> Arrvial Time 2023-01-18 07:30:00","<strong>West Palm Beach<\/strong><br/>Palm Beach International Airport<br/>Singapore Airlines<br/>Flight Number <strong>1490<\/strong>\n  <br/>Departure Time 2023-01-18 07:00:00<br/> Arrvial Time 2023-01-18 09:43:00","<strong>Buffalo<\/strong><br/>Buffalo Niagara International Airport<br/>China Eastern Airlines<br/>Flight Number <strong>4547<\/strong>\n  <br/>Departure Time 2023-01-18 10:29:00<br/> Arrvial Time 2023-01-18 12:00:00","<strong>Boston<\/strong><br/>General Edward Lawrence Logan International Airport<br/>American Airlines<br/>Flight Number <strong>4302<\/strong>\n  <br/>Departure Time 2023-01-18 08:03:00<br/> Arrvial Time 2023-01-18 09:30:00","<strong>Orlando<\/strong><br/>Orlando International Airport<br/>JetBlue Airways<br/>Flight Number <strong>1584<\/strong>\n  <br/>Departure Time 2023-01-18 09:25:00<br/> Arrvial Time 2023-01-18 11:55:00","<strong>Tel-aviv<\/strong><br/>Ben Gurion International Airport<br/>El Al<br/>Flight Number <strong>7<\/strong>\n  <br/>Departure Time 2023-01-18 13:00:00<br/> Arrvial Time 2023-01-18 18:00:00","<strong>Tel-aviv<\/strong><br/>Ben Gurion International Airport<br/>Aerolineas Argentinas<br/>Flight Number <strong>7855<\/strong>\n  <br/>Departure Time 2023-01-18 13:00:00<br/> Arrvial Time 2023-01-18 18:00:00"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-12.0219,52.308601],"lng":[-122.375,121.233002]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section><section id="putting-everything-into-a-function" class="level2 page-columns page-full" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="putting-everything-into-a-function">
+<span class="header-section-number">1.6</span> Putting Everything into a Function</h2>
+<p>I thought that this code could probably be put into a function, so I did!</p>
+<p>If you want to try this out for yourself, here’s all the code you need. Don’t forget to install the necessary libraries!</p>
+<p>And for a bonus, at the bottom of this page there is a map using this function to map flights going to San Francisco!</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights_map</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">api</span>, <span class="va">arr_IATA</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/GET.html">GET</a></span><span class="op">(</span><span class="st">"http://api.aviationstack.com/v1/flights"</span>, </span>
+<span>                 query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>access_key <span class="op">=</span> <span class="va">api</span>, arr_IATA <span class="op">=</span> <span class="va">arr_IATA</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">r</span></span>
+<span>  </span>
+<span>  <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/status_code.html">status_code</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">flights</span> <span class="op">&lt;-</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/content.html">content</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">data_flight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">flights</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">tb_flight</span> <span class="op">&lt;-</span> <span class="va">data_flight</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"flights$data"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">departure</span><span class="op">)</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">arrival</span><span class="op">)</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">airline</span><span class="op">)</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/hoist.html">unnest_wider</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">flight</span><span class="op">)</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"codeshared"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">lat_lon_dep</span> <span class="op">&lt;-</span> <span class="va">tb_flight</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>departure_country <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">departure_timezone</span>, <span class="st">'/'</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">departure_iata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">airportr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/airportr/man/airport_detail.html">airport_detail</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">x</span>, </span>
+<span>                                             input_type <span class="op">=</span> <span class="st">"IATA"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="va">tb_flight</span><span class="op">$</span><span class="va">departure_iata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">tb_flight</span> <span class="op">|&gt;</span> </span>
+<span>                       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"scheduled"</span><span class="op">)</span>, </span>
+<span>                                     <span class="va">airline_name</span>, </span>
+<span>                                     <span class="va">flight_number</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>departure_scheduled <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="va">departure_scheduled</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                  arrival_scheduled <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms</a></span><span class="op">(</span><span class="va">arrival_scheduled</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">arr_location</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_vec</a></span><span class="op">(</span><span class="va">arr_iata</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">airportr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/airportr/man/airport_location.html">airport_location</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">x</span>, </span>
+<span>                                                                           input_type <span class="op">=</span> <span class="st">"IATA"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">lat_lon_line</span> <span class="op">&lt;-</span> <span class="va">lat_lon_dep</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_modify</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_modify</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/add_row.html">add_row</a></span><span class="op">(</span><span class="va">.x</span>, </span>
+<span>                                  Latitude <span class="op">=</span> <span class="va">arr_location</span><span class="op">$</span><span class="va">Latitude</span>, </span>
+<span>                                  Longitude <span class="op">=</span> <span class="va">arr_location</span><span class="op">$</span><span class="va">Longitude</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  </span>
+<span>  <span class="va">dep_sf</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="va">lat_lon_line</span>, </span>
+<span>                         coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Longitude"</span>, <span class="st">"Latitude"</span><span class="op">)</span>, </span>
+<span>                         crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span>
+<span>  </span>
+<span>  </span>
+<span>  <span class="va">dep_line</span> <span class="op">&lt;-</span> <span class="va">dep_sf</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast</a></span><span class="op">(</span><span class="st">"LINESTRING"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">lat_lon_dep</span> <span class="op">|&gt;</span></span>
+<span>                       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>                       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_modify</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">.x</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>                       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>                       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">IATA</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span></span>
+<span>    <span class="st">"&lt;strong&gt;%s&lt;/strong&gt;&lt;br/&gt;%s&lt;br/&gt;%s&lt;br/&gt;Flight Number &lt;strong&gt;%s&lt;/strong&gt;</span></span>
+<span><span class="st">  &lt;br/&gt;Departure Time %s&lt;br/&gt; Arrvial Time %s"</span>,</span>
+<span>  <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">City</span>, </span>
+<span>  <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">Name</span>, </span>
+<span>  <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">airline_name</span>,</span>
+<span>  <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">flight_number</span>, </span>
+<span>  <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">departure_scheduled</span>,</span>
+<span>  <span class="va">lat_lon_dep</span><span class="op">$</span><span class="va">arrival_scheduled</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu">htmltools</span><span class="fu">::</span><span class="va"><a href="https://rstudio.github.io/htmltools/reference/HTML.html">HTML</a></span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">m</span> <span class="op">&lt;-</span> </span>
+<span>    <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addPolylines</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dep_line</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addMarkers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lat_lon_dep</span>, </span>
+<span>                        lng <span class="op">=</span> <span class="op">~</span><span class="va">Longitude</span>, </span>
+<span>                        lat <span class="op">=</span> <span class="op">~</span><span class="va">Latitude</span>, </span>
+<span>                        label <span class="op">=</span> <span class="va">label</span>,</span>
+<span>                        clusterOptions <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-options.html">markerClusterOptions</a></span><span class="op">(</span>freezeAtZoom <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">m</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu">rstudioapi</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/rstudioapi/reference/askForPassword.html">askForPassword</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">flights_map</span><span class="op">(</span><span class="va">api</span>, <span class="st">"SFO"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell page-columns page-full">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display column-screen-inset-shaded">
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-36390125ef1388a3c482" style="width:100%;height:541px;"></div>
+<script type="application/json" data-for="htmlwidget-36390125ef1388a3c482">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addPolylines","args":[[[[{"lng":[174.792007446,-122.375],"lat":[-37.0080986023,37.6189994812012]}]],[[{"lng":[-122.375,-84.428101],"lat":[37.6189994812012,33.6367]}]],[[{"lng":[-122.375,-119.0569992],"lat":[37.6189994812012,35.43360138]}]],[[{"lng":[77.706299,-122.375],"lat":[13.1979,37.6189994812012]}]],[[{"lng":[-122.375,-71.00520325],"lat":[37.6189994812012,42.36429977]}]],[[{"lng":[-122.375,-118.359001159668],"lat":[37.6189994812012,34.2006988525391]}]],[[{"lng":[-122.375,-81.8498001099],"lat":[37.6189994812012,41.4117012024]}]],[[{"lng":[-122.375,-84.6678009033],"lat":[37.6189994812012,39.0488014221]}]],[[{"lng":[-123.21199798584,-122.375],"lat":[44.1245994567871,37.6189994812012]}]],[[{"lng":[-122.375,-74.168701171875],"lat":[37.6189994812012,40.6925010681152]}]],[[{"lng":[-122.375,-119.718002319336],"lat":[37.6189994812012,36.7761993408203]}]],[[{"lng":[-117.533996582031,-122.375],"lat":[47.6198997497559,37.6189994812012]}]],[[{"lng":[113.915001,-122.375],"lat":[22.308901,37.6189994812012]}]],[[{"lng":[126.450996398926,-122.375],"lat":[37.4691009521484,37.6189994812012]}]],[[{"lng":[135.244003295898,-122.375],"lat":[34.4272994995117,37.6189994812012]}]],[[{"lng":[-122.375,-115.1520004],"lat":[37.6189994812012,36.08010101]}]],[[{"lng":[-122.375,-118.4079971],"lat":[37.6189994812012,33.94250107]}]],[[{"lng":[-0.461941,-122.375],"lat":[51.4706,37.6189994812012]}]],[[{"lng":[-122.375,-94.713898],"lat":[37.6189994812012,39.2976]}]],[[{"lng":[144.843002,-122.375],"lat":[-37.673302,37.6189994812012]}]],[[{"lng":[-122.375,-90.2580032348633],"lat":[37.6189994812012,29.9934005737305]}]],[[{"lng":[-122.375,-95.894096],"lat":[37.6189994812012,41.3032]}]],[[{"lng":[-122.375,-117.600997924805],"lat":[37.6189994812012,34.0559997558594]}]],[[{"lng":[-122.5979996,-122.375],"lat":[45.58869934,37.6189994812012]}]],[[{"lng":[-122.375,-119.767997741699],"lat":[37.6189994812012,39.4990997314453]}]],[[{"lng":[-122.375,-117.190002441],"lat":[37.6189994812012,32.7336006165]}]],[[{"lng":[-122.375,-120.641998291],"lat":[37.6189994812012,35.2368011475]}]],[[{"lng":[-122.375,-85.736],"lat":[37.6189994812012,38.1744]}]],[[{"lng":[-122.308998,-122.375],"lat":[47.449001,37.6189994812012]}]],[[{"lng":[-122.375,-111.977996826172],"lat":[37.6189994812012,40.7883987426758]}]],[[{"lng":[-122.375,-117.8679962],"lat":[37.6189994812012,33.67570114]}]],[[{"lng":[34.8866996765137,-122.375],"lat":[32.0113983154297,37.6189994812012]}]],[[{"lng":[-122.375,-110.94100189209],"lat":[37.6189994812012,32.1161003112793]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":false,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addMarkers","args":[[22.308901,22.308901,22.308901,39.4990997314453,39.4990997314453,39.4990997314453,39.4990997314453,39.4990997314453,39.4990997314453,39.4990997314453,39.4990997314453,39.4990997314453,34.0559997558594,34.0559997558594,13.1979,39.2976,39.2976,42.36429977,41.3032,42.36429977,32.7336006165,34.2006988525391,32.1161003112793,47.449001,32.7336006165,35.2368011475,47.449001,45.58869934,32.0113983154297,32.1161003112793,32.1161003112793,45.58869934,45.58869934,39.0488014221,33.67570114,33.67570114,33.67570114,34.2006988525391,47.6198997497559,40.7883987426758,40.7883987426758,40.7883987426758,40.7883987426758,40.7883987426758,45.58869934,45.58869934,45.58869934,45.58869934,35.43360138,44.1245994567871,40.7883987426758,40.7883987426758,51.4706,47.449001,47.449001,47.449001,47.449001,40.7883987426758,-37.0080986023,33.94250107,32.7336006165,32.7336006165,47.449001,47.449001,47.449001,47.449001,-37.673302,-37.673302,32.7336006165,32.7336006165,32.7336006165,32.7336006165,32.7336006165,34.4272994995117,42.36429977,41.4117012024,33.6367,47.449001,38.1744,36.08010101,47.449001,37.4691009521484,40.6925010681152,29.9934005737305,45.58869934,45.58869934,45.58869934,36.7761993408203,33.67570114,40.6925010681152,33.67570114,33.94250107,33.94250107,33.94250107,33.94250107,33.94250107,33.94250107,33.94250107,33.94250107,33.94250107],[113.915001,113.915001,113.915001,-119.767997741699,-119.767997741699,-119.767997741699,-119.767997741699,-119.767997741699,-119.767997741699,-119.767997741699,-119.767997741699,-119.767997741699,-117.600997924805,-117.600997924805,77.706299,-94.713898,-94.713898,-71.00520325,-95.894096,-71.00520325,-117.190002441,-118.359001159668,-110.94100189209,-122.308998,-117.190002441,-120.641998291,-122.308998,-122.5979996,34.8866996765137,-110.94100189209,-110.94100189209,-122.5979996,-122.5979996,-84.6678009033,-117.8679962,-117.8679962,-117.8679962,-118.359001159668,-117.533996582031,-111.977996826172,-111.977996826172,-111.977996826172,-111.977996826172,-111.977996826172,-122.5979996,-122.5979996,-122.5979996,-122.5979996,-119.0569992,-123.21199798584,-111.977996826172,-111.977996826172,-0.461941,-122.308998,-122.308998,-122.308998,-122.308998,-111.977996826172,174.792007446,-118.4079971,-117.190002441,-117.190002441,-122.308998,-122.308998,-122.308998,-122.308998,144.843002,144.843002,-117.190002441,-117.190002441,-117.190002441,-117.190002441,-117.190002441,135.244003295898,-71.00520325,-81.8498001099,-84.428101,-122.308998,-85.736,-115.1520004,-122.308998,126.450996398926,-74.168701171875,-90.2580032348633,-122.5979996,-122.5979996,-122.5979996,-119.718002319336,-117.8679962,-74.168701171875,-117.8679962,-118.4079971,-118.4079971,-118.4079971,-118.4079971,-118.4079971,-118.4079971,-118.4079971,-118.4079971,-118.4079971],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,{"showCoverageOnHover":true,"zoomToBoundsOnClick":true,"spiderfyOnMaxZoom":true,"removeOutsideVisibleBounds":true,"spiderLegPolylineOptions":{"weight":1.5,"color":"#222","opacity":0.5},"freezeAtZoom":5},null,["<strong>Hong Kong<\/strong><br/>Hong Kong International Airport<br/>Cathay Pacific<br/>Flight Number <strong>872<\/strong>\n  <br/>Departure Time 2023-01-21 00:55:00<br/> Arrvial Time 2023-01-20 20:55:00","<strong>Hong Kong<\/strong><br/>Hong Kong International Airport<br/>Malaysia Airlines<br/>Flight Number <strong>9198<\/strong>\n  <br/>Departure Time 2023-01-21 00:55:00<br/> Arrvial Time 2023-01-20 20:55:00","<strong>Hong Kong<\/strong><br/>Hong Kong International Airport<br/>American Airlines<br/>Flight Number <strong>8930<\/strong>\n  <br/>Departure Time 2023-01-21 00:55:00<br/> Arrvial Time 2023-01-20 20:55:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>Air Canada<br/>Flight Number <strong>4371<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 07:31:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>ANA<br/>Flight Number <strong>7379<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 07:31:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>Air New Zealand<br/>Flight Number <strong>9581<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 07:31:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>United Airlines<br/>Flight Number <strong>1281<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 07:31:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>Air Canada<br/>Flight Number <strong>4145<\/strong>\n  <br/>Departure Time 2023-01-20 10:45:00<br/> Arrvial Time 2023-01-20 12:04:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>SA AVIANCA<br/>Flight Number <strong>2105<\/strong>\n  <br/>Departure Time 2023-01-20 10:45:00<br/> Arrvial Time 2023-01-20 12:04:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>Lufthansa<br/>Flight Number <strong>8909<\/strong>\n  <br/>Departure Time 2023-01-20 10:45:00<br/> Arrvial Time 2023-01-20 12:04:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>Air New Zealand<br/>Flight Number <strong>9582<\/strong>\n  <br/>Departure Time 2023-01-20 10:45:00<br/> Arrvial Time 2023-01-20 12:04:00","<strong>Reno<\/strong><br/>Reno Tahoe International Airport<br/>SkyWest Airlines<br/>Flight Number <strong>5899<\/strong>\n  <br/>Departure Time 2023-01-20 10:45:00<br/> Arrvial Time 2023-01-20 12:04:00","<strong>Ontario<\/strong><br/>Ontario International Airport<br/>United Airlines<br/>Flight Number <strong>5416<\/strong>\n  <br/>Departure Time 2023-01-20 10:31:00<br/> Arrvial Time 2023-01-20 12:05:00","<strong>Ontario<\/strong><br/>Ontario International Airport<br/>Air Canada<br/>Flight Number <strong>4424<\/strong>\n  <br/>Departure Time 2023-01-20 10:31:00<br/> Arrvial Time 2023-01-20 12:05:00","<strong>Bangalore<\/strong><br/>Kempegowda International Airport<br/>Air India<br/>Flight Number <strong>175<\/strong>\n  <br/>Departure Time 2023-01-20 14:20:00<br/> Arrvial Time 2023-01-20 17:00:00","<strong>Kansas City<\/strong><br/>Kansas City International Airport<br/>United Airlines<br/>Flight Number <strong>694<\/strong>\n  <br/>Departure Time 2023-01-20 07:15:00<br/> Arrvial Time 2023-01-20 09:25:00","<strong>Kansas City<\/strong><br/>Kansas City International Airport<br/>Asiana Airlines<br/>Flight Number <strong>6318<\/strong>\n  <br/>Departure Time 2023-01-20 07:15:00<br/> Arrvial Time 2023-01-20 09:25:00","<strong>Boston<\/strong><br/>General Edward Lawrence Logan International Airport<br/>Air New Zealand<br/>Flight Number <strong>9023<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 11:53:00","<strong>Omaha<\/strong><br/>Eppley Airfield<br/>Air Canada<br/>Flight Number <strong>4685<\/strong>\n  <br/>Departure Time 2023-01-20 07:35:00<br/> Arrvial Time 2023-01-20 09:34:00","<strong>Boston<\/strong><br/>General Edward Lawrence Logan International Airport<br/>United Airlines<br/>Flight Number <strong>1008<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 11:53:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>Southwest Airlines<br/>Flight Number <strong>423<\/strong>\n  <br/>Departure Time 2023-01-20 11:05:00<br/> Arrvial Time 2023-01-20 12:40:00","<strong>Burbank<\/strong><br/>Bob Hope Airport<br/>United Airlines<br/>Flight Number <strong>5552<\/strong>\n  <br/>Departure Time 2023-01-20 08:05:00<br/> Arrvial Time 2023-01-20 09:38:00","<strong>Tucson<\/strong><br/>Tucson International Airport<br/>United Airlines<br/>Flight Number <strong>5264<\/strong>\n  <br/>Departure Time 2023-01-20 08:06:00<br/> Arrvial Time 2023-01-20 09:38:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>Delta Air Lines<br/>Flight Number <strong>2888<\/strong>\n  <br/>Departure Time 2023-01-20 07:20:00<br/> Arrvial Time 2023-01-20 09:36:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>Alaska Airlines<br/>Flight Number <strong>3372<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:40:00","<strong>San Luis Obispo<\/strong><br/>San Luis County Regional Airport<br/>United Airlines<br/>Flight Number <strong>4754<\/strong>\n  <br/>Departure Time 2023-01-20 08:29:00<br/> Arrvial Time 2023-01-20 09:41:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>Alaska Airlines<br/>Flight Number <strong>1166<\/strong>\n  <br/>Departure Time 2023-01-20 07:35:00<br/> Arrvial Time 2023-01-20 09:45:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>Alaska Airlines<br/>Flight Number <strong>1174<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:45:00","<strong>Tel-aviv<\/strong><br/>Ben Gurion International Airport<br/>United Airlines<br/>Flight Number <strong>955<\/strong>\n  <br/>Departure Time 2023-01-20 00:55:00<br/> Arrvial Time 2023-01-20 06:00:00","<strong>Tucson<\/strong><br/>Tucson International Airport<br/>United Airlines<br/>Flight Number <strong>5583<\/strong>\n  <br/>Departure Time 2023-01-20 12:54:00<br/> Arrvial Time 2023-01-20 14:26:00","<strong>Tucson<\/strong><br/>Tucson International Airport<br/>Air Canada<br/>Flight Number <strong>3770<\/strong>\n  <br/>Departure Time 2023-01-20 12:54:00<br/> Arrvial Time 2023-01-20 14:26:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>United Airlines<br/>Flight Number <strong>1760<\/strong>\n  <br/>Departure Time 2023-01-20 10:19:00<br/> Arrvial Time 2023-01-20 12:11:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>Alaska Airlines<br/>Flight Number <strong>2027<\/strong>\n  <br/>Departure Time 2023-01-20 12:00:00<br/> Arrvial Time 2023-01-20 13:44:00","<strong>Cincinnati<\/strong><br/>Cincinnati Northern Kentucky International Airport<br/>ABX Air<br/>Flight Number <strong>805<\/strong>\n  <br/>Departure Time 2023-01-20 05:17:00<br/> Arrvial Time 2023-01-20 07:08:00","<strong>Santa Ana<\/strong><br/>John Wayne Airport-Orange County Airport<br/>United Airlines<br/>Flight Number <strong>1872<\/strong>\n  <br/>Departure Time 2023-01-20 06:45:00<br/> Arrvial Time 2023-01-20 08:29:00","<strong>Santa Ana<\/strong><br/>John Wayne Airport-Orange County Airport<br/>Virgin Australia<br/>Flight Number <strong>8499<\/strong>\n  <br/>Departure Time 2023-01-20 06:45:00<br/> Arrvial Time 2023-01-20 08:29:00","<strong>Santa Ana<\/strong><br/>John Wayne Airport-Orange County Airport<br/>Air Canada<br/>Flight Number <strong>4134<\/strong>\n  <br/>Departure Time 2023-01-20 06:45:00<br/> Arrvial Time 2023-01-20 08:29:00","<strong>Burbank<\/strong><br/>Bob Hope Airport<br/>SA AVIANCA<br/>Flight Number <strong>2347<\/strong>\n  <br/>Departure Time 2023-01-20 08:05:00<br/> Arrvial Time 2023-01-20 09:38:00","<strong>Spokane<\/strong><br/>Spokane International Airport<br/>United Airlines<br/>Flight Number <strong>5319<\/strong>\n  <br/>Departure Time 2023-01-20 07:14:00<br/> Arrvial Time 2023-01-20 09:48:00","<strong>Salt Lake City<\/strong><br/>Salt Lake City International Airport<br/>United Airlines<br/>Flight Number <strong>5736<\/strong>\n  <br/>Departure Time 2023-01-20 08:10:00<br/> Arrvial Time 2023-01-20 09:43:00","<strong>Salt Lake City<\/strong><br/>Salt Lake City International Airport<br/>Virgin Australia<br/>Flight Number <strong>8447<\/strong>\n  <br/>Departure Time 2023-01-20 08:10:00<br/> Arrvial Time 2023-01-20 09:43:00","<strong>Salt Lake City<\/strong><br/>Salt Lake City International Airport<br/>ANA<br/>Flight Number <strong>7303<\/strong>\n  <br/>Departure Time 2023-01-20 08:10:00<br/> Arrvial Time 2023-01-20 09:43:00","<strong>Salt Lake City<\/strong><br/>Salt Lake City International Airport<br/>Air Canada<br/>Flight Number <strong>4393<\/strong>\n  <br/>Departure Time 2023-01-20 08:10:00<br/> Arrvial Time 2023-01-20 09:43:00","<strong>Salt Lake City<\/strong><br/>Salt Lake City International Airport<br/>Delta Air Lines<br/>Flight Number <strong>843<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:16:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>Qatar Airways<br/>Flight Number <strong>2094<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:45:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>Korean Air<br/>Flight Number <strong>6094<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:45:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>JAL<br/>Flight Number <strong>5416<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:45:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>American Airlines<br/>Flight Number <strong>7467<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:45:00","<strong>Bakersfield<\/strong><br/>Meadows Field<br/>Air New Zealand<br/>Flight Number <strong>9147<\/strong>\n  <br/>Departure Time 2023-01-20 08:29:00<br/> Arrvial Time 2023-01-20 09:50:00","<strong>Eugene<\/strong><br/>Mahlon Sweet Field<br/>SA AVIANCA<br/>Flight Number <strong>2270<\/strong>\n  <br/>Departure Time 2023-01-20 06:00:00<br/> Arrvial Time 2023-01-20 07:38:00","<strong>Salt Lake City<\/strong><br/>Salt Lake City International Airport<br/>Delta Air Lines<br/>Flight Number <strong>2414<\/strong>\n  <br/>Departure Time 2023-01-20 11:20:00<br/> Arrvial Time 2023-01-20 12:30:00","<strong>Salt Lake City<\/strong><br/>Salt Lake City International Airport<br/>Virgin Atlantic<br/>Flight Number <strong>4538<\/strong>\n  <br/>Departure Time 2023-01-20 11:20:00<br/> Arrvial Time 2023-01-20 12:30:00","<strong>London<\/strong><br/>London Heathrow Airport<br/>Brussels Airlines<br/>Flight Number <strong>9101<\/strong>\n  <br/>Departure Time 2023-01-20 09:20:00<br/> Arrvial Time 2023-01-20 12:30:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>JAL<br/>Flight Number <strong>5428<\/strong>\n  <br/>Departure Time 2023-01-20 07:35:00<br/> Arrvial Time 2023-01-20 09:45:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>American Airlines<br/>Flight Number <strong>7511<\/strong>\n  <br/>Departure Time 2023-01-20 07:35:00<br/> Arrvial Time 2023-01-20 09:45:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>WestJet<br/>Flight Number <strong>7548<\/strong>\n  <br/>Departure Time 2023-01-20 07:20:00<br/> Arrvial Time 2023-01-20 09:36:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>Korean Air<br/>Flight Number <strong>3083<\/strong>\n  <br/>Departure Time 2023-01-20 07:20:00<br/> Arrvial Time 2023-01-20 09:36:00","<strong>Salt Lake City<\/strong><br/>Salt Lake City International Airport<br/>Qatar Airways<br/>Flight Number <strong>2972<\/strong>\n  <br/>Departure Time 2023-01-20 08:45:00<br/> Arrvial Time 2023-01-20 10:00:00","<strong>Auckland<\/strong><br/>Auckland International Airport<br/>Lufthansa<br/>Flight Number <strong>9324<\/strong>\n  <br/>Departure Time 2023-01-20 15:50:00<br/> Arrvial Time 2023-01-20 07:05:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>SA AVIANCA<br/>Flight Number <strong>2150<\/strong>\n  <br/>Departure Time 2023-01-20 08:15:00<br/> Arrvial Time 2023-01-20 09:50:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>Qatar Airways<br/>Flight Number <strong>2028<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:40:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>JAL<br/>Flight Number <strong>5461<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:40:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>Alaska Airlines<br/>Flight Number <strong>1082<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 08:25:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>Air Tahiti Nui<br/>Flight Number <strong>2650<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 08:25:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>Korean Air<br/>Flight Number <strong>6113<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 08:25:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>American Airlines<br/>Flight Number <strong>7456<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 08:25:00","<strong>Melbourne<\/strong><br/>Melbourne International Airport<br/>United Airlines<br/>Flight Number <strong>61<\/strong>\n  <br/>Departure Time 2023-01-20 13:00:00<br/> Arrvial Time 2023-01-20 08:25:00","<strong>Melbourne<\/strong><br/>Melbourne International Airport<br/>Virgin Australia<br/>Flight Number <strong>8003<\/strong>\n  <br/>Departure Time 2023-01-20 13:00:00<br/> Arrvial Time 2023-01-20 08:25:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>United Airlines<br/>Flight Number <strong>2017<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 08:01:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>Virgin Australia<br/>Flight Number <strong>8433<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 08:01:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>ANA<br/>Flight Number <strong>7301<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 08:01:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>Air Canada<br/>Flight Number <strong>5312<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 08:01:00","<strong>San Diego<\/strong><br/>San Diego International Airport<br/>Alaska Airlines<br/>Flight Number <strong>3310<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 07:56:00","<strong>Osaka<\/strong><br/>Kansai International Airport<br/>United Airlines<br/>Flight Number <strong>34<\/strong>\n  <br/>Departure Time 2023-01-20 18:25:00<br/> Arrvial Time 2023-01-20 11:20:00","<strong>Boston<\/strong><br/>General Edward Lawrence Logan International Airport<br/>JetBlue Airways<br/>Flight Number <strong>1833<\/strong>\n  <br/>Departure Time 2023-01-20 10:00:00<br/> Arrvial Time 2023-01-20 13:54:00","<strong>Cleveland<\/strong><br/>Cleveland Hopkins International Airport<br/>Air New Zealand<br/>Flight Number <strong>9045<\/strong>\n  <br/>Departure Time 2023-01-20 07:00:00<br/> Arrvial Time 2023-01-20 09:37:00","<strong>Atlanta<\/strong><br/>Hartsfield Jackson Atlanta International Airport<br/>Aerolineas Argentinas<br/>Flight Number <strong>7024<\/strong>\n  <br/>Departure Time 2023-01-20 08:20:00<br/> Arrvial Time 2023-01-20 10:50:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>United Airlines<br/>Flight Number <strong>2652<\/strong>\n  <br/>Departure Time 2023-01-20 09:14:00<br/> Arrvial Time 2023-01-20 11:35:00","<strong>Louisville<\/strong><br/>Louisville International Standiford Field<br/>Breeze Airways<br/>Flight Number <strong>228<\/strong>\n  <br/>Departure Time 2023-01-20 09:45:00<br/> Arrvial Time 2023-01-20 11:37:00","<strong>Las Vegas<\/strong><br/>McCarran International Airport<br/>ANA<br/>Flight Number <strong>7309<\/strong>\n  <br/>Departure Time 2023-01-20 08:00:00<br/> Arrvial Time 2023-01-20 09:42:00","<strong>Seattle<\/strong><br/>Seattle Tacoma International Airport<br/>Alaska Airlines<br/>Flight Number <strong>1132<\/strong>\n  <br/>Departure Time 2023-01-20 09:20:00<br/> Arrvial Time 2023-01-20 11:32:00","<strong>Seoul<\/strong><br/>Incheon International Airport<br/>United Airlines<br/>Flight Number <strong>892<\/strong>\n  <br/>Departure Time 2023-01-20 18:00:00<br/> Arrvial Time 2023-01-20 11:30:00","<strong>Newark<\/strong><br/>Newark Liberty International Airport<br/>United Airlines<br/>Flight Number <strong>788<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 09:33:00","<strong>New Orleans<\/strong><br/>Louis Armstrong New Orleans International Airport<br/>United Airlines<br/>Flight Number <strong>1687<\/strong>\n  <br/>Departure Time 2023-01-20 06:36:00<br/> Arrvial Time 2023-01-20 09:35:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>Air Canada<br/>Flight Number <strong>3340<\/strong>\n  <br/>Departure Time 2023-01-20 10:19:00<br/> Arrvial Time 2023-01-20 12:11:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>Lufthansa<br/>Flight Number <strong>9235<\/strong>\n  <br/>Departure Time 2023-01-20 10:19:00<br/> Arrvial Time 2023-01-20 12:11:00","<strong>Portland<\/strong><br/>Portland International Airport<br/>Air New Zealand<br/>Flight Number <strong>9350<\/strong>\n  <br/>Departure Time 2023-01-20 10:19:00<br/> Arrvial Time 2023-01-20 12:11:00","<strong>Fresno<\/strong><br/>Fresno Yosemite International Airport<br/>Air Canada<br/>Flight Number <strong>4333<\/strong>\n  <br/>Departure Time 2023-01-20 06:40:00<br/> Arrvial Time 2023-01-20 07:50:00","<strong>Santa Ana<\/strong><br/>John Wayne Airport-Orange County Airport<br/>Lufthansa<br/>Flight Number <strong>9239<\/strong>\n  <br/>Departure Time 2023-01-20 10:47:00<br/> Arrvial Time 2023-01-20 12:20:00","<strong>Newark<\/strong><br/>Newark Liberty International Airport<br/>Virgin Australia<br/>Flight Number <strong>8159<\/strong>\n  <br/>Departure Time 2023-01-20 06:15:00<br/> Arrvial Time 2023-01-20 09:33:00","<strong>Santa Ana<\/strong><br/>John Wayne Airport-Orange County Airport<br/>Air Canada<br/>Flight Number <strong>4589<\/strong>\n  <br/>Departure Time 2023-01-20 10:47:00<br/> Arrvial Time 2023-01-20 12:20:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>Alaska Airlines<br/>Flight Number <strong>3398<\/strong>\n  <br/>Departure Time 2023-01-20 09:30:00<br/> Arrvial Time 2023-01-20 10:57:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>Alaska Airlines<br/>Flight Number <strong>1175<\/strong>\n  <br/>Departure Time 2023-01-20 06:00:00<br/> Arrvial Time 2023-01-20 07:27:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>Air Tahiti Nui<br/>Flight Number <strong>2522<\/strong>\n  <br/>Departure Time 2023-01-20 06:00:00<br/> Arrvial Time 2023-01-20 07:27:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>Delta Air Lines<br/>Flight Number <strong>2614<\/strong>\n  <br/>Departure Time 2023-01-20 06:00:00<br/> Arrvial Time 2023-01-20 07:26:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>WestJet<br/>Flight Number <strong>6866<\/strong>\n  <br/>Departure Time 2023-01-20 06:00:00<br/> Arrvial Time 2023-01-20 07:26:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>Virgin Atlantic<br/>Flight Number <strong>4109<\/strong>\n  <br/>Departure Time 2023-01-20 06:00:00<br/> Arrvial Time 2023-01-20 07:26:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>Korean Air<br/>Flight Number <strong>7263<\/strong>\n  <br/>Departure Time 2023-01-20 06:00:00<br/> Arrvial Time 2023-01-20 07:26:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>China Airlines<br/>Flight Number <strong>9868<\/strong>\n  <br/>Departure Time 2023-01-20 06:00:00<br/> Arrvial Time 2023-01-20 07:26:00","<strong>Los Angeles<\/strong><br/>Los Angeles International Airport<br/>Southwest Airlines<br/>Flight Number <strong>695<\/strong>\n  <br/>Departure Time 2023-01-20 05:55:00<br/> Arrvial Time 2023-01-20 07:25:00"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-37.673302,51.4706],"lng":[-123.21199798584,174.792007446]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

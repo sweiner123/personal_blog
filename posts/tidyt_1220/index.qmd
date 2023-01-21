@@ -2,12 +2,13 @@
 title: "Tidy Tuesday - 12/20"
 author: "Sam Weiner"
 date: "1/9/2023"
+image: national_weather_service.png
 categories: [tidytuesday, analysis]
 freeze: auto
 ---
-Tidy Tuesday released this data set on December 20th, 2022. It was collected as a part of a data science capstone project where national weather data was acquired to learn which areas of the U.S. struggle with weather prediction and the possible reasons why. Specifically, the project focused on the error in high and low temperature forecasting. 
+Hello everyone! Tidy Tuesday released this data set on December 20th, 2022 and it is so interesting. It was collected as a part of a data science capstone project where national weather data was acquired to learn which areas of the U.S. struggle with weather prediction and the possible reasons why. Specifically, the project focused on the error in high and low temperature forecasting.
 
-The data includes 16 months of daily forecasts and observations from 167 cities, as well as a separate data.frame of information about those cities and some other American cities.
+The data includes 16 months of daily forecasts and observations from 167 cities, as well as a separate data frame of information about those cities and some other American cities.
 
 So let's dive into this data and learn something about forecasting weather! 
 

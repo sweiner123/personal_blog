@@ -31,8 +31,6 @@ tt <- tt_load("2022-11-29")
 tt
 ```
 
-
-
 ```{r}
 #| include: false
 
@@ -65,7 +63,7 @@ matches %>%
 
 ```
 
-I want to visualize how many games there were for total goals scored between the home and away teams. We can do this by creating a new column (total_score) adding the two scores together and counting the number of games with that score.  
+I want to visualize how many games there were for total goals scored between the home and away teams. We can do this by creating a new column (total_score) adding the two scores together and counting the number of games with that score.
 
 We can use ggplot2 to easily visualize our data. Also, by turning total_score into a factor, I can reorder the levels of the factors to reflect the number of matches each for each score. This makes the plot easily comprehensible.
 
@@ -87,7 +85,7 @@ matches %>%
   coord_flip()
 ```
 
-It looks like total score of 1, 2, and 3 are by far the most common score outcomes for world cup matches. Let's now look at the number of matches each country has one since 1930. We are going to visualize teams that have one more than 5 games at world cup and see who ranks on top. 
+It looks like total score of 1, 2, and 3 are by far the most common score outcomes for world cup matches. Let's now look at the number of matches each country has one since 1930. We are going to visualize teams that have one more than 5 games at world cup and see who ranks on top.
 
 ```{r}
 matches |> 
@@ -99,7 +97,7 @@ matches |>
   coord_flip()
 ```
 
-Brazil is by far the most winningest team in World Cup history! But I which country has won the most games in the past 20 years?
+Brazil is by far the most winningest team in World Cup history! But which country has won the most games in the past 20 years?
 
 ```{r}
 matches |> 
@@ -111,13 +109,13 @@ matches |>
   coord_flip()
 ```
 
-Germany has overcome Brazil! 
+Germany has overcome Brazil!
 
 Just for fun, let's see which day of the week most World Cup matches are played. Hopefully this information can help you figure out how to spend your vacation days if you want to see the most action.
 
 We are going to also stratify by which stage the games are being played, so if you are more interested in the games deeper in the bracket, we can see on what days those are played most often.
 
-Here I am removing the number associoted with each Group to get an overall Group category. Next, I am releveling the days of week variable to make them look a little nicer.
+Here I am removing the number associated with each Group to get an overall Group category. Next, I am resleveling the days of week variable to make them look a little nicer.
 
 ```{r}
 matches <- matches %>% 
@@ -140,7 +138,7 @@ matches %>%
 
 ## World Cup dataset
 
-As was mentioned above, the World Cup dataset contains more general information about each World Cup. 
+As was mentioned above, the World Cup dataset contains more general information about each World Cup.
 
 ```{r}
 wcups
@@ -156,9 +154,23 @@ wcups %>%
 Let's also visualize the relationship between number of goals scored and the number of matches played in each World Cup.
 
 ```{r}
-wcups %>% 
-  ggplot(aes(year, goals_scored)) +
-  geom_line() +
-  geom_line(aes(year, games))
+#| code-fold: true
 
+a <- wcups %>% 
+  ggplot(aes(year, goals_scored)) +
+  geom_line(color = "red") +
+  xlab("Year") +
+  ylab("Total Goals Scored") +
+  ggtitle("Total Goals Scored Over Time")
+
+b <- wcups |> 
+  ggplot(aes(year, games)) +
+  geom_line(color = "blue") +
+  xlab("Year") +
+  ylab("Total Games") +
+  ggtitle("Total Games Played Over Time")
+
+library(patchwork)
+
+a / b
 ```

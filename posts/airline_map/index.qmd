@@ -1,0 +1,520 @@
+---
+title: "Mapping Aviation Data" 
+author: "Sam Weiner" 
+date: "1/18/2023"
+categories: [maps, rstats, api]
+editor: visual 
+toc: true 
+toc-depth: 4
+number-sections: true
+highlight-style: pygments
+format: 
+  html: 
+    code-link: true
+    df-print: default
+fig-width: 6
+fig-asp: 0.618
+---
+
+# Visualizing Data From API's
+
+Hello and welcome back to Dialectic with Data! In this installment, I am going to be working with data from the [AviationStack API](https://aviationstack.com/). This API can let us retrieve real time flight data from all over the world, and I thought that it would be interesting to visualize the flights that are currently on their way to a specific airport.
+
+To recreate this project yourself, you can sign up for a free account with AviationStack [here](https://aviationstack.com/product). The free account lets us make 100 api calls a month which is really awesome!
+
+For this project, I am going to be working in R, which has a great package for working with api calls, [httr](https://httr.r-lib.org/). This package lets us easily assemble queries.
+
+```{r libraries}
+#| message: false
+#| warning: false
+#| code-fold: true
+library(tidyverse)
+library(httr)
+library(lubridate)
+library(airportr)
+library(gt)
+```
+
+```{r ask-api}
+#| eval: true
+#| echo: false
+
+api <- Sys.getenv("aviation_api")
+```
+
+## API Keys
+
+The first step for working with APIs is to get our API key into our R session. Generally, it is not a very good practice to have our API key written out in our code. The key is liable to get stolen and abused, and that is something that we want to prevent. If you plan on using the API key a lot, you might want to add it to your .Renviron file. Doing this is very simple and generally safe.
+
+To get to your .Renviron file, go to the console and run this code `usethis::get_r_environ()`. Your .Renviron should pop up and then you can add a line like this: `aviation_api = {your_key_here}`. Now, whenever you want to retrieve you API key, call `Sys.getenv("aviation_api")` and your API key will appear.
+
+If you only plan on using your API key a couple of times, however, Rstudio has a function that you can use to manually add your API key each time you want to add it to your R environment. Run `rstudioapi::askForPassword()` and an interactive window will pop up where you can put your key. Just remember to save it to a variable!
+
+``` r
+api <- rstudioapi::askForPassword()
+```
+
+## API Calls
+
+For this project, I am going to be working in R, which has a great package for working with API calls, [httr](https://httr.r-lib.org/). This package lets us easily assemble queries.
+
+To make a call from the API, we are going to use `httr::GET()`. To construct the call, we put the base URL as a string in the function. Then, in the query parameter, we write a named list using the different parameters we have to or want to add to the call. `access_key` is where we put our API key and this is a necessary parameter. `arr_iata` is an optional parameter which is used to get us the information that we want, but it is not necessary to have a successful API call. You can find out more about the different parameters in the [AviationStack documentation](https://aviationstack.com/documentation).
+
+In this API call, we are using the real-time flights API endpoint, and we are saying that we want to see flights that are going to be arriving at JFK airport.
+
+[If you are unfamiliar with the term "IATA", have no fear! IATA codes are a global standard of references for airports all around the world. They are really easy to find and almost every airport has one.]{.aside}
+
+```{r api-call}
+#| eval: false
+#| echo: true
+r <- httr::GET("http://api.aviationstack.com/v1/flights", 
+               query = list(access_key = api, arr_iata = "JFK"))
+```
+
+```{r read-api call}
+#| echo: false
+# saveRDS(r, file = "C:\\Users\\sam\\My Drive\\aviation.rds")
+
+r <- readRDS(file = "C:\\Users\\sam\\My Drive\\aviation.rds")
+```
+
+Once our call has been completed, we are going to get back something called a response object. This object contains all the information that we requested. When we run the object in the console, we get some summary information like the full URL of the call (including the API key which is why I'm not showing the output), the time of the call, the size of the request in kB, and the status code.
+
+The status code is an important piece of information to look for when working with APIs. A status code of 200 is good. That means everything worked fine and we have our data! A status code of anything else means that we do not have our data, and the reasons could be many. For more information on what other status codes mean, I turn you to the [HTTP Status Cats](https://www.flickr.com/photos/girliemac/sets/72157628409467125) for guidance.
+
+So to retrieve the status of our API call, we run `httr::status_code(r)` and, luckily for us, our request went through without a hitch! (Though this was not always the case when I was writing this article 😥)
+
+```{r}
+httr::status_code(r)
+
+```
+
+## Working with the Data
+
+To retrieve the contents of our call, we run `httr::content(r)` on our response object.
+
+```{r}
+flights <- httr::content(r)
+```
+
+`flights` is a large list with two main components. `pagination` and `data`. We are most interested in what's contained inside `data`. [`pagination` contains some descriptive information about the call that we can't do anything with.]{.aside}
+
+Let's take a look at what's inside `data` using the `str` function. The `max.level` option makes the output a little easier to read.
+
+As we can see, data contains lists too! Namely, there are lists called flight date and flight status which each contain one value. Also there are lists called departure, arrival, airline and flight which contain a lot of value and even more lists!
+
+```{r}
+str(flights$data[[1]], max.level = 4)
+```
+
+To get this data in a nice to read format, how about we turn it into a data frame?
+
+```{r}
+data_flight <- tibble(data = flights$data)
+```
+
+
+
+```{r}
+data_flight |> head()
+```
+
+OK, that's not nice to read.
+
+The issue is that the data is still in a list. We have to get the information out of a list find a way to make it look like a data frame with columns and rows. There is a package in R called, [tidyr](https://tidyr.tidyverse.org/) (which is included in the tidyverse), that will be able to help us. tidyr is full of functions that will help us "rectangle" our data. The function we will be using is `unnest_wider()`. Let's see how it works.
+
+To use `unnest_wider()`, we first have to turn our list into a data frame which we did with `tibble()` above. Next, we pipe the data frame to `unnest_wider()` and tell it what column we want it to work on. In this case we only have one called `data`. After we run the code, we something a lot bigger. Actually, the number of rows are the same, but the columns are now equivalent to the number of items that `flights$data` contains. And each column name corresponds to the name of that item. However, we can see that a lot of the columns still contains lists. 
+
+```{r}
+#| column: body-outset
+
+data_flight |> 
+  tidyr::unnest_wider(data) |> 
+  head()
+```
+
+However, we can see that a lot of the columns still contains lists. No problem. We can easily take care of that with another call to `unnest_wider()`. If we string together two calls to the function, we can get to the information in the lists under departure. Now our data frame is a lot bigger.
+
+```{r}
+#| column: body-outset
+
+data_flight |> 
+  tidyr::unnest_wider(data) |> 
+  tidyr::unnest_wider(departure, names_sep = "_") |> 
+  head()
+```
+
+We can string together as many calls to `unnest_wider()` as we need until we get the output that we are looking for. We can remove the columns that end with "codeshared" as we won't be utilizing that information.
+
+We are saving the output as a data frame names `tb_flight`.
+
+```{r}
+
+tb_flight <- data_flight |> 
+  tidyr::unnest_wider(data) |> 
+  tidyr::unnest_wider(departure, names_sep = "_") |> 
+  tidyr::unnest_wider(arrival, names_sep = "_") |> 
+  tidyr::unnest_wider(airline, names_sep = "_") |> 
+  tidyr::unnest_wider(flight, names_sep = "_") |> 
+  select(-ends_with(c("codeshared")))
+
+```
+
+Here is what our final data frame looks like.
+
+```{r}
+#| column: body-outset
+
+tb_flight |>
+  head() |> 
+  gt()
+```
+
+## Data Prep for Plotting Flights
+
+Looking at our data, there's something that stands out, or should I say doesn't stand out. This data doesn't have any geographic information! We can't plot anything with this data. 
+
+Well, thankfully for us, there is a nifty package that can help us called [airportr](https://github.com/dshkol/airportr). Airportr is a pretty simple package that does exactly what we need it to do. It uses data from [openfligts.org](openfligts.org) to take an airport name, such as an IATA code, and produce a bunch of information about that airport, including it's latitude and longitude! We can plot now! WOOHOO!
+
+So let's get down to business. We are going to take our unnested data frame and use the IATA codes to get the latitude and longitude of each airport currently with flights heading to JFK airport. 
+
+To do this, we are going to use `purrr::map()` which takes a list or vector of values, and applies them one at a time to a function. The function we are applying them to is `airportr::airport_detail()` which is going to return the information we need.
+
+`purrr::map()` returns a list of values however and we want a data frame, so `purrr::list_rbind()` is going to collapse that list into exactly what we want. 
+Once we have a data frame, we can add back in all the flight information from the API call to include as details in our map. 
+
+```{r}
+lat_lon_dep <- tb_flight |> 
+  mutate(departure_country = str_split(departure_timezone, '/')) |> 
+  pull(departure_iata) |> 
+  map(\(x) airportr::airport_detail(input = x, input_type = "IATA")) |> 
+  setNames(tb_flight$departure_iata) |> 
+  list_rbind() |> 
+  bind_cols(tb_flight |> 
+              select(ends_with("scheduled"), 
+                     airline_name, 
+                     flight_number)) |>
+  mutate(departure_scheduled = as.character(ymd_hms(departure_scheduled)),
+         arrival_scheduled = as.character(ymd_hms(arrival_scheduled)))
+```
+
+This bit of code is to get us the location of JFK airport since flights don't leave JFK to arrive at JFK, or do they? That would be weird. 
+
+```{r}
+arr_location <- map_vec("JFK", \(x) airportr::airport_location(input = x, input_type = "IATA"))
+
+arr_location
+```
+
+Anyway, once we get JFK's lat and long, we can do something to help us with our plotting later. On our map, we want to have a line point from the departure airport to JFK. To do this we need to have the a special data type called a `LINESTRING` which we well be creating later, but this is a necessary step to creating it.
+
+We group the data frame we created by IATA code and then we pass the grouped data frame to a function called `group_modify()`. This function lets us apply function to each group, and we are using it to get one row for each IATA code found in our data. Then, for each group we are adding the longitude and latitude for JFK.
+
+```{r}
+lat_lon_line <- lat_lon_dep |>
+  group_by(IATA) |> 
+  group_modify(~ head(.x, 1L)) |> 
+  group_modify(~ add_row(.x, 
+                         Latitude = arr_location$Latitude, 
+                         Longitude = arr_location$Longitude))
+```
+
+This is what our output will look like.
+
+As you can see, the second occurance of each IATA code contains the latitude and longitude of JFK. 
+
+```{r}
+lat_lon_line |> 
+  select(IATA, Longitude, Latitude) |> 
+  head()
+```
+
+When working with geographical data in R, the [sf package](https://r-spatial.github.io/sf/) going to be your best friend. This package contains so many functions to work with and map out geographic data. And most importantly for us, turn geographic data in numeric form into a geographic data structure called a geometry.
+
+```{r more libraries}
+#| message: false
+library(sf)
+```
+
+`sf::st_as_sf()` is going to turn our long and lat values into a geometry data structure. All we have to do is give it our data frame, the column names that correspond to our long and lat values, and a value for our coordinate reference system. 4326 is a standard CRS code that helps applies the same mapping projection to all of our long and lat values when they are plotted.
+
+```{r line-geom1}
+dep_sf <- sf::st_as_sf(lat_lon_line, coords = c("Longitude", "Latitude"), crs = 4326)
+```
+
+Here's why we went through all that trouble with `group_modify()` before. When we group dep_sf by IATA code and then call `summarise()` on it, we get the latitude and longitude for JFK and the other airport in the same column. 
+
+```{r line-geom2}
+#| column: body-outset
+dep_sf |> 
+  group_by(IATA) |> 
+  summarise() |> 
+  head()
+```
+
+Next, when we call another sf function, `st_cast()`, with the argument "LINESTRING", we get the geometry that we have been after. Now, we can plot lines between the airports!
+
+```{r line-geom3}
+dep_sf |> 
+  group_by(IATA) |> 
+  summarise() |> 
+  st_cast("LINESTRING") |> 
+  head()
+```
+
+The final part of the pipe is adding on the information from our API call and the airportr function call.
+
+```{r line-geom4}
+dep_line <- dep_sf |> 
+  group_by(IATA) |> 
+  summarise() |> 
+  st_cast("LINESTRING") |> 
+  bind_cols(lat_lon_dep |>
+              group_by(IATA) |> 
+              group_modify(~ head(.x, 1L)) |> 
+              ungroup() |> 
+              select(-c(IATA))
+            )
+```
+
+## Plotting Our Data
+
+We have finally made it to plotting our data! Wow, that was a long road but I am glad we are here. 
+
+We are going to be using the [leaflet R package](https://rstudio.github.io/leaflet/https://rstudio.github.io/leaflet/) which is the R implementation of a popular open-source JavaScript library for interactive mapping.
+
+I highly recommend checking out the documentation for using leaflet because it is very powerful, and what I am about to show you is a pretty simple use case in comparison to what is out there.
+
+```{r leaflet-lib}
+library(leaflet)
+```
+
+
+All leaflet code begins with the `leaflet()` function. Then we add our base map with `addTiles()`. Now we add our geometries. `addPolylines()` is how we add our LINESTIRNG data. We don't have to specify our columns in this instance because leaflet is looking for the geometry data structure we made. Next, we are adding markers for the airport locations using `addMarkers()`. In this case, we are referring to column names because we don't have a geometry data structure in this object. I'm also adding labels so information about each airport and the flight shows up when we hover over a marker, and finally, we are clustering markers because some airports have multiple flights going to JFK throughout the day. 
+
+```{r leaflet-labels}
+#| code-fold: true
+#| code-summary: "Labels"
+label <- sprintf(
+  "<strong>%s</strong><br/>%s<br/>%s<br/>Flight Number <strong>%s</strong>
+  <br/>Departure Time %s<br/> Arrvial Time %s",
+  lat_lon_dep$City, lat_lon_dep$Name, lat_lon_dep$airline_name,
+  lat_lon_dep$flight_number, lat_lon_dep$departure_scheduled, lat_lon_dep$arrival_scheduled
+) %>% lapply(htmltools::HTML)
+```
+
+```{r leaflet}
+m <- 
+  leaflet() |> 
+  addTiles() |> 
+  leaflet::addPolylines(data = dep_line) |> 
+  addMarkers(data = lat_lon_dep, 
+             lng = ~Longitude, 
+             lat = ~Latitude, 
+             label = label,
+             clusterOptions = markerClusterOptions(freezeAtZoom = 5))
+
+```
+
+So with all our code put together, here's our finished map.
+
+```{r}
+#| column: screen-inset-shaded
+m
+```
+
+
+## Putting Everything into a Function
+
+I thought that this code could probably be put into a function, so I did! 
+
+If you want to try this out for yourself, here's all the code you need. Don't forget to install the necessary libraries!
+
+And for a bonus, at the bottom of this page there is a map using this function to map flights going to San Francisco!
+
+```{r}
+flights_map <- function(api, arr_IATA) {
+  
+  r <- httr::GET("http://api.aviationstack.com/v1/flights", 
+                 query = list(access_key = api, arr_IATA = arr_IATA))
+  
+  r
+  
+  httr::status_code(r)
+  
+  flights <- httr::content(r)
+  
+  data_flight <- tibble(flights$data)
+  
+  tb_flight <- data_flight |> 
+    tidyr::unnest_wider(col = c("flights$data")) |> 
+    tidyr::unnest_wider(col = c(departure), names_sep = "_") |> 
+    tidyr::unnest_wider(col = c(arrival), names_sep = "_") |> 
+    tidyr::unnest_wider(col = c(airline), names_sep = "_") |> 
+    tidyr::unnest_wider(col = c(flight), names_sep = "_") |> 
+    dplyr::select(-ends_with(c("codeshared")))
+  
+  lat_lon_dep <- tb_flight |> 
+    dplyr::mutate(departure_country = str_split(departure_timezone, '/')) |> 
+    dplyr::pull(departure_iata) |> 
+    purrr::map(\(x) airportr::airport_detail(input = x, 
+                                             input_type = "IATA")) |> 
+    setNames(tb_flight$departure_iata) |> 
+    purrr::list_rbind() |> 
+    dplyr::bind_cols(tb_flight |> 
+                       dplyr::select(ends_with("scheduled"), 
+                                     airline_name, 
+                                     flight_number)) |>
+    dplyr::mutate(departure_scheduled = as.character(ymd_hms(departure_scheduled)),
+                  arrival_scheduled = as.character(ymd_hms(arrival_scheduled)))
+  
+  arr_location <- purrr::map_vec(arr_iata, \(x) airportr::airport_location(input = x, 
+                                                                           input_type = "IATA"))
+  
+  lat_lon_line <- lat_lon_dep |>
+    dplyr::group_by(IATA) |> 
+    dplyr::group_modify(~ head(.x, 1L)) |> 
+    dplyr::group_modify(~ add_row(.x, 
+                                  Latitude = arr_location$Latitude, 
+                                  Longitude = arr_location$Longitude))
+  
+  
+  dep_sf <- sf::st_as_sf(lat_lon_line, 
+                         coords = c("Longitude", "Latitude"), 
+                         crs = 4326)
+  
+  
+  dep_line <- dep_sf |> 
+    dplyr::group_by(IATA) |> 
+    dplyr::summarise() |> 
+    sf::st_cast("LINESTRING") |> 
+    dplyr::bind_cols(lat_lon_dep |>
+                       dplyr::group_by(IATA) |> 
+                       dplyr::group_modify(~ head(.x, 1L)) |> 
+                       dplyr::ungroup() |> 
+                       dplyr::select(-c(IATA))
+    )
+  
+  label <- sprintf(
+    "<strong>%s</strong><br/>%s<br/>%s<br/>Flight Number <strong>%s</strong>
+  <br/>Departure Time %s<br/> Arrvial Time %s",
+  lat_lon_dep$City, 
+  lat_lon_dep$Name, 
+  lat_lon_dep$airline_name,
+  lat_lon_dep$flight_number, 
+  lat_lon_dep$departure_scheduled,
+  lat_lon_dep$arrival_scheduled
+  ) %>% 
+    lapply(htmltools::HTML)
+  
+  m <- 
+    leaflet::leaflet() |> 
+    leaflet::addTiles() |> 
+    leaflet::addPolylines(data = dep_line) |> 
+    leaflet::addMarkers(data = lat_lon_dep, 
+                        lng = ~Longitude, 
+                        lat = ~Latitude, 
+                        label = label,
+                        clusterOptions = leaflet::markerClusterOptions(freezeAtZoom = 5))
+  m
+}
+```
+
+
+
+``` r
+api <- rstudioapi::askForPassword()
+```
+
+```{r}
+#| eval: false
+flights_map(api, "SFO")
+```
+
+```{r}
+#| echo: false
+
+s <- readRDS("C:/Users/sam/My Drive/sfo_api_call.rds")
+
+flights <- httr::content(s)
+  
+  data_flight <- tibble(flights$data)
+  
+  tb_flight <- data_flight |> 
+    tidyr::unnest_wider(col = c("flights$data")) |> 
+    tidyr::unnest_wider(col = c(departure), names_sep = "_") |> 
+    tidyr::unnest_wider(col = c(arrival), names_sep = "_") |> 
+    tidyr::unnest_wider(col = c(airline), names_sep = "_") |> 
+    tidyr::unnest_wider(col = c(flight), names_sep = "_") |> 
+    dplyr::select(-ends_with(c("codeshared")))
+  
+  lat_lon_dep <- tb_flight |> 
+    dplyr::mutate(departure_country = str_split(departure_timezone, '/')) |> 
+    dplyr::pull(departure_iata) |> 
+    purrr::map(\(x) airportr::airport_detail(input = x, 
+                                             input_type = "IATA")) |> 
+    setNames(tb_flight$departure_iata) |> 
+    purrr::list_rbind() |> 
+    dplyr::bind_cols(tb_flight |> 
+                       dplyr::select(ends_with("scheduled"), 
+                                     airline_name, 
+                                     flight_number)) |>
+    dplyr::mutate(departure_scheduled = as.character(ymd_hms(departure_scheduled)),
+                  arrival_scheduled = as.character(ymd_hms(arrival_scheduled)))
+  
+  arr_location <- purrr::map_vec("SFO", \(x) airportr::airport_location(input = x, 
+                                                                           input_type = "IATA"))
+  
+  lat_lon_line <- lat_lon_dep |>
+    dplyr::group_by(IATA) |> 
+    dplyr::group_modify(~ head(.x, 1L)) |> 
+    dplyr::group_modify(~ add_row(.x, 
+                                  Latitude = arr_location$Latitude, 
+                                  Longitude = arr_location$Longitude))
+  
+  
+  dep_sf <- sf::st_as_sf(lat_lon_line, 
+                         coords = c("Longitude", "Latitude"), 
+                         crs = 4326)
+  
+  
+  dep_line <- dep_sf |> 
+    dplyr::group_by(IATA) |> 
+    dplyr::summarise() |> 
+    sf::st_cast("LINESTRING") |> 
+    dplyr::bind_cols(lat_lon_dep |>
+                       dplyr::group_by(IATA) |> 
+                       dplyr::group_modify(~ head(.x, 1L)) |> 
+                       dplyr::ungroup() |> 
+                       dplyr::select(-c(IATA))
+    )
+  
+  label <- sprintf(
+    "<strong>%s</strong><br/>%s<br/>%s<br/>Flight Number <strong>%s</strong>
+  <br/>Departure Time %s<br/> Arrvial Time %s",
+  lat_lon_dep$City, 
+  lat_lon_dep$Name, 
+  lat_lon_dep$airline_name,
+  lat_lon_dep$flight_number, 
+  lat_lon_dep$departure_scheduled,
+  lat_lon_dep$arrival_scheduled
+  ) %>% 
+    lapply(htmltools::HTML)
+  
+  m <- 
+    leaflet::leaflet() |> 
+    leaflet::addTiles() |> 
+    leaflet::addPolylines(data = dep_line) |> 
+    leaflet::addMarkers(data = lat_lon_dep, 
+                        lng = ~Longitude, 
+                        lat = ~Latitude, 
+                        label = label,
+                        clusterOptions = leaflet::markerClusterOptions(freezeAtZoom = 5))
+```
+
+
+```{r}
+#| column: screen-inset-shaded
+
+m
+```
