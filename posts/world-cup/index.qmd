@@ -2,6 +2,7 @@
 title: "Tidy Tuesday - World Cup Edition"
 author: "Sam Weiner"
 date: "2022-12-11"
+image: world_cup.jpg
 categories: [tidytuesday, analysis]
 ---
 

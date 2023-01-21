@@ -2,6 +2,7 @@
 title: "Mapping Aviation Data" 
 author: "Sam Weiner" 
 date: "1/18/2023"
+image: aviators.png
 categories: [maps, rstats, api]
 editor: visual 
 toc: true 
