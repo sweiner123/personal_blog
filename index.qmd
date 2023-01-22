@@ -1,5 +1,5 @@
 ---
-title: "Dialectic with Data"
+title: ""
 image: head_shot.jpg
 about:
   template: jolla
