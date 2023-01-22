@@ -1,12 +1,15 @@
 ---
 title: "Dialectic with Data"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
-page-layout: full
-title-block-banner: true
+image: head_shot.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/sam-weiner/
+    - icon: github
+      text: Github
+      href: https://github.com/sweiner123
 ---
+
+Sam Weiner is an aspiring Data Scientist who is excited to bring creativity and analytical know-how to your data science team. I am a current masters student at the Institute for Advanced Analytics, where I am studying data science and technical communication to be able to solve complex problems and share results answers with a wide audience.

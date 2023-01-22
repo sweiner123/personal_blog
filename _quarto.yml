@@ -9,10 +9,11 @@ website:
   title: "Dialectic with Data"
   navbar:
     right:
+      - blog.qmd
       - about.qmd
       - icon: github
         href: https://github.com/sweiner123
-      - icon: liknedin
+      - icon: linkedin
         href: https://www.linkedin.com/in/sam-weiner/
 format:
   html:

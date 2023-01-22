@@ -11,14 +11,21 @@
     "href": "about.html#education",
     "title": "About",
     "section": "Education",
-    "text": "Education\nRutgers University | New Brunswick, NJ\nB.A. in Philosophy | Sept 2018 - May 2021\nInstitute for Advanced Analytics, North Carolina State University | Raleigh, NC\nM.S. Candidate in Analytics | June 2022 - Current"
+    "text": "Education\nRutgers University | New Brunswick, NJ\n\nB.A. in Philosophy | Sept 2018 - May 2021\nInstitute for Advanced Analytics, North Carolina State University | Raleigh, NC\n\nM.S. Candidate in Analytics | June 2022 - Current"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Mapping Aviation Data\n\n\n\n\n\n\n\nmaps\n\n\nrstats\n\n\napi\n\n\n\n\n\n\n\n\n\n\n\nJan 18, 2023\n\n\nSam Weiner\n\n\n\n\n\n\n  \n\n\n\n\nTidy Tuesday - 12/20\n\n\n\n\n\n\n\ntidytuesday\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJan 9, 2023\n\n\nSam Weiner\n\n\n\n\n\n\n  \n\n\n\n\nR resources for Practicum\n\n\n\n\n\n\n\nresources\n\n\nrstats\n\n\n\n\n\n\n\n\n\n\n\nJan 8, 2023\n\n\nSam Weiner\n\n\n\n\n\n\n  \n\n\n\n\nTidy Tuesday - World Cup Edition\n\n\n\n\n\n\n\ntidytuesday\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nDec 11, 2022\n\n\nSam Weiner\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nDec 8, 2022\n\n\nSam Weiner\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Dialectic with Data",
     "section": "",
-    "text": "Mapping Aviation Data\n\n\n\n\n\n\n\nmaps\n\n\nrstats\n\n\napi\n\n\n\n\n\n\n\n\n\n\n\nJan 18, 2023\n\n\nSam Weiner\n\n\n\n\n\n\n  \n\n\n\n\nTidy Tuesday - 12/20\n\n\n\n\n\n\n\ntidytuesday\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJan 9, 2023\n\n\nSam Weiner\n\n\n\n\n\n\n  \n\n\n\n\nR resources for Practicum\n\n\n\n\n\n\n\nresources\n\n\nrstats\n\n\n\n\n\n\n\n\n\n\n\nJan 8, 2023\n\n\nSam Weiner\n\n\n\n\n\n\n  \n\n\n\n\nTidy Tuesday - World Cup Edition\n\n\n\n\n\n\n\ntidytuesday\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nDec 11, 2022\n\n\nSam Weiner\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nDec 8, 2022\n\n\nSam Weiner\n\n\n\n\n\n\nNo matching items"
+    "text": "Sam Weiner is an aspiring Data Scientist who is excited to bring creativity and analytical know-how to your data science team. I am a current masters student at the Institute for Advanced Analytics, where I am studying data science and technical communication to be able to solve complex problems and share results answers with a wide audience."
   },
   {
     "objectID": "posts/airline_map/index.html",
