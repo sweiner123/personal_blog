@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Sam Weiner">
 <meta name="dcterms.date" content="2023-01-08">
-<title>Dialectic with Data - R resources for Practicum</title>
+<title>Dialectic with Data - R Resources and Packages</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,7 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">R resources for Practicum</h1>
+      <h1 class="title">R Resources and Packages</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">resources</div>
                 <div class="quarto-category">rstats</div>
@@ -304,6 +304,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Quarto is Rstudio’s (now called Posit) new Rmarkdown replacement. The biggest change from Rmarkdown to Quarto is that you can use Quarto in Jupyter Notebooks! Posit (formerly Rstudio) is broadening it’s presence in the data science community by engaging with python users in addition to R users. The hope, says Posit, is to create easy tools for cross-language collaboration so that researchers and data scientists who have different languages of choice can work together with ease. From what I have seen, many data scientists who might have preferred R as a language have been pressured to use python because of its large presence in the data science community. This tool is hopefully going to create a pathway for R users to stay R users without complicating team workflows in a python-dominant environment. In addition, Quarto has some awesome features such as helping users easily create documents, presentation, or even blogs (like this one!). So far, it has been very intuitive and the documentation has been very helpful. You can find information at <a href="https://quarto.org">quarto.org</a>.</p>
 </section></section><section id="packages" class="level2 page-columns page-full" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="packages">
 <span class="header-section-number">2</span> Packages</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="r_packages.jpeg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">R-Packages</figcaption><p></p>
+</figure>
+</div>
 <p>Now lets get to packages! I am going to be listing packages that I think are really helpful (and really cool) for working with data and doing modeling in R.</p>
 <section id="tidyverse" class="level3" data-number="2.1"><h3 data-number="2.1" class="anchored" data-anchor-id="tidyverse">
 <span class="header-section-number">2.1</span> Tidyverse</h3>
@@ -768,25 +773,25 @@ F-statistic: 50.17 on 3 and 28 DF,  p-value: 2.184e-11</code></pre>
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>here() starts at C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog</code></pre>
+<pre><code>here() starts at C:/Users/sam/My Drive/personal_blog</code></pre>
 </div>
 </div>
 <p>Calling <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> will output the top of the project directory</p>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog"</code></pre>
+<pre><code>[1] "C:/Users/sam/My Drive/personal_blog"</code></pre>
 </div>
 </div>
 <p>By adding folder names in quotation marks, we can easily dive deeper into our project directory.</p>
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"posts"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog/posts"</code></pre>
+<pre><code>[1] "C:/Users/sam/My Drive/personal_blog/posts"</code></pre>
 </div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"posts"</span>, <span class="st">"R-resources"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/Users/sam/Insync/sweiner@ncsu.edu/Google Drive/personal_blog/posts/R-resources"</code></pre>
+<pre><code>[1] "C:/Users/sam/My Drive/personal_blog/posts/R-resources"</code></pre>
 </div>
 </div>
 </section><section id="todor" class="level4" data-number="2.3.6"><h4 data-number="2.3.6" class="anchored" data-anchor-id="todor">

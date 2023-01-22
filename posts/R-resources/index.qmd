@@ -1,5 +1,5 @@
 ---
-title: "R resources for Practicum" 
+title: "R Resources and Packages" 
 author: "Sam Weiner" 
 date: "1/8/2023"
 image: r_packages.jpeg

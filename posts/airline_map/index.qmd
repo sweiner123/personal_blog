@@ -114,8 +114,6 @@ To get this data in a nice to read format, how about we turn it into a data fram
 data_flight <- tibble(data = flights$data)
 ```
 
-
-
 ```{r}
 data_flight |> head()
 ```
@@ -124,7 +122,7 @@ OK, that's not nice to read.
 
 The issue is that the data is still in a list. We have to get the information out of a list find a way to make it look like a data frame with columns and rows. There is a package in R called, [tidyr](https://tidyr.tidyverse.org/) (which is included in the tidyverse), that will be able to help us. tidyr is full of functions that will help us "rectangle" our data. The function we will be using is `unnest_wider()`. Let's see how it works.
 
-To use `unnest_wider()`, we first have to turn our list into a data frame which we did with `tibble()` above. Next, we pipe the data frame to `unnest_wider()` and tell it what column we want it to work on. In this case we only have one called `data`. After we run the code, we something a lot bigger. Actually, the number of rows are the same, but the columns are now equivalent to the number of items that `flights$data` contains. And each column name corresponds to the name of that item. However, we can see that a lot of the columns still contains lists. 
+To use `unnest_wider()`, we first have to turn our list into a data frame which we did with `tibble()` above. Next, we pipe the data frame to `unnest_wider()` and tell it what column we want it to work on. In this case we only have one called `data`. After we run the code, we something a lot bigger. Actually, the number of rows are the same, but the columns are now equivalent to the number of items that `flights$data` contains. And each column name corresponds to the name of that item. However, we can see that a lot of the columns still contains lists.
 
 ```{r}
 #| column: body-outset
@@ -173,16 +171,15 @@ tb_flight |>
 
 ## Data Prep for Plotting Flights
 
-Looking at our data, there's something that stands out, or should I say doesn't stand out. This data doesn't have any geographic information! We can't plot anything with this data. 
+Looking at our data, there's something that stands out, or should I say doesn't stand out. This data doesn't have any geographic information! We can't plot anything with this data.
 
 Well, thankfully for us, there is a nifty package that can help us called [airportr](https://github.com/dshkol/airportr). Airportr is a pretty simple package that does exactly what we need it to do. It uses data from [openfligts.org](openfligts.org) to take an airport name, such as an IATA code, and produce a bunch of information about that airport, including it's latitude and longitude! We can plot now! WOOHOO!
 
-So let's get down to business. We are going to take our unnested data frame and use the IATA codes to get the latitude and longitude of each airport currently with flights heading to JFK airport. 
+So let's get down to business. We are going to take our unnested data frame and use the IATA codes to get the latitude and longitude of each airport currently with flights heading to JFK airport.
 
 To do this, we are going to use `purrr::map()` which takes a list or vector of values, and applies them one at a time to a function. The function we are applying them to is `airportr::airport_detail()` which is going to return the information we need.
 
-`purrr::map()` returns a list of values however and we want a data frame, so `purrr::list_rbind()` is going to collapse that list into exactly what we want. 
-Once we have a data frame, we can add back in all the flight information from the API call to include as details in our map. 
+`purrr::map()` returns a list of values however and we want a data frame, so `purrr::list_rbind()` is going to collapse that list into exactly what we want. Once we have a data frame, we can add back in all the flight information from the API call to include as details in our map.
 
 ```{r}
 lat_lon_dep <- tb_flight |> 
@@ -199,7 +196,7 @@ lat_lon_dep <- tb_flight |>
          arrival_scheduled = as.character(ymd_hms(arrival_scheduled)))
 ```
 
-This bit of code is to get us the location of JFK airport since flights don't leave JFK to arrive at JFK, or do they? That would be weird. 
+This bit of code is to get us the location of JFK airport since flights don't leave JFK to arrive at JFK, or do they? That would be weird.
 
 ```{r}
 arr_location <- map_vec("JFK", \(x) airportr::airport_location(input = x, input_type = "IATA"))
@@ -222,7 +219,7 @@ lat_lon_line <- lat_lon_dep |>
 
 This is what our output will look like.
 
-As you can see, the second occurance of each IATA code contains the latitude and longitude of JFK. 
+As you can see, the second occurance of each IATA code contains the latitude and longitude of JFK.
 
 ```{r}
 lat_lon_line |> 
@@ -243,7 +240,7 @@ library(sf)
 dep_sf <- sf::st_as_sf(lat_lon_line, coords = c("Longitude", "Latitude"), crs = 4326)
 ```
 
-Here's why we went through all that trouble with `group_modify()` before. When we group dep_sf by IATA code and then call `summarise()` on it, we get the latitude and longitude for JFK and the other airport in the same column. 
+Here's why we went through all that trouble with `group_modify()` before. When we group dep_sf by IATA code and then call `summarise()` on it, we get the latitude and longitude for JFK and the other airport in the same column.
 
 ```{r line-geom2}
 #| column: body-outset
@@ -280,7 +277,7 @@ dep_line <- dep_sf |>
 
 ## Plotting Our Data
 
-We have finally made it to plotting our data! Wow, that was a long road but I am glad we are here. 
+We have finally made it to plotting our data! Wow, that was a long road but I am glad we are here.
 
 We are going to be using the [leaflet R package](https://rstudio.github.io/leaflet/https://rstudio.github.io/leaflet/) which is the R implementation of a popular open-source JavaScript library for interactive mapping.
 
@@ -290,8 +287,7 @@ I highly recommend checking out the documentation for using leaflet because it i
 library(leaflet)
 ```
 
-
-All leaflet code begins with the `leaflet()` function. Then we add our base map with `addTiles()`. Now we add our geometries. `addPolylines()` is how we add our LINESTIRNG data. We don't have to specify our columns in this instance because leaflet is looking for the geometry data structure we made. Next, we are adding markers for the airport locations using `addMarkers()`. In this case, we are referring to column names because we don't have a geometry data structure in this object. I'm also adding labels so information about each airport and the flight shows up when we hover over a marker, and finally, we are clustering markers because some airports have multiple flights going to JFK throughout the day. 
+All leaflet code begins with the `leaflet()` function. Then we add our base map with `addTiles()`. Now we add our geometries. `addPolylines()` is how we add our LINESTIRNG data. We don't have to specify our columns in this instance because leaflet is looking for the geometry data structure we made. Next, we are adding markers for the airport locations using `addMarkers()`. In this case, we are referring to column names because we don't have a geometry data structure in this object. I'm also adding labels so information about each airport and the flight shows up when we hover over a marker, and finally, we are clustering markers because some airports have multiple flights going to JFK throughout the day.
 
 ```{r leaflet-labels}
 #| code-fold: true
@@ -324,16 +320,17 @@ So with all our code put together, here's our finished map.
 m
 ```
 
-
 ## Putting Everything into a Function
 
-I thought that this code could probably be put into a function, so I did! 
+I thought that this code could probably be put into a function, so I did!
 
 If you want to try this out for yourself, here's all the code you need. Don't forget to install the necessary libraries!
 
 And for a bonus, at the bottom of this page there is a map using this function to map flights going to San Francisco!
 
 ```{r}
+#| column: body-outset
+
 flights_map <- function(api, arr_IATA) {
   
   r <- httr::GET("http://api.aviationstack.com/v1/flights", 
@@ -420,8 +417,6 @@ flights_map <- function(api, arr_IATA) {
   m
 }
 ```
-
-
 
 ``` r
 api <- rstudioapi::askForPassword()
@@ -512,7 +507,6 @@ flights <- httr::content(s)
                         label = label,
                         clusterOptions = leaflet::markerClusterOptions(freezeAtZoom = 5))
 ```
-
 
 ```{r}
 #| column: screen-inset-shaded
