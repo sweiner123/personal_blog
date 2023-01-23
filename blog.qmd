@@ -1,5 +1,5 @@
 ---
-title: "Lets {thinkr} and {dplyr}"
+title: "Data |> Insights()"
 listing:
   contents: posts
   sort: "date desc"

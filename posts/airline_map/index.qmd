@@ -3,6 +3,7 @@ title: "Mapping Aviation Data"
 author: "Sam Weiner" 
 date: "1/18/2023"
 image: aviators.png
+subtitle: "Using the AviationStack API to Visualize incoming flights to an airport"
 categories: [maps, rstats, api]
 editor: visual 
 toc: true 
@@ -173,7 +174,7 @@ tb_flight |>
 
 Looking at our data, there's something that stands out, or should I say doesn't stand out. This data doesn't have any geographic information! We can't plot anything with this data.
 
-Well, thankfully for us, there is a nifty package that can help us called [airportr](https://github.com/dshkol/airportr). Airportr is a pretty simple package that does exactly what we need it to do. It uses data from [openfligts.org](openfligts.org) to take an airport name, such as an IATA code, and produce a bunch of information about that airport, including it's latitude and longitude! We can plot now! WOOHOO!
+Well, thankfully for us, there is a nifty package that can help us called [airportr](https://github.com/dshkol/airportr). Airportr is a pretty simple package that does exactly what we need it to do. It uses data from [openflights.org](openflights.org) to take an airport name, such as an IATA code, and produce a bunch of information about that airport, including it's latitude and longitude! We can plot now! WOOHOO!
 
 So let's get down to business. We are going to take our unnested data frame and use the IATA codes to get the latitude and longitude of each airport currently with flights heading to JFK airport.
 
@@ -334,7 +335,7 @@ And for a bonus, at the bottom of this page there is a map using this function t
 flights_map <- function(api, arr_IATA) {
   
   r <- httr::GET("http://api.aviationstack.com/v1/flights", 
-                 query = list(access_key = api, arr_IATA = arr_IATA))
+                 query = list(access_key = api, arr_iata = arr_IATA))
   
   r
   

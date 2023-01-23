@@ -1,13 +1,13 @@
-flights_map <- function(api, air_code) {
+flights_map <- function(api, arr_IATA) {
   
   r <- httr::GET("http://api.aviationstack.com/v1/flights", 
-                 query = list(access_key = api, arr_iata = air_code))
+                 query = list(access_key = api, arr_IATA = arr_IATA))
   
   r
   
   httr::status_code(r)
   
-  flights <- content(r)
+  flights <- httr::content(r)
   
   data_flight <- tibble(flights$data)
   
@@ -33,7 +33,7 @@ flights_map <- function(api, air_code) {
     dplyr::mutate(departure_scheduled = as.character(ymd_hms(departure_scheduled)),
                   arrival_scheduled = as.character(ymd_hms(arrival_scheduled)))
   
-  arr_location <- purrr::map_vec(air_code, \(x) airportr::airport_location(input = x, 
+  arr_location <- purrr::map_vec(arr_iata, \(x) airportr::airport_location(input = x, 
                                                                            input_type = "IATA"))
   
   lat_lon_line <- lat_lon_dep |>
@@ -82,6 +82,7 @@ flights_map <- function(api, air_code) {
                         label = label,
                         clusterOptions = leaflet::markerClusterOptions(freezeAtZoom = 5))
   m
+}
 }
 
 api <- rstudioapi::askForPassword()
